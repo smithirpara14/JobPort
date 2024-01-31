@@ -10,12 +10,10 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    createdEvents: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'Event'
-        }
-    ]
+    accountType: {
+        type: Schema.Types.ObjectId,
+        ref: 'AccountType'
+    }
 });
 
 module.exports = mongoose.model('User', userSchema);
