@@ -2,6 +2,6 @@
     "env":{
         "MONGO_USER": "smithirpara1410",
         "MONGO_PASSWORD": "0PPTZWJq5WNJzFE6",
-        "MONGO_DB":"event-react-dev"
+        "MONGO_DB":"JobPort"
     }
  }
