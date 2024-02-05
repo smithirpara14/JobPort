@@ -28,8 +28,9 @@ mongoose.connect(`mongodb+srv://${process.env.MONGO_USER
     }:${process.env.MONGO_PASSWORD
     }@cluster0.tnliqyl.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`)
     .then(() => {
-        app.listen(3000);
-        console.log('Server is running on port 3000');
+        app.listen(3001);
+        console.log('Server is running on port 3001');
+        // open graphql: localhost:3001/graphql
     }).catch(err => {
         console.log(err);
     });
