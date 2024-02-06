@@ -4,6 +4,7 @@ const { graphqlHTTP } = require('express-graphql');
 const { buildSchema } = require('graphql');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const cors = require('cors');
 
 //graphql
 const graphQlResolvers = require('./graphql/resolver/index');
@@ -15,6 +16,7 @@ const AccountType = require('./models/accounttype');
 
 const app = express();
 
+app.use(cors());
 app.use(bodyParser.json());
 
 app.use('/graphql',

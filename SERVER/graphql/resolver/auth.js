@@ -8,13 +8,18 @@ module.exports = {
         try {
             const existingUser = await User.findOne({ email: args.userInput.email });
             if (existingUser) {
-                throw new Error('User exists already.');
+                throw new Error('User already exists.');
             }
+
             const hashedPassword = await bcrypt.hash(args.userInput.password, 12);
             const accountType = await AccountType.findOne({ name: args.userInput.accountType });
+
             const user = new User({
+                firstName: args.userInput.firstName,
+                lastName: args.userInput.lastName,
                 email: args.userInput.email,
                 password: hashedPassword,
+                birthDate: args.userInput.birthDate,
                 accountType: accountType
             });
 
