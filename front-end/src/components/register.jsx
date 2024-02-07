@@ -18,6 +18,13 @@ const RegisterForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    // Front-end validation
+    if (!firstName || !lastName || !email || !password || !birthDate) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
     try {
       const { data } = await createUser({
         variables: {
@@ -57,6 +64,7 @@ const RegisterForm = () => {
                     value={firstName}
                     onChange={(event) => setFirstName(event.target.value)}
                     placeholder="Enter your first name"
+                    required
                   />
                 </Form.Group>
               </Col>
@@ -68,6 +76,7 @@ const RegisterForm = () => {
                     value={lastName}
                     onChange={(event) => setLastName(event.target.value)}
                     placeholder="Enter your last name"
+                    required
                   />
                 </Form.Group>
               </Col>
@@ -79,6 +88,7 @@ const RegisterForm = () => {
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
                 placeholder="Enter your email"
+                required
               />
             </Form.Group>
             <Form.Group controlId="formPassword">
@@ -88,6 +98,7 @@ const RegisterForm = () => {
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
                 placeholder="Enter your password"
+                required
               />
             </Form.Group>
             <Form.Group controlId="formBirthDate">
@@ -96,6 +107,7 @@ const RegisterForm = () => {
                 type="date"
                 value={birthDate}
                 onChange={(event) => setBirthDate(event.target.value)}
+                required
               />
             </Form.Group>
             <Form.Group controlId="formAccountType" className=" m-3">
