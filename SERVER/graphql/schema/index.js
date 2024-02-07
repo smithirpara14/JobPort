@@ -1,15 +1,13 @@
-const { buildSchema } = require('graphql');
-
-module.exports = buildSchema(`
+export const typeDefs = `
     type User {
-        _id: ID!
-        firstName: String!
-        lastName: String!
-        email: String!
+        _id: ID
+        firstName: String
+        lastName: String
+        email: String
         password: String
-        creationDate: String!
+        creationDate: String
         birthDate: String
-        accountType: AccountType!
+        accountType: AccountType
     }
 
     type AccountType {
@@ -27,20 +25,17 @@ module.exports = buildSchema(`
     }
 
     type AuthData {
-        userId: ID!
+        userId: String!
+        token: String!
+        tokenExpiration: Int!
     }
 
-    type RootQuery {
+    type Query {
         users: [User!]!
         login(email: String!, password: String!): AuthData!
     }
 
-    type RootMutation {
+    type Mutation {
         createUser(userInput: UserInput): User
     }
-
-    schema {
-        query: RootQuery,
-        mutation: RootMutation
-    }
-`);
+`;

@@ -2,6 +2,7 @@
     "env":{
         "MONGO_USER": "smithirpara1410",
         "MONGO_PASSWORD": "0PPTZWJq5WNJzFE6",
-        "MONGO_DB":"JobPort"
+        "MONGO_DB":"JobPort",
+        "JWT_SECRET": "secretkeyjwtjobportapplication"
     }
  }

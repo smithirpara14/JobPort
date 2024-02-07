@@ -1,30 +1,48 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const { graphqlHTTP } = require('express-graphql');
-const { buildSchema } = require('graphql');
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
-const cors = require('cors');
-
+import express from 'express';
+import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
+import jwt from 'jsonwebtoken';
+import { ApolloServer } from "@apollo/server";
+import { expressMiddleware } from "@apollo/server/express4";
+import cors from 'cors';
+import { readFileSync } from 'fs';
+import { typeDefs } from "./graphql/schema/index.js";
+import { resolvers } from './graphql/resolver/index.js';
+import { isAuth } from './middleware/is-auth.js';
 //graphql
-const graphQlResolvers = require('./graphql/resolver/index');
-const graphQLSchema = require('./graphql/schema/index');
-
-//models
-const User = require('./models/user');
-const AccountType = require('./models/accounttype');
+// const typeDefs = readFileSync("./graphql/schema/schema.graphql", "utf8");
+//const typeDefs = require("./graphql/schema/index");
+//const graphQlResolvers = require('./graphql/resolver/index');
 
 const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
 
-app.use('/graphql',
-    graphqlHTTP({
-        schema: graphQLSchema,
-        rootValue: graphQlResolvers,
-        graphiql: true
+// app.use(isAuth);
+
+const apolloServer = new ApolloServer({
+    typeDefs,
+    resolvers,
+});
+
+const startApolloServer = async () => {
+    await apolloServer.start();
+    app.use("/graphql", expressMiddleware(apolloServer, {
+        context: async ({ req }) => {
+            const token = req.headers.authorization || '';
+            try {
+                const decoded = jwt.verify(token, process.env.JWT_SECRET);
+                console.log(decoded);
+                return {...decoded, isAuth: true};
+            } catch (err) {
+                return {isAuth: false};
+            }
+        }
     }));
+};
+
+startApolloServer();
 
 mongoose.connect(`mongodb+srv://${process.env.MONGO_USER
     }:${process.env.MONGO_PASSWORD
@@ -32,7 +50,12 @@ mongoose.connect(`mongodb+srv://${process.env.MONGO_USER
     .then(() => {
         app.listen(3001);
         console.log('Server is running on port 3001');
-        // open graphql: localhost:3001/graphql
+        console.log('GraphQl Server started on localhost:3001/graphql');
     }).catch(err => {
         console.log(err);
     });
+
+const getUser = (token) => {
+
+
+}

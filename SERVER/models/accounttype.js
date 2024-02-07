@@ -1,5 +1,6 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import mongoose from 'mongoose';
+
+const { Schema } = mongoose;
 
 const accountTypeSchema = new Schema({
     name: {
@@ -12,4 +13,4 @@ const accountTypeSchema = new Schema({
     }
 });
 
-module.exports = mongoose.model('AccountType', accountTypeSchema);
+export default mongoose.model('AccountType', accountTypeSchema);
