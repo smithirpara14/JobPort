@@ -1,13 +1,13 @@
 import React from "react";
 import { Navbar, Nav } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const Header = () => {
   return (
     <Navbar
       className="rounded-bottom-5 px-4"
       style={{
-        backgroundColor: "#3a41c6",
+        backgroundColor: "#6A00C9",
         width: "80%",
         margin: "auto",
       }}
