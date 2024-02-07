@@ -1,29 +1,27 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const { buildSchema } = require('graphql');
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
-const cors = require('cors');
-const { readFileSync } = require('fs');
-const { ApolloServer } = require('@apollo/server');
-const { expressMiddleware } = require("@apollo/server/express4");
-
+import express from 'express';
+import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
+import { ApolloServer } from "@apollo/server";
+import { expressMiddleware } from "@apollo/server/express4";
+import cors from 'cors';
+import { readFileSync } from 'fs';
+import { typeDefs } from "./graphql/schema/index.js";
+import { resolvers } from './graphql/resolver/index.js';
+import { isAuth } from './middleware/is-auth.js';
 //graphql
-const typeDefs = readFileSync("./graphql/schema/schema.graphql", "utf8");
-const graphQlResolvers = require('./graphql/resolver/index');
-
-//models
-const User = require('./models/user');
-const AccountType = require('./models/accounttype');
+// const typeDefs = readFileSync("./graphql/schema/schema.graphql", "utf8");
+//const typeDefs = require("./graphql/schema/index");
+//const graphQlResolvers = require('./graphql/resolver/index');
 
 const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(isAuth);
 
 const apolloServer = new ApolloServer({
     typeDefs,
-    graphQlResolvers,
+    resolvers,
 });
 
 const startApolloServer = async () => {

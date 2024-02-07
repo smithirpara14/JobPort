@@ -1,8 +1,8 @@
-const { GraphQLScalarType } = require("graphql");
+import { GraphQLScalarType } from "graphql";
 
-const GraphQlDateResolver = new GraphQLScalarType({
+export const GraphQlDateResolver = new GraphQLScalarType({
     name: "GraphQlDate",
-    description: "A GraphQl Date Type",
+    description: "A GraphQL Date Type",
     serialize(value) {
         return value.toISOString();
     },
@@ -11,8 +11,3 @@ const GraphQlDateResolver = new GraphQLScalarType({
         return isNaN(newDate) ? undefined : newDate;
     },
 });
-
-module.exports = {
-    GraphQlDateResolver
-};
-

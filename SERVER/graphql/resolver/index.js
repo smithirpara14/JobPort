@@ -1,9 +1,11 @@
-const authResolver = require('./auth');
-const helperResolver = require('./helper');
+import { users, login, createUser } from './auth.js';
 
-const rootResolver = {
-    ...authResolver,
-    ...helperResolver
+export const resolvers = {
+  Query: {
+    users,
+    login
+  },
+  Mutation: {
+    createUser
+  }
 };
-
-module.exports = rootResolver;

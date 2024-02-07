@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { gql, useLazyQuery } from "@apollo/client";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const LoginForm = () => {
@@ -10,42 +11,46 @@ const LoginForm = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (email.trim().length === 0 && password.trim().length === 0) {
-      setError("Please enter valid email and password");
-      return;
-    }
-    const requestBody = {
-      query: `
-        query {
-          login(email: "${email}", password: "${password}") {
-            email,
-            token
-          }
-        }
-      `,
-    };
-    fetch("http://localhost:3001/graphql", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(requestBody),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.status === "ok") {
-          setLoggedIn(true);
-        } else {
-          setError("Invalid email or password");
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  };
 
+  
+  const LOGIN_QUERY = gql`
+  query login($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      userId
+    }
+  }
+`;
+
+const [executeQuery, { loading, data }] = useLazyQuery(LOGIN_QUERY, {
+  variables: { email, password },
+  onError: (error) => {
+    console.error("Error:", error);
+    setError("Invalid email or password");
+  }
+});
+
+const handleSubmit = (event) => {
+  event.preventDefault();
+  if (email.trim().length === 0 || password.trim().length === 0) {
+    setError("Please enter valid email and password");
+    return;
+  }
+  setError("");
+  executeQuery();
+};
+
+// Handle the response data
+React.useEffect(() => {
+  if (data) {
+    // Assuming the response data has a userId field
+    if (data.login.userId) {
+      setLoggedIn(true);
+    } else {
+      setError("Invalid email or password");
+    }
+  }
+}, [data]);
+  
   return (
     <Container className="mt-5 p-4" style={{ backgroundColor: "#f0f0f0" }}>
       {loggedIn ? (

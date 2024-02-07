@@ -1,13 +1,13 @@
-module.exports = `
+export const typeDefs = `
     type User {
-        _id: ID!
-        firstName: String!
-        lastName: String!
-        email: String!
+        _id: ID
+        firstName: String
+        lastName: String
+        email: String
         password: String
-        creationDate: String!
+        creationDate: String
         birthDate: String
-        accountType: AccountType!
+        accountType: AccountType
     }
 
     type AccountType {
@@ -25,7 +25,9 @@ module.exports = `
     }
 
     type AuthData {
-        userId: ID!
+        userId: String!
+        token: String!
+        tokenExpiration: Int!
     }
 
     type Query {
