@@ -8,6 +8,7 @@ import Logout from "./components/logout";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import RegisterForm from "./components/register";
+import _404Page from "./components/404Page"
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
           <Route path="/login" element={<UserLogin />} />
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/logout" element={<Logout />} />
+          <Route path="*" element={<_404Page />} />
         </Routes>
       </Router>
 
