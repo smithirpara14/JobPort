@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Form, Button, Dropdown } from "react-bootstrap";
 import { useMutation } from "@apollo/client";
 import { CREATE_USER } from "./graphqlQueries";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +12,7 @@ const RegisterForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [birthDate, setBirthDate] = useState("");
+  const [accountType, setAccountType] = useState("user");
 
   const [createUser] = useMutation(CREATE_USER);
 
@@ -26,7 +27,7 @@ const RegisterForm = () => {
             email,
             password,
             birthDate,
-            accountType: "Standard", // You may want to change this value based on user selection
+            accountType,
           },
         },
       });
@@ -45,26 +46,32 @@ const RegisterForm = () => {
         <Col md={6} className="left-section">
           <img src="images/login.jpg" alt="Login" className="img-fluid" />
         </Col>
-        <Col md={6} className="right-section d-flex align-items-center">
+        <Col md={6} className="right-section">
           <Form onSubmit={handleSubmit} className="w-100">
-            <Form.Group controlId="formFirstName">
-              <Form.Label>First Name:</Form.Label>
-              <Form.Control
-                type="text"
-                value={firstName}
-                onChange={(event) => setFirstName(event.target.value)}
-                placeholder="Enter your first name"
-              />
-            </Form.Group>
-            <Form.Group controlId="formLastName">
-              <Form.Label>Last Name:</Form.Label>
-              <Form.Control
-                type="text"
-                value={lastName}
-                onChange={(event) => setLastName(event.target.value)}
-                placeholder="Enter your last name"
-              />
-            </Form.Group>
+            <Row>
+              <Col md={6}>
+                <Form.Group controlId="formFirstName">
+                  <Form.Label>First Name:</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={firstName}
+                    onChange={(event) => setFirstName(event.target.value)}
+                    placeholder="Enter your first name"
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group controlId="formLastName">
+                  <Form.Label>Last Name:</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={lastName}
+                    onChange={(event) => setLastName(event.target.value)}
+                    placeholder="Enter your last name"
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
             <Form.Group controlId="formEmail">
               <Form.Label>Email:</Form.Label>
               <Form.Control
@@ -90,6 +97,27 @@ const RegisterForm = () => {
                 value={birthDate}
                 onChange={(event) => setBirthDate(event.target.value)}
               />
+            </Form.Group>
+            <Form.Group controlId="formAccountType" className=" m-3">
+              <Form.Label>Account Type:</Form.Label>
+              <Dropdown>
+                <Dropdown.Toggle
+                  className="w-100"
+                  variant="primary"
+                  id="dropdown-basic"
+                >
+                  {accountType === "user" ? "User" : "Admin"}
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu className="w-100">
+                  <Dropdown.Item onClick={() => setAccountType("user")}>
+                    User
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={() => setAccountType("admin")}>
+                    Admin
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
             </Form.Group>
             <Button
               variant="primary"
