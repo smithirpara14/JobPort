@@ -4,11 +4,22 @@ import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 
 const Header = () => {
   return (
-    <Navbar style={{ backgroundColor: "#3a41c6" }} variant="dark" expand="lg">
-      <Navbar.Brand href="/">JobPort</Navbar.Brand>
+    <Navbar
+      className="rounded-bottom-5 px-4"
+      style={{
+        backgroundColor: "#3a41c6",
+        width: "80%",
+        margin: "auto",
+      }}
+      variant="dark"
+      expand="lg"
+    >
+      <Navbar.Brand href="/" className="mr-auto">
+        JobPort
+      </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="mr-auto">
+      <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
+        <Nav>
           <Nav.Link href="/" className="text-light">
             Home
           </Nav.Link>
@@ -18,8 +29,6 @@ const Header = () => {
           <Nav.Link href="/about" className="text-light">
             About
           </Nav.Link>
-        </Nav>
-        <Nav className="ml-auto">
           <Nav.Link href="/login" className="text-light">
             Login
           </Nav.Link>

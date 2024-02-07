@@ -93,6 +93,12 @@ const LoginForm = () => {
               >
                 Login
               </Button>
+              <Form.Text className="text-muted mt-2 mb-3">
+                <a href="/forgot-password">Forgot Password?</a>
+              </Form.Text>
+              <Form.Text className="text-muted mb-2">
+                <a href="/register">Register with Us</a>
+              </Form.Text>
             </Form>
           </Col>
         </Row>
