@@ -5,26 +5,52 @@ import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const LoginForm = () => {
-  const [username, setUsername] = useState("");
+  const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (username.trim() !== "" && password.trim() !== "") {
-      setLoggedIn(true);
-      setUsername("");
-      setPassword("");
-    } else {
-      alert("Please enter username and password");
+    if (email.trim().length === 0 && password.trim().length === 0) {
+      setError("Please enter valid email and password");
+      return;
     }
+    const requestBody = {
+      query: `
+        query {
+          login(email: "${email}", password: "${password}") {
+            email,
+            token
+          }
+        }
+      `,
+    };
+    fetch("http://localhost:3001/graphql", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestBody),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === "ok") {
+          setLoggedIn(true);
+        } else {
+          setError("Invalid email or password");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
 
   return (
     <Container className="mt-5 p-4" style={{ backgroundColor: "#f0f0f0" }}>
       {loggedIn ? (
         <div>
-          <h2>Welcome, {username}!</h2>
+          <h2>Welcome, {email}!</h2>
           <Button variant="primary" onClick={() => setLoggedIn(false)}>
             Logout
           </Button>
@@ -35,14 +61,19 @@ const LoginForm = () => {
             <img src="images/login.jpg" alt="Login" className="img-fluid" />
           </Col>
           <Col md={6} className="right-section d-flex align-items-center">
-            <Form onSubmit={handleSubmit} className="w-100">
-              <Form.Group controlId="formUsername">
-                <Form.Label>Username:</Form.Label>
+              <Form onSubmit={handleSubmit} className="w-100">
+              {error && (
+              <span className="text-danger">
+                {error}
+              </span>
+            )}
+              <Form.Group controlId="formemail">
+                <Form.Label>Email:</Form.Label>
                 <Form.Control
-                  type="text"
-                  value={username}
-                  onChange={(event) => setUsername(event.target.value)}
-                  placeholder="Enter your username"
+                  type="email"
+                  value={email}
+                  onChange={(event) => setemail(event.target.value)}
+                  placeholder="Enter your email"
                 />
               </Form.Group>
               <Form.Group controlId="formPassword">
