@@ -1,57 +1,72 @@
-import React, { useState } from 'react';
+// LoginForm.js
+
+import React, { useState } from "react";
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const LoginForm = () => {
-  // State variables to store username and password
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
 
-  // Function to handle form submission
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Check if username and password are correct (for simplicity, just check for non-empty values)
-    if (username.trim() !== '' && password.trim() !== '') {
-      // For demonstration, just log in user by setting loggedIn state to true
+    if (username.trim() !== "" && password.trim() !== "") {
       setLoggedIn(true);
-      // Reset form fields
-      setUsername('');
-      setPassword('');
+      setUsername("");
+      setPassword("");
     } else {
-      alert('Please enter username and password');
+      alert("Please enter username and password");
     }
   };
 
   return (
-    <div>
+    <Container className="mt-5 p-4" style={{ backgroundColor: "#f0f0f0" }}>
       {loggedIn ? (
         <div>
           <h2>Welcome, {username}!</h2>
-          <button onClick={() => setLoggedIn(false)}>Logout</button>
+          <Button variant="primary" onClick={() => setLoggedIn(false)}>
+            Logout
+          </Button>
         </div>
       ) : (
-        <form onSubmit={handleSubmit}>
-          <label>
-            Username:
-            <input
-              type="text"
-              value={username}
-              onChange={(event) => setUsername(event.target.value)}
-            />
-          </label>
-          <br />
-          <label>
-            Password:
-            <input
-              type="password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-            />
-          </label>
-          <br />
-          <button type="submit">Login</button>
-        </form>
+        <Row>
+          <Col md={6} className="left-section">
+            <img src="images/login.jpg" alt="Login" className="img-fluid" />
+          </Col>
+          <Col md={6} className="right-section d-flex align-items-center">
+            <Form onSubmit={handleSubmit} className="w-100">
+              <Form.Group controlId="formUsername">
+                <Form.Label>Username:</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={username}
+                  onChange={(event) => setUsername(event.target.value)}
+                  placeholder="Enter your username"
+                />
+              </Form.Group>
+              <Form.Group controlId="formPassword">
+                <Form.Label>Password:</Form.Label>
+                <Form.Control
+                  type="password"
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                  placeholder="Enter your password"
+                />
+              </Form.Group>
+              <Button
+                variant="primary"
+                type="submit"
+                className="w-100 mt-3"
+                style={{ backgroundColor: "#3a41c6" }}
+              >
+                Login
+              </Button>
+            </Form>
+          </Col>
+        </Row>
       )}
-    </div>
+    </Container>
   );
 };
 
