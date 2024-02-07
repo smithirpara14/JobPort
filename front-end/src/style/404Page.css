@@ -9,7 +9,8 @@
 }
 
 .four_zero_four_bg {
-    background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
+    background-image: url("https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif");
+    /*"Image source: dribbble.com. Title: dribbble_1.gif. Author: Markus Magnusson.  Available at: [https://dribbble.com/shots/2083086-Caveman-404-Page-for-typed-com]."*/
     height: 400px;
     background-position: center;
 }
