@@ -1,21 +1,17 @@
 import jwt from 'jsonwebtoken';
 
 export function isAuth(req, res, next) {
-    const authHeader = req.get('Authorization');
-    if (!authHeader) {
-        req.isAuth = false;
-        return next();
-    }
-    const token = authHeader.split(' ')[1];
+    const token = req.headers.token || '';
     if (!token || token === '') {
         req.isAuth = false;
         return next();
     }
     let decodedToken;
     try {
-        decodedToken = jwt.verify(token, 'somesupersecretkey');
+        decodedToken = jwt.verify(token, process.env.JWT_SECRET);
     } catch (err) {
         req.isAuth = false;
+        console.log(err);
         return next();
     }
     if (!decodedToken) {

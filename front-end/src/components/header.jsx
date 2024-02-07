@@ -1,7 +1,7 @@
 import React from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import { isAuthenticated} from "../controllers/auth";
 const Header = () => {
   return (
     <Navbar
@@ -29,11 +29,20 @@ const Header = () => {
           <Nav.Link href="/about" className="text-light">
             About
           </Nav.Link>
-          <Nav.Link href="/login" className="text-light">
-            Login
-          </Nav.Link>
+          {
+            isAuthenticated() ? (
+              <Nav.Link href="/logout" className="text-light">
+                Logout
+              </Nav.Link>
+            ) : (
+              <Nav.Link href="/login" className="text-light">
+                Login
+                </Nav.Link>
+              )
+            
+          }
           <Nav.Link href="/register" className="text-light">
-            Register
+                Register
           </Nav.Link>
         </Nav>
       </Navbar.Collapse>

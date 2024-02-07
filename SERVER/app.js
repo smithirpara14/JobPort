@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
+import jwt from 'jsonwebtoken';
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import cors from 'cors';
@@ -17,7 +18,8 @@ const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use(isAuth);
+
+// app.use(isAuth);
 
 const apolloServer = new ApolloServer({
     typeDefs,
@@ -26,7 +28,18 @@ const apolloServer = new ApolloServer({
 
 const startApolloServer = async () => {
     await apolloServer.start();
-    app.use("/graphql", expressMiddleware(apolloServer));
+    app.use("/graphql", expressMiddleware(apolloServer, {
+        context: async ({ req }) => {
+            const token = req.headers.authorization || '';
+            try {
+                const decoded = jwt.verify(token, process.env.JWT_SECRET);
+                console.log(decoded);
+                return {...decoded, isAuth: true};
+            } catch (err) {
+                return {isAuth: false};
+            }
+        }
+    }));
 };
 
 startApolloServer();
@@ -41,3 +54,8 @@ mongoose.connect(`mongodb+srv://${process.env.MONGO_USER
     }).catch(err => {
         console.log(err);
     });
+
+const getUser = (token) => {
+
+
+}

@@ -30,8 +30,11 @@ export async function createUser(parent, args, context, info) {
     }
 }
 
-export async function users() {
+export async function users(parent, args, context, info) {
     try {
+        if (context.isAuth === false) {
+            throw new Error('User is not authenticated');
+        }
         const users = await User.find();
         return users.map(user => {
             return { ...user._doc, _id: user.id, password: null };
@@ -51,8 +54,8 @@ export async function login(parent, { email, password }, context, info) {
         throw new Error('Password is incorrect!');
     }
     const token = jwt.sign({ userId: user.id, email: user.email },
-        'somesupersecretkey',
-        { expiresIn: '3h' }
+        process.env.JWT_SECRET,
+        { expiresIn: '1h' }
     );
     return { userId: user.email, token: token, tokenExpiration: 1 };
 
