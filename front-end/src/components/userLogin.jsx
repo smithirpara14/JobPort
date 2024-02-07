@@ -58,14 +58,14 @@ const LoginForm = () => {
                 variant="primary"
                 type="submit"
                 className="w-100 mt-3"
-                style={{ backgroundColor: "#3a41c6" }}
+                style={{ backgroundColor: "#6A00C9" }}
               >
                 Login
               </Button>
-              <Form.Text className="text-muted mt-2 mb-3">
+              <Form.Text className="text-muted m-5">
                 <a href="/forgot-password">Forgot Password?</a>
               </Form.Text>
-              <Form.Text className="text-muted mb-2">
+              <Form.Text className="text-muted m-5">
                 <a href="/register">Register with Us</a>
               </Form.Text>
             </Form>
