@@ -1,11 +1,11 @@
 import React from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { isAuthenticated} from "../controllers/auth";
+import { isAuthenticated } from "../controllers/auth";
 const Header = () => {
   return (
     <Navbar
-      className="rounded-bottom-5 px-4"
+      className="rounded-bottom-5 px-4 mb-4"
       style={{
         backgroundColor: "#6A00C9",
         width: "80%",
@@ -29,20 +29,17 @@ const Header = () => {
           <Nav.Link href="/about" className="text-light">
             About
           </Nav.Link>
-          {
-            isAuthenticated() ? (
-              <Nav.Link href="/logout" className="text-light">
-                Logout
-              </Nav.Link>
-            ) : (
-              <Nav.Link href="/login" className="text-light">
-                Login
-                </Nav.Link>
-              )
-            
-          }
+          {isAuthenticated() ? (
+            <Nav.Link href="/logout" className="text-light">
+              Logout
+            </Nav.Link>
+          ) : (
+            <Nav.Link href="/login" className="text-light">
+              Login
+            </Nav.Link>
+          )}
           <Nav.Link href="/register" className="text-light">
-                Register
+            Register
           </Nav.Link>
         </Nav>
       </Navbar.Collapse>
