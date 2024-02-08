@@ -6,9 +6,9 @@ const Home = () => {
   return (
     <Container>
       {/* Header Section */}
-      <Row className="mt-4">
+      <Row className="mt-3">
         <Col>
-          <h1 className="text-center">Welcome to Job Portal</h1>
+          <h1 className="text-center ">Welcome to Job Portal</h1>
           <p className="text-center">
             Find the perfect job that matches your skills and interests.
           </p>
