@@ -40,10 +40,14 @@ const RegisterForm = () => {
       });
       console.log("User created:", data.createUser);
       navigate("/login");
-      // Optionally, you can handle successful registration here (e.g., show a success message)
     } catch (error) {
       console.error("Error creating user:", error);
-      // Optionally, you can handle errors here (e.g., show an error message)
+      if (error.message.includes("GraphQL error")) {
+        const errorMessage = error.message.replace("GraphQL error: ", "");
+        alert(errorMessage);
+      } else {
+        alert("An error occurred while registering. Please try again later.");
+      }
     }
   };
 
