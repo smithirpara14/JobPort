@@ -55,7 +55,7 @@ React.useEffect(() => {
 }, [data]);
   
   return (
-    <Container className="mt-5 p-4" style={{ backgroundColor: "#f0f0f0" }}>
+    <Container className="mt-5 p-5" style={{ backgroundColor: "#f0f0f0" }}>
       {loggedIn ? (
         navigate("/")
       ) : (
@@ -63,7 +63,7 @@ React.useEffect(() => {
           <Col md={6} className="left-section">
             <img src="images/login.jpg" alt="Login" className="img-fluid" />
           </Col>
-          <Col md={6} className="right-section d-flex align-items-center">
+          <Col md={6} className="right-section d-flex align-items-center p-4">
               <Form onSubmit={handleSubmit} className="w-100">
               {error && (
               <span className="text-danger">
@@ -87,21 +87,25 @@ React.useEffect(() => {
                   onChange={(event) => setPassword(event.target.value)}
                   placeholder="Enter your password"
                 />
-              </Form.Group>
-              <Button
-                variant="primary"
-                type="submit"
-                className="w-100 mt-3"
-                style={{ backgroundColor: "#6A00C9" }}
-              >
-                Login
-              </Button>
-              <Form.Text className="text-muted m-5">
-                <a href="/forgot-password">Forgot Password?</a>
-              </Form.Text>
-              <Form.Text className="text-muted m-5">
-                <a href="/register">Register with Us</a>
-              </Form.Text>
+                </Form.Group>
+                <Row>
+                  <Col md={6}>
+                    <Button
+                      variant="primary"
+                      type="submit"
+                      className="w-100 mt-3 jp-bg-primary"
+                      // style={{ backgroundColor: "#6A00C9" }}
+                    >
+                    Login
+                    </Button>
+                  </Col>
+                  <Col md={6}>
+                  <a href="/register" className="btn w-100 mt-3 jp-bg-primary text-white">Sign Up</a>
+                  </Col>
+                </Row>
+                <Form.Text className="text-muted m-5">
+                  <a href="/forgot-password">Forgot Password?</a>
+                </Form.Text>
             </Form>
           </Col>
         </Row>

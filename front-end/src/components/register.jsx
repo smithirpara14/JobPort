@@ -12,7 +12,7 @@ const RegisterForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [birthDate, setBirthDate] = useState("");
-  const [accountType, setAccountType] = useState("user");
+  const [accountType, setAccountType] = useState("Job Seeker");
 
   const [createUser] = useMutation(CREATE_USER);
 
@@ -52,12 +52,12 @@ const RegisterForm = () => {
   };
 
   return (
-    <Container className="mt-5 p-4" style={{ backgroundColor: "#f0f0f0" }}>
+    <Container className="mt-5 p-5" style={{ backgroundColor: "#f0f0f0" }}>
       <Row>
-        <Col md={6} className="left-section">
+        <Col md={6} className="left-section align-self-center">
           <img src="images/login.jpg" alt="Login" className="img-fluid" />
         </Col>
-        <Col md={6} className="right-section">
+        <Col md={6} className="right-section align-self-center p-4">
           <Form onSubmit={handleSubmit} className="w-100">
             <Row>
               <Col md={6}>
@@ -105,44 +105,51 @@ const RegisterForm = () => {
                 required
               />
             </Form.Group>
-            <Form.Group controlId="formBirthDate">
-              <Form.Label>Birth Date:</Form.Label>
-              <Form.Control
-                type="date"
-                value={birthDate}
-                onChange={(event) => setBirthDate(event.target.value)}
-                required
-              />
-            </Form.Group>
-            <Form.Group controlId="formAccountType" className=" m-3">
-              <Form.Label>Account Type:</Form.Label>
-              <Dropdown>
-                <Dropdown.Toggle
-                  className="w-100"
-                  variant="primary"
-                  id="dropdown-basic"
-                >
-                  {accountType === "user" ? "User" : "Admin"}
-                </Dropdown.Toggle>
+            <Row>
+              <Col md={6}>
+                <Form.Group controlId="formBirthDate">
+                  <Form.Label>Birth Date:</Form.Label>
+                  <Form.Control
+                    type="date"
+                    value={birthDate}
+                    onChange={(event) => setBirthDate(event.target.value)}
+                    required
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group controlId="formAccountType">
+                  <Form.Label>Account Type:</Form.Label>
+                  <Dropdown>
+                    <Dropdown.Toggle split
+                      variant="secondary"
+                      className="w-100 form-control"
+                      id="dropdown-split-basic"
+                    >
+                      {accountType === "Job Seeker" ? "Job Seeker" : "Employer"}
+                    </Dropdown.Toggle>
 
-                <Dropdown.Menu className="w-100">
-                  <Dropdown.Item onClick={() => setAccountType("user")}>
-                    User
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => setAccountType("admin")}>
-                    Admin
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </Form.Group>
+                    <Dropdown.Menu className="w-100">
+                      <Dropdown.Item onClick={() => setAccountType("Job Seeker")}>
+                        Job Seeker
+                      </Dropdown.Item>
+                      <Dropdown.Item onClick={() => setAccountType("Employer")}>
+                        Employer
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </Form.Group>
+              </Col>
+            </Row>
+            <div className="text-center">
             <Button
-              variant="primary"
-              type="submit"
-              className="w-100 mt-3"
-              style={{ backgroundColor: "#3a41c6" }}
-            >
-              Register
-            </Button>
+                variant="primary"
+                type="submit"
+                className="w-50 mt-5 jp-bg-primary m-auto"
+              >
+                Register
+              </Button>
+            </div>
           </Form>
         </Col>
       </Row>

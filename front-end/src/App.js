@@ -12,7 +12,7 @@ import _404Page from "./components/404Page"
 
 const App = () => {
   return (
-    <div>
+    <div className="min-vh-100 d-flex flex-column">
       <Header />
 
       <Router>

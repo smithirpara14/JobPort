@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 const Home = () => {
   return (
-    <Container>
+    <Container className="mt-5 p-5">
       {/* Header Section */}
       <Row className="mt-3">
         <Col>

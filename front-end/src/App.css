@@ -34,5 +34,22 @@
   }
   to {
     transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
   }
+}
+
+.min-vh-100 {
+  min-height: 100vh;
+}
+
+.jp-bg-primary {
+  background-color: #6a00c9 !important;
+  border-color: #6a00c9 !important;
+}
+
+.form-label{
+  margin: 0.5rem 0;
 }
