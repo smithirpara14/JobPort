@@ -4,13 +4,16 @@ import React, { useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { gql, useLazyQuery } from "@apollo/client";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const LoginForm = () => {
+  const { state } = useLocation();
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
   const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false); 
 
   const navigate = useNavigate();
   
@@ -42,7 +45,8 @@ const handleSubmit = (event) => {
 };
 
 // Handle the response data
-React.useEffect(() => {
+  React.useEffect(() => {
+  
   if (data) {
     // Assuming the response data has a userId field
     if (data.login.userId) {
@@ -52,7 +56,13 @@ React.useEffect(() => {
       setError("Invalid email or password");
     }
   }
-}, [data]);
+  if (state) {
+    if(state && state.registrationSuccess){
+      setSuccessMessage(state.registrationSuccess);
+      setShowSuccessMessage(true);
+    }
+  }  
+}, [data, state]);
   
   return (
     <Container className="mt-5 p-5" style={{ backgroundColor: "#f0f0f0" }}>
@@ -69,7 +79,12 @@ React.useEffect(() => {
               <span className="text-danger">
                 {error}
               </span>
-            )}
+                )}
+                {showSuccessMessage && (
+                  <span className="text-success">
+                    {successMessage}
+                  </span>
+                )}
               <Form.Group controlId="formemail">
                 <Form.Label>Email:</Form.Label>
                 <Form.Control

@@ -5,9 +5,10 @@ import jwt from 'jsonwebtoken';
 
 export async function createUser(parent, args, context, info) {
     try {
+        console.log("User Input::: ", args.userInput);
         const existingUser = await User.findOne({ email: args.userInput.email });
         if (existingUser) {
-            throw new Error('User already exists.');
+            throw new Error('User already exists. Please use a different email address.');
         }
 
         const hashedPassword = await bcrypt.hash(args.userInput.password, 12);

@@ -50,6 +50,10 @@
   border-color: #6a00c9 !important;
 }
 
-.form-label{
+.btn-primary {
+  background-color: #6a00c9 !important;
+  border-color: #6a00c9 !important;
+}
+.form-label {
   margin: 0.5rem 0;
 }
