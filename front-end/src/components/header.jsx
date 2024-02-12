@@ -6,12 +6,7 @@ import { isAuthenticated } from "../controllers/auth";
 const Header = () => {
   return (
     <Navbar
-      className="rounded-bottom-5 px-4 mb-4"
-      style={{
-        backgroundColor: "#6A00C9",
-        width: "80%",
-        margin: "auto",
-      }}
+      className="rounded-bottom-5 px-4 mb-4 container jp-bg-primary mv-0 mh-auto"
       variant="dark"
       expand="lg"
     >
