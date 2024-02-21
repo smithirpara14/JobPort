@@ -1,13 +1,17 @@
-import { users, login, createUser, user, accountTypes } from './auth.js';
+import { users, login, createUser, user, accountTypes, accountType, deleteUser, createAccountType, deleteAccountType } from './auth.js';
 
 export const resolvers = {
   Query: {
     users,
     login,
     user,
-    accountTypes  
+    accountTypes,
+    accountType
   },
   Mutation: {
-    createUser
+    createUser,
+    deleteUser,
+    createAccountType,
+    deleteAccountType
   }
 };

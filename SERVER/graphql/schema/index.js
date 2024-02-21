@@ -34,10 +34,14 @@ export const typeDefs = `
         users: [User!]!
         user(userId: ID!): User
         accountTypes: [AccountType!]!
+        accountType(accountTypeId: ID!): AccountType
         login(email: String!, password: String!): AuthData!
     }
 
     type Mutation {
         createUser(userInput: UserInput): User
+        deleteUser(userId: ID!): User        
+        createAccountType(name: String!, description: String!): AccountType
+        deleteAccountType(accountTypeId: ID!): AccountType
     }
 `;

@@ -65,6 +65,43 @@ export async function user(parent, args, context, info) {
     }
 }
 
+export async function deleteUser(parent, args, context, info) {
+    try {
+        const { userId } = args;
+        const deletedUser = await User.findByIdAndDelete(userId);
+        if (!deletedUser) {
+            throw new Error('User not found');
+        }
+        return {
+            ...deletedUser._doc,
+            _id: deletedUser.id,
+            password: null
+        };
+    } catch (err) {
+        console.error("Error deleting user:", err);
+        throw err;
+    }
+}
+
+export async function createAccountType(parent, args, context, info) {
+    try {
+        const { name, description } = args;
+        const existingAccountType = await AccountType.findOne({ name });
+        if (existingAccountType) {
+            throw new Error('Account type already exists.');
+        }
+        const newAccountType = new AccountType({
+            name,
+            description
+        });
+        const result = await newAccountType.save();
+        return { ...result._doc, _id: result.id };
+    } catch (err) {
+        console.error("Error creating account type:", err);
+        throw err;
+    }
+}
+
 export async function accountTypes(parent, args, context, info) {
     try {
         const accountTypes = await AccountType.find();
@@ -72,6 +109,40 @@ export async function accountTypes(parent, args, context, info) {
             return { ...accountType._doc, _id: accountType.id };
         });
     } catch (err) {
+        throw err;
+    }
+}
+
+export async function accountType(parent, args, context, info) {
+    try {
+        const { accountTypeId } = args;
+        const accountType = await AccountType.findById(accountTypeId);
+        if (!accountType) {
+            throw new Error('Account type not found');
+        }
+        return {
+            ...accountType._doc,
+            _id: accountType.id
+        };
+    } catch (err) {
+        console.error("Error fetching account type:", err);
+        throw err;
+    }
+}
+
+export async function deleteAccountType(parent, args, context, info) {
+    try {
+        const { accountTypeId } = args;
+        const deletedAccountType = await AccountType.findByIdAndDelete(accountTypeId);
+        if (!deletedAccountType) {
+            throw new Error('Account type not found');
+        }
+        return {
+            ...deletedAccountType._doc,
+            _id: deletedAccountType.id
+        };
+    } catch (err) {
+        console.error("Error deleting account type:", err);
         throw err;
     }
 }
