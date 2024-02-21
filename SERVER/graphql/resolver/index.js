@@ -1,4 +1,4 @@
-import { users, login, createUser, user, accountTypes, accountType, deleteUser, createAccountType, deleteAccountType } from './auth.js';
+import { users, login, createUser, user, accountTypes, accountType, deleteUser, createAccountType, deleteAccountType, updateAccountType  } from './auth.js';
 
 export const resolvers = {
   Query: {
@@ -12,6 +12,7 @@ export const resolvers = {
     createUser,
     deleteUser,
     createAccountType,
-    deleteAccountType
+    deleteAccountType,
+    updateAccountType 
   }
 };

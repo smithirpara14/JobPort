@@ -65,6 +65,29 @@ export async function user(parent, args, context, info) {
     }
 }
 
+export async function updateUser(parent, args, context, info) {
+    //updateUser(userId: ID!, userInput: UserInput): User
+    try {
+        const { userId, userInput } = args;
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            userInput,
+            { new: true }
+        );
+        if (!updatedUser) {
+            throw new Error('User not found');
+        }
+        return {
+            ...updatedUser._doc,
+            _id: updatedUser.id,
+            password: null
+        };
+    } catch (err) {
+        console.error("Error updating user:", err);
+        throw err;
+    }
+}
+
 export async function deleteUser(parent, args, context, info) {
     try {
         const { userId } = args;
@@ -126,6 +149,27 @@ export async function accountType(parent, args, context, info) {
         };
     } catch (err) {
         console.error("Error fetching account type:", err);
+        throw err;
+    }
+}
+
+export async function updateAccountType(parent, args, context, info) {
+    try {
+        const { accountTypeId, name, description } = args;
+        const updatedAccountType = await AccountType.findByIdAndUpdate(
+            accountTypeId,
+            { name, description },
+            { new: true }
+        );
+        if (!updatedAccountType) {
+            throw new Error('Account type not found');
+        }
+        return {
+            ...updatedAccountType._doc,
+            _id: updatedAccountType.id
+        };
+    } catch (err) {
+        console.error("Error updating account type:", err);
         throw err;
     }
 }

@@ -13,6 +13,7 @@ export const typeDefs = `
     type AccountType {
         _id: ID!
         name: String!
+        description: String!
     }
 
     input UserInput {
@@ -43,5 +44,6 @@ export const typeDefs = `
         deleteUser(userId: ID!): User        
         createAccountType(name: String!, description: String!): AccountType
         deleteAccountType(accountTypeId: ID!): AccountType
+        updateAccountType(accountTypeId: ID!, name: String!, description: String!): AccountType
     }
 `;
