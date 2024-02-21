@@ -32,6 +32,8 @@ export const typeDefs = `
 
     type Query {
         users: [User!]!
+        user(userId: ID!): User
+        accountTypes: [AccountType!]!
         login(email: String!, password: String!): AuthData!
     }
 

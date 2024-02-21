@@ -1,9 +1,11 @@
-import { users, login, createUser } from './auth.js';
+import { users, login, createUser, user, accountTypes } from './auth.js';
 
 export const resolvers = {
   Query: {
     users,
-    login
+    login,
+    user,
+    accountTypes  
   },
   Mutation: {
     createUser

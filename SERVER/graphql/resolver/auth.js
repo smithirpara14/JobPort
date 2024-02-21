@@ -33,12 +33,43 @@ export async function createUser(parent, args, context, info) {
 
 export async function users(parent, args, context, info) {
     try {
-        if (context.isAuth === false) {
-            throw new Error('User is not authenticated');
-        }
-        const users = await User.find();
+        // if (context.isAuth === false) {
+        //     throw new Error('User is not authenticated');
+        // }
+        
+        // helps to fetch accountType. excluding will result in {accountType: null}
+        const users = await User.find().populate('accountType');
         return users.map(user => {
             return { ...user._doc, _id: user.id, password: null };
+        });
+    } catch (err) {
+        throw err;
+    }
+}
+
+export async function user(parent, args, context, info) {
+    try {
+        const { userId } = args;
+        const user = await User.findById(userId).populate('accountType');
+        if (!user) {
+            throw new Error('User not found');
+        }
+        return {
+            ...user._doc,
+            _id: user.id,
+            password: null
+        };
+    } catch (err) {
+        console.error("Error fetching user:", err);
+        throw err;
+    }
+}
+
+export async function accountTypes(parent, args, context, info) {
+    try {
+        const accountTypes = await AccountType.find();
+        return accountTypes.map(accountType => {
+            return { ...accountType._doc, _id: accountType.id };
         });
     } catch (err) {
         throw err;
