@@ -8,6 +8,7 @@ import UserLogin from "./components/userLogin";
 import Logout from "./components/logout";
 import RegisterForm from "./components/register";
 import _404Page from "./components/404Page"
+import Admin from "./components/admin"
 import "./App.css";
 
 const App = () => {
@@ -20,6 +21,7 @@ const App = () => {
             <Route path="/login" element={<UserLogin />} />
             <Route path="/register" element={<RegisterForm />} />
             <Route path="/logout" element={<Logout />} />
+            <Route path="/admin" element={<Admin />} />
             <Route path="*" element={<_404Page />} />
           </Routes>
         </Router>
