@@ -1,4 +1,7 @@
+
 export const typeDefs = `
+    scalar GraphQlDate
+
     type User {
         _id: ID
         firstName: String
@@ -6,7 +9,7 @@ export const typeDefs = `
         email: String
         password: String
         creationDate: String
-        birthDate: String
+        birthDate: GraphQlDate
         accountType: AccountType
     }
 
@@ -21,7 +24,7 @@ export const typeDefs = `
         lastName: String!
         email: String!
         password: String!
-        birthDate: String
+        birthDate: GraphQlDate
         accountType: String!
     }
 
@@ -31,9 +34,15 @@ export const typeDefs = `
         tokenExpiration: Int!
     }
 
+    input UserPersonalInfo {
+        firstName: String
+        lastName: String
+        birthDate: GraphQlDate
+    }
+
     type Query {
         users: [User!]!
-        user(userId: ID!): User
+        user(email: String!): User
         accountTypes: [AccountType!]!
         accountType(accountTypeId: ID!): AccountType
         login(email: String!, password: String!): AuthData!
@@ -41,6 +50,7 @@ export const typeDefs = `
 
     type Mutation {
         createUser(userInput: UserInput): User
+        updateUserPersonalInfo(userPersonalInfo: UserPersonalInfo): User
         deleteUser(userId: ID!): User        
         createAccountType(name: String!, description: String!): AccountType
         deleteAccountType(accountTypeId: ID!): AccountType

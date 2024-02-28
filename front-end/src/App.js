@@ -7,6 +7,7 @@ import Footer from "./components/footer";
 import UserLogin from "./components/userLogin";
 import Logout from "./components/logout";
 import RegisterForm from "./components/register";
+import UserProfile from "./components/userProfile";
 import _404Page from "./components/404Page";
 import Admin from "./components/admin";
 import CreateAccountType from "./components/createAccountType";
@@ -23,9 +24,10 @@ const App = () => {
           <Route path="/login" element={<UserLogin />} />
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/logout" element={<Logout />} />
+          <Route path="/profile" element={<UserProfile />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/createAccountType" element={<CreateAccountType />} />
-          <Route path="/updateAccountType/:id" element={<UpdateAccountType />} />      
+          <Route path="/updateAccountType/:id" element={<UpdateAccountType />} />
           <Route path="*" element={<_404Page />} />
         </Routes>
       </Router>

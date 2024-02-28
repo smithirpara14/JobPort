@@ -2,7 +2,7 @@ import React from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { isAuthenticated } from "../controllers/auth";
-
+import ProfileMenu from "./profileMenu";
 const Header = () => {
   return (
     <Navbar
@@ -28,12 +28,7 @@ const Header = () => {
           {
             isAuthenticated() ? (
               <>
-                <Nav.Link href="/profile" className="text-light">
-                  Profile
-                </Nav.Link>
-                <Nav.Link href="/logout" className="text-light">
-                  Logout
-                </Nav.Link>
+                <ProfileMenu />
               </>
             ) : (
               <>

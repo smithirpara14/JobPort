@@ -34,9 +34,9 @@ const startApolloServer = async () => {
             try {
                 const decoded = jwt.verify(token, process.env.JWT_SECRET);
                 console.log(decoded);
-                return {...decoded, isAuth: true};
+                return { ...decoded, isAuth: true };
             } catch (err) {
-                return {isAuth: false};
+                return { isAuth: false };
             }
         }
     }));
@@ -56,13 +56,13 @@ startApolloServer();
 //     });
 
 mongoose.connect(`mongodb+srv://krunal:qwertyuiop@cluster0.4ej0mg8.mongodb.net/<your-database-name>?retryWrites=true&w=majority`)
-.then(() => {
-    app.listen(3001);
-    console.log('Server is running on port 3001');
-    console.log('GraphQl Server started on localhost:3001/graphql');
-}).catch(err => {
-    console.log(err);
-});
+    .then(() => {
+        app.listen(3001);
+        console.log('Server is running on port 3001');
+        console.log('GraphQl Server started on localhost:3001/graphql');
+    }).catch(err => {
+        console.log(err);
+    });
 
 
 const getUser = (token) => {
