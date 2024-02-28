@@ -6,11 +6,17 @@ export const getToken = () => {
 // Function to set token in localStorage
 export const setToken = (token) => {
     localStorage.setItem('token', token);
+    // if (localStorage.getItem('token') !== null) {
+    //     window.location.reload();
+    // }
 };
 
 // Function to remove token from localStorage
 export const removeToken = () => {
-    localStorage.removeItem('token');    
+    localStorage.removeItem('token');
+    if (localStorage.getItem('token') === null) {
+        window.location.reload();
+    }
 };
 
 // Function to check if user is authenticated
