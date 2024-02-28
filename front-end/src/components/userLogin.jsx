@@ -51,6 +51,7 @@ const handleSubmit = (event) => {
     // Assuming the response data has a userId field
     if (data.login.userId) {
       localStorage.setItem("token", data.login.token);
+      localStorage.setItem("userEmail", data.login.userId);
       setLoggedIn(true);
     } else {
       setError("Invalid email or password");

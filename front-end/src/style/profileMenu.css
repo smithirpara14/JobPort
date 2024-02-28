@@ -1,0 +1,83 @@
+/* DropdownMenu.css */
+
+/* Container for the entire menu */
+.menu-container {
+  position: relative;
+}
+
+/* Trigger button styling */
+.menu-trigger {
+  background-color: #f0f0f0;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.menu-trigger span {
+  margin-right: 10px;
+}
+
+.menu-trigger img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+/* Dropdown menu styling */
+.menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  display: none;
+}
+
+.menu.active {
+  display: block;
+}
+
+.menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu li {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.menu li:last-child {
+  border-bottom: none;
+}
+
+/* Icons (you can use any icon library or custom icons) */
+.icon-profile::before {
+  content: "\f007"; /* Font Awesome user icon */
+  font-family: "Font Awesome";
+  margin-right: 10px;
+}
+
+.icon-resume::before {
+  content: "\f002"; /* Font Awesome file icon */
+  font-family: "Font Awesome";
+  margin-right: 10px;
+}
+
+/* Add styles for other icons similarly */
+
+/* Sign out button */
+.menu button {
+  width: 100%;
+  background-color: #f0f0f0;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  text-align: left;
+}

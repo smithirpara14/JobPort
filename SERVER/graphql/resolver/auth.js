@@ -36,7 +36,7 @@ export async function users(parent, args, context, info) {
         // if (context.isAuth === false) {
         //     throw new Error('User is not authenticated');
         // }
-        
+
         // helps to fetch accountType. excluding will result in {accountType: null}
         const users = await User.find().populate('accountType');
         return users.map(user => {
@@ -49,14 +49,18 @@ export async function users(parent, args, context, info) {
 
 export async function user(parent, args, context, info) {
     try {
-        const { userId } = args;
-        const user = await User.findById(userId).populate('accountType');
-        if (!user) {
+
+        const { email } = args;
+        console.log("Email::: ", args);
+        const user = await User.find({ email }).populate('accountType');
+        console.log("User::: ", user);
+        if (user.length === 0) {
+            log.error("User not found");
             throw new Error('User not found');
         }
         return {
-            ...user._doc,
-            _id: user.id,
+            ...user[0]._doc,
+            _id: user[0].id,
             password: null
         };
     } catch (err) {
@@ -87,6 +91,30 @@ export async function updateUser(parent, args, context, info) {
         throw err;
     }
 }
+
+export async function updateUserPersonalInfo(parent, args, context, info) {
+    try {
+        const { userPersonalInfo } = args;
+        const { userId } = context;
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            userPersonalInfo,
+            { new: true }
+        );
+        if (!updatedUser) {
+            throw new Error('User not found');
+        }
+        return {
+            ...updatedUser._doc,
+            _id: updatedUser.id,
+            password: null
+        };
+    } catch (err) {
+        console.error("Error updating user:", err);
+        throw err;
+    }
+}
+
 
 export async function deleteUser(parent, args, context, info) {
     try {
