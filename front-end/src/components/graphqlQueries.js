@@ -36,3 +36,35 @@ export const UPDATE_USER_PERSONAL_INFO = gql`
   }
 `;
 
+export const FETCH_JOB_POSTS = gql`
+  query jobPosts {
+    jobPosts {
+      _id
+      title
+      description
+      location
+      experienceLevel
+      employmentType
+      salaryRange
+      creationDate
+      closingDate
+    }
+  }
+`;
+
+export const CREATE_JOB_POST = gql`
+  mutation createJobPost($jobPostInput: JobPostInput!) {
+    createJobPost(jobPostInput: $jobPostInput) {
+      title
+      description
+      location
+      experienceLevel
+      employmentType
+      salaryRange
+      creationDate
+      closingDate
+    }
+  }
+`;
+
+

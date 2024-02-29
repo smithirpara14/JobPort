@@ -220,7 +220,8 @@ export async function deleteAccountType(parent, args, context, info) {
 }
 
 export async function login(parent, { email, password }, context, info) {
-    const user = await User.findOne({ email: email });
+    const user = await User.findOne({ email: email }).populate('accountType');
+    console.log("User::: ", user);
     if (!user) {
         throw new Error('User does not exist!');
     }
@@ -232,6 +233,6 @@ export async function login(parent, { email, password }, context, info) {
         process.env.JWT_SECRET,
         { expiresIn: '1h' }
     );
-    return { userId: user.email, token: token, tokenExpiration: 1 };
+    return { userId: user.email, token: token, tokenExpiration: 1, userRole: user.accountType.name };
 
 }
