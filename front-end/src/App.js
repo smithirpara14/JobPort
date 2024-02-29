@@ -12,6 +12,10 @@ import _404Page from "./components/404Page";
 import Admin from "./components/admin";
 import CreateAccountType from "./components/createAccountType";
 import UpdateAccountType from "./components/updateAccountType";
+import JobPostList from "./components/employer_jobpost/jobPostList";
+import ViewJobPost from "./components/employer_jobpost/viewJobPost";
+import CreateJobPost from "./components/employer_jobpost/createJobPost";
+import UpdateJobPost from "./components/employer_jobpost/editJobPost";
 import "./App.css";
 
 const App = () => {
@@ -28,7 +32,12 @@ const App = () => {
           <Route path="/admin" element={<Admin />} />
           <Route path="/createAccountType" element={<CreateAccountType />} />
           <Route path="/updateAccountType/:id" element={<UpdateAccountType />} />
+          <Route path="/jobposts" element={<JobPostList />} />
+          <Route path="/jobposts/:id" element={<ViewJobPost />} />
+          <Route path="/jobposts/edit/:id" element={<UpdateJobPost />} />
+          <Route path="/jobposts/create" element={<CreateJobPost />} />
           <Route path="*" element={<_404Page />} />
+
         </Routes>
       </Router>
       <Footer />

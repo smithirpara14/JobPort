@@ -1,4 +1,5 @@
-import { users, login, createUser, updateUserPersonalInfo, user, accountTypes, accountType, deleteUser, createAccountType, deleteAccountType, updateAccountType  } from './auth.js';
+import { users, login, createUser, updateUserPersonalInfo, user, accountTypes, accountType, deleteUser, createAccountType, deleteAccountType, updateAccountType } from './auth.js';
+import { jobPosts, jobPost, createJobPost, updateJobPost, deleteJobPost } from './job.js';
 import { GraphQlDateResolver } from './helper.js';
 export const resolvers = {
   Query: {
@@ -6,7 +7,9 @@ export const resolvers = {
     login,
     user,
     accountTypes,
-    accountType
+    accountType,
+    jobPosts,
+    jobPost
   },
   Mutation: {
     createUser,
@@ -14,8 +17,11 @@ export const resolvers = {
     updateUserPersonalInfo,
     createAccountType,
     deleteAccountType,
-    updateAccountType 
+    updateAccountType,
+    createJobPost,
+    updateJobPost,
+    deleteJobPost
   },
   GraphQlDate: GraphQlDateResolver
-  
+
 };

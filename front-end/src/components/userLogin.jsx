@@ -52,6 +52,7 @@ const handleSubmit = (event) => {
     // Assuming the response data has a userId field
     if (data.login.userId) {
       localStorage.setItem("userEmail", data.login.userId);
+      localStorage.setItem("userRole", data.login.userRole);
       setToken(data.login.token);
       setLoggedIn(true);
       navigate("/");
