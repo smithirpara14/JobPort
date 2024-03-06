@@ -12,7 +12,16 @@ export const validateEmail = (email) => {
 
 export const validatePassword = (password) => {
     // Minimum eight characters, at least one letter and one number
-    var regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    var regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
     return regex.test(password);
+}
+
+export const dateFormatted = (date) => {
+    const newDate = new Date(date);
+    const year = newDate.getFullYear();
+    const month = (newDate.getMonth() + 1).toString().padStart(2, "0");
+    const day = newDate.getDate().toString().padStart(2, "0");
+    const formattedDate = `${year}-${month}-${day}`;
+    return formattedDate;
 }
 

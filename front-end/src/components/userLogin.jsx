@@ -5,6 +5,7 @@ import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { gql, useLazyQuery } from "@apollo/client";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate, useLocation } from "react-router-dom";
+import { setToken } from "../controllers/auth";
 
 const LoginForm = () => {
   const { state } = useLocation();
@@ -50,8 +51,12 @@ const handleSubmit = (event) => {
   if (data) {
     // Assuming the response data has a userId field
     if (data.login.userId) {
-      localStorage.setItem("token", data.login.token);
+      localStorage.setItem("userEmail", data.login.userId);
+      localStorage.setItem("userRole", data.login.userRole);
+      setToken(data.login.token);
       setLoggedIn(true);
+      navigate("/");
+      window.location.reload();
     } else {
       setError("Invalid email or password");
     }

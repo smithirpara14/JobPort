@@ -11,9 +11,9 @@ const jobSchema = new Schema({
         type: String,
         required: true
     },
-    company: {
+    author: {
         type: Schema.Types.ObjectId,
-        ref: 'Company'
+        ref: 'User'
     },
     location: {
         type: String,
