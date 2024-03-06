@@ -4,7 +4,11 @@ import { useMutation } from "@apollo/client";
 import { CREATE_USER } from "./graphqlQueries";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { validateName, validateEmail, validatePassword } from "../controllers/helper";
+import {
+  validateName,
+  validateEmail,
+  validatePassword,
+} from "../controllers/helper";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -38,7 +42,7 @@ const RegisterForm = () => {
       setErrorFirstName("");
     }
     // Validate Last Name
-    if (lastName.trim().length === 0) { 
+    if (lastName.trim().length === 0) {
       setErrorLastName("Last name is required");
       hasError = true;
     } else if (!validateName(lastName)) {
@@ -62,7 +66,9 @@ const RegisterForm = () => {
       setErrorPassword("Password is required");
       hasError = true;
     } else if (!validatePassword(password)) {
-      setErrorPassword("A minimum of eight characters, at least one letter and one number is required");
+      setErrorPassword(
+        "A minimum of eight characters, at least one lowercase letter, at least one uppercase letter, and one number is required"
+      );
       hasError = true;
     } else {
       setErrorPassword("");
@@ -100,9 +106,11 @@ const RegisterForm = () => {
         },
       });
       //console.log("User created:", data.createUser);
-      navigate(
-        '/login',{
-        state: { registrationSuccess: 'You have been successfully registered. Please log in.' }
+      navigate("/login", {
+        state: {
+          registrationSuccess:
+            "You have been successfully registered. Please log in.",
+        },
       });
     } catch (error) {
       console.error("Error creating user:", error.message);
@@ -123,11 +131,7 @@ const RegisterForm = () => {
         </Col>
         <Col md={6} className="right-section align-self-center p-4">
           <Form onSubmit={handleSubmit} className="w-100">
-            {error && (
-              <span className="text-danger">
-                {error}
-              </span>
-            )}
+            {error && <span className="text-danger">{error}</span>}
             <Row>
               <Col md={6}>
                 <Form.Group controlId="formFirstName">
@@ -137,13 +141,10 @@ const RegisterForm = () => {
                     value={firstName}
                     onChange={(event) => setFirstName(event.target.value)}
                     placeholder="Enter your first name"
-                    
                   />
                 </Form.Group>
                 {errorFirstName && (
-                  <span className="text-danger">
-                    {errorFirstName}
-                  </span>
+                  <span className="text-danger">{errorFirstName}</span>
                 )}
               </Col>
               <Col md={6}>
@@ -157,9 +158,7 @@ const RegisterForm = () => {
                   />
                 </Form.Group>
                 {errorLastName && (
-                  <span className="text-danger">
-                    {errorLastName}
-                  </span>
+                  <span className="text-danger">{errorLastName}</span>
                 )}
               </Col>
             </Row>
@@ -171,11 +170,7 @@ const RegisterForm = () => {
                 onChange={(event) => setEmail(event.target.value)}
                 placeholder="Enter your email"
               />
-              {errorEmail && (
-                <span className="text-danger">
-                  {errorEmail}
-                </span>
-              )}
+              {errorEmail && <span className="text-danger">{errorEmail}</span>}
             </Form.Group>
             <Form.Group controlId="formPassword">
               <Form.Label>Password:</Form.Label>
@@ -184,12 +179,9 @@ const RegisterForm = () => {
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
                 placeholder="Enter your password"
-                
               />
               {errorPassword && (
-                <span className="text-danger">
-                  {errorPassword}
-                </span>
+                <span className="text-danger">{errorPassword}</span>
               )}
             </Form.Group>
             <Row>
@@ -200,20 +192,18 @@ const RegisterForm = () => {
                     type="date"
                     value={birthDate}
                     onChange={(event) => setBirthDate(event.target.value)}
-                    
                   />
                 </Form.Group>
                 {errorBirthDate && (
-                  <span className="text-danger">
-                    {errorBirthDate}
-                  </span>
+                  <span className="text-danger">{errorBirthDate}</span>
                 )}
               </Col>
               <Col md={6}>
                 <Form.Group controlId="formAccountType">
                   <Form.Label>Account Type:</Form.Label>
                   <Dropdown>
-                    <Dropdown.Toggle split
+                    <Dropdown.Toggle
+                      split
                       variant="secondary"
                       className="w-100 form-control"
                       id="dropdown-split-basic"
@@ -222,7 +212,9 @@ const RegisterForm = () => {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu className="w-100">
-                      <Dropdown.Item onClick={() => setAccountType("Job Seeker")}>
+                      <Dropdown.Item
+                        onClick={() => setAccountType("Job Seeker")}
+                      >
                         Job Seeker
                       </Dropdown.Item>
                       <Dropdown.Item onClick={() => setAccountType("Employer")}>
@@ -232,14 +224,12 @@ const RegisterForm = () => {
                   </Dropdown>
                 </Form.Group>
                 {errorAccountType && (
-                  <span className="text-danger">
-                    {errorAccountType}
-                  </span>
+                  <span className="text-danger">{errorAccountType}</span>
                 )}
               </Col>
             </Row>
             <div className="text-center">
-            <Button
+              <Button
                 variant="primary"
                 type="submit"
                 className="w-50 mt-5 jp-bg-primary m-auto"

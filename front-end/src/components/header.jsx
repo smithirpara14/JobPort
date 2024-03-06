@@ -19,28 +19,26 @@ const Header = () => {
           <Nav.Link href="/" className="text-light">
             Home
           </Nav.Link>
-          <Nav.Link href="/jobs" className="text-light">
+          <Nav.Link href="/jobposts" className="text-light">
             Jobs
           </Nav.Link>
           <Nav.Link href="/about" className="text-light">
             About
           </Nav.Link>
-          {
-            isAuthenticated() ? (
-              <>
-                <ProfileMenu />
-              </>
-            ) : (
-              <>
-                <Nav.Link href="/login" className="text-light">
-                  Login
-                </Nav.Link>
-                <Nav.Link href="/register" className="text-light">
-                  Register
-                </Nav.Link>
-              </>
-            )
-          }
+          {isAuthenticated() ? (
+            <>
+              <ProfileMenu />
+            </>
+          ) : (
+            <>
+              <Nav.Link href="/login" className="text-light">
+                Login
+              </Nav.Link>
+              <Nav.Link href="/register" className="text-light">
+                Register
+              </Nav.Link>
+            </>
+          )}
         </Nav>
       </Navbar.Collapse>
     </Navbar>
