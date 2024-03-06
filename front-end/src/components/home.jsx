@@ -4,9 +4,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 const Home = () => {
   return (
-    <Container className="mt-5 p-5">
+    <Container>
       {/* Header Section */}
-      <Row className="mt-3">
+      <Row>
         <Col>
           <h1 className="text-center ">Welcome to Job Portal</h1>
           <p className="text-center">

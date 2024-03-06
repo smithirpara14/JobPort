@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { gql, useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 
@@ -18,11 +19,11 @@ const CreateAccountType = () => {
   const [description, setDescription] = useState("");
   const [createAccountType] = useMutation(CREATE_ACCOUNT_TYPE);
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await createAccountType({ variables: { name, description } });
-      navigate("/admin"); 
+      navigate("/admin");
       // TODO: refresh admin page when redirected cause list is not updated.
     } catch (error) {
       console.error("Error creating account type:", error);
@@ -30,31 +31,41 @@ const CreateAccountType = () => {
   };
 
   return (
-    <div>
-      <h1>Create Account Type</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="name">Name:</label>
-          <input
-            type="text"
-            id="name"
-            value={name}
-            onChange={e => setName(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="description">Description:</label>
-          <textarea
-            id="description"
-            value={description}
-            onChange={e => setDescription(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit">Create Account Type</button>
-      </form>
-    </div>
+    <Container className="mt-5">
+      <Row className="justify-content-center">
+        <Col md={6}>
+          <div className="p-4" style={{ backgroundColor: "#f0f0f0" }}>
+            <h1 className="text-center">Create Account Type</h1>
+            <Form onSubmit={handleSubmit}>
+              <Form.Group controlId="name">
+                <Form.Label>Name:</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group controlId="description">
+                <Form.Label>Description:</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  required
+                />
+              </Form.Group>
+
+              <Button variant="primary" type="submit" className="w-100">
+                Create Account Type
+              </Button>
+            </Form>
+          </div>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
