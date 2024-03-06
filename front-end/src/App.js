@@ -9,6 +9,7 @@ import Logout from "./components/logout";
 import RegisterForm from "./components/register";
 import _404Page from "./components/404Page";
 import Admin from "./components/admin";
+import CreateUser from "./components/createUser";
 import CreateAccountType from "./components/createAccountType";
 import UpdateAccountType from "./components/updateAccountType";
 import "./App.css";
@@ -25,6 +26,7 @@ const App = () => {
           <Route path="/logout" element={<Logout />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/createAccountType" element={<CreateAccountType />} />
+          <Route path="/createUser" element={<CreateUser />} />
           <Route path="/updateAccountType/:id" element={<UpdateAccountType />} />      
           <Route path="*" element={<_404Page />} />
         </Routes>
