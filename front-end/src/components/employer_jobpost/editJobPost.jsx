@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Form, Button, Dropdown } from "react-bootstrap";
-import { useMutation } from "@apollo/client";
-import { CREATE_JOB_POST } from "../graphqlQueries";
-import { useNavigate } from "react-router-dom";
+import { useMutation, useQuery } from "@apollo/client";
+import { FETCH_JOB_POST ,UPDATE_JOB_POST } from "../graphqlQueries";
+import { useNavigate, useParams } from "react-router-dom";
+import QueryResult from "../queryResult";
+import {dateFormatted} from "../../controllers/helper";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const EditJobPost = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
   const [jobTitle, setJobTitle] = useState("");
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
@@ -22,7 +25,23 @@ const EditJobPost = () => {
   const [errorEmploymentType, setErrorEmploymentType] = useState("");
   const [errorSalaryRange, setErrorSalaryRange] = useState("");
   const [errorClosingDate, setErrorClosingDate] = useState("");
-  const [createJobPost] = useMutation(CREATE_JOB_POST);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false); 
+
+  const [updateJobPost] = useMutation(UPDATE_JOB_POST);
+
+  const { loading, errorDB, data } = useQuery(FETCH_JOB_POST, {
+    variables: { jobPostId: id },
+    onCompleted: (data) => { 
+      setJobTitle(data.jobPost.title);
+      setDescription(data.jobPost.description);
+      setLocation(data.jobPost.location);
+      setExperienceLevel(data.jobPost.experienceLevel);
+      setEmploymentType(data.jobPost.employmentType);
+      setSalaryRange(data.jobPost.salaryRange);
+      setClosingDate(dateFormatted(data.jobPost.closingDate));
+     }
+  });
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -80,8 +99,9 @@ const EditJobPost = () => {
       return;
     }
     try {
-      const result = await createJobPost({
+      const result = await updateJobPost({
         variables: {
+          jobId: id,
           jobPostInput: {
             title: jobTitle,
             description: description,
@@ -94,7 +114,7 @@ const EditJobPost = () => {
         },
       });
       if (result) {
-        navigate("/jobposts");
+        postUpdateSuccess(result.data.updateJobPost);
       }
     } catch (error) {
       console.error("Error creating job:", error);
@@ -102,12 +122,41 @@ const EditJobPost = () => {
     }
   };
 
+  const postUpdateSuccess = (newData) => {
+    setError("");
+    setErrorJobTitle("");
+    setErrorDescription("");
+    setErrorLocation("");
+    setErrorExperienceLevel("");
+    setErrorEmploymentType("");
+    setErrorSalaryRange("");
+    setErrorClosingDate("");
+    setJobTitle(newData.title);
+    setDescription(newData.description);
+    setLocation(newData.location);
+    setExperienceLevel(newData.experienceLevel);
+    setEmploymentType(newData.employmentType);
+    setSalaryRange(newData.salaryRange);
+    setClosingDate(dateFormatted(newData.closingDate));
+    setSuccessMessage("Job updated successfully");
+    setShowSuccessMessage(true);
+    
+  }
+
+
   return (
+    <QueryResult error={errorDB} loading={loading} data={data}>
+    {data && data.jobPost && (
     <Container className="mt-5 p-5" style={{ backgroundColor: "#f0f0f0" }}>
       <Row>
         <Col md={6} className="right-section align-self-center p-4">
           <Form onSubmit={handleSubmit} className="w-100">
-            {error && <span className="text-danger">{error}</span>}
+                {error && <span className="text-danger">{error}</span>}
+                {showSuccessMessage && (
+                  <span className="text-success">
+                    {successMessage}
+                  </span>
+                )}
             <Form.Group controlId="formJobTtile">
               <Form.Label>Job Title:</Form.Label>
               <Form.Control
@@ -235,19 +284,23 @@ const EditJobPost = () => {
                 )}
               </Col>
             </Row>
-            <div className="text-center">
+            <div className="text-center mt-4">
               <Button
-                variant="primary"
+                variant="success"
                 type="submit"
-                className="w-50 mt-5 jp-bg-primary m-auto"
+                className="m-1 jp-bg-success"
               >
                 Save Job
-              </Button>
+                  </Button>
+              <Button variant="warning" onClick={() => { navigate(`/jobposts/${id}`)}} className="m-1 jp-bg-success">Cancel</Button>
+
             </div>
           </Form>
         </Col>
       </Row>
-    </Container>
+        </Container>
+      )}
+    </QueryResult>
   );
 };
 

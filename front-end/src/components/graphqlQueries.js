@@ -64,6 +64,36 @@ export const CREATE_JOB_POST = gql`
       creationDate
       closingDate
     }
+  }`;
+
+export const FETCH_JOB_POST = gql`
+    query jobPost($jobPostId: ID!) {
+      jobPost(jobPostId: $jobPostId) {
+        _id
+        title
+        description
+        location
+        experienceLevel
+        employmentType
+        salaryRange
+        creationDate
+        closingDate
+      }
+  }
+`;
+
+export const UPDATE_JOB_POST = gql`
+  mutation updateJobPost($jobId: ID!, $jobPostInput: JobPostInput!) {
+    updateJobPost(jobPostId: $jobId, jobPostInput: $jobPostInput) {
+      title
+      description
+      location
+      experienceLevel
+      employmentType
+      salaryRange
+      creationDate
+      closingDate
+    }
   }
 `;
 
