@@ -37,8 +37,8 @@ export const UPDATE_USER_PERSONAL_INFO = gql`
 `;
 
 export const FETCH_JOB_POSTS = gql`
-  query jobPosts {
-    jobPosts {
+  query jobPosts ($userId: String!) {
+    jobPosts (userId: $userId) {
       _id
       title
       description
@@ -53,8 +53,8 @@ export const FETCH_JOB_POSTS = gql`
 `;
 
 export const CREATE_JOB_POST = gql`
-  mutation createJobPost($jobPostInput: JobPostInput!) {
-    createJobPost(jobPostInput: $jobPostInput) {
+  mutation createJobPost($userId:String!, $jobPostInput: JobPostInput!) {
+    createJobPost(userId:$userId, jobPostInput: $jobPostInput) {
       title
       description
       location

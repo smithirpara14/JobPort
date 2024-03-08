@@ -30,6 +30,7 @@ export const typeDefs = `
 
     type AuthData {
         userId: String!
+        userRole: String!
         token: String!
         tokenExpiration: Int!
     }
@@ -68,7 +69,7 @@ export const typeDefs = `
         accountTypes: [AccountType!]!
         accountType(accountTypeId: ID!): AccountType
         login(email: String!, password: String!): AuthData!
-        jobPosts: [JobPost!]!
+        jobPosts(userId: String!): [JobPost!]!
         jobPost(jobPostId: ID!): JobPost
     }
 
@@ -79,7 +80,7 @@ export const typeDefs = `
         createAccountType(name: String!, description: String!): AccountType
         deleteAccountType(accountTypeId: ID!): AccountType
         updateAccountType(accountTypeId: ID!, name: String!, description: String!): AccountType
-        createJobPost(jobPostInput: JobPostInput): JobPost
+        createJobPost(userId:String!, jobPostInput: JobPostInput): JobPost
         updateJobPost(jobPostId: ID!, jobPostInput: JobPostInput): JobPost
         deleteJobPost(jobPostId: ID!): JobPost
 

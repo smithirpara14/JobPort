@@ -82,6 +82,7 @@ const CreateJobPost = () => {
     try {
       const result = await createJobPost({
         variables: {
+          userId: localStorage.getItem("userEmail"),
           jobPostInput: {
             title: jobTitle,
             description: description,
