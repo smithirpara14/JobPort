@@ -7,7 +7,13 @@ import jwt from 'jsonwebtoken';
 export async function jobPosts(parent, args, context, info) {
     console.log("Job Posts:::");
     try {
-        const jobPosts = await Job.find().populate('author');
+        // Find the user document by email
+        const user = await User.findOne({ email: args.userId });
+        if (!user) {
+            throw new Error('User with the provided email not found');
+        }
+        const jobPosts = await Job.find({author : user._id}).populate('author');
+        console.log("Job Posts::: ", jobPosts);
         return jobPosts.map(jobPost => {
             return { ...jobPost._doc, _id: jobPost.id };
         });
@@ -19,11 +25,15 @@ export async function jobPosts(parent, args, context, info) {
 //resolver to create a job post
 export async function createJobPost(parent, args, context, info) {
     try {
-        console.log("Job Input::: ", args);
+        // Find the user document by email
+        const author = await User.findOne({ email: args.userId });
+        if (!author) {
+            throw new Error('Author with the provided email not found');
+        }
         const job = new Job({
             title: args.jobPostInput.title,
             description: args.jobPostInput.description,
-            auther: args.jobPostInput.auther,
+            author: author._id,
             location: args.jobPostInput.location,
             experienceLevel: args.jobPostInput.experienceLevel,
             employmentType: args.jobPostInput.employmentType,

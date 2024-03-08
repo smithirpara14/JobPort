@@ -17,7 +17,8 @@ const JobPostList = () => {
         setJobPosts(data.jobPosts);
     }
 
-    const { loading, error, data } = useQuery(FETCH_JOB_POSTS, {
+  const { loading, error, data } = useQuery(FETCH_JOB_POSTS, {
+        variables: { userId: localStorage.getItem("userEmail") },
         onCompleted: handleSetJobPosts
     });
 

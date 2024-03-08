@@ -22,6 +22,7 @@ const LoginForm = () => {
   query login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
       userId,
+      userRole,
       token,
       tokenExpiration
     }
