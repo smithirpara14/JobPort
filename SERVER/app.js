@@ -33,7 +33,7 @@ const startApolloServer = async () => {
             const token = req.headers.authorization || '';
             try {
                 const decoded = jwt.verify(token, process.env.JWT_SECRET);
-                console.log(decoded);
+                //console.log(decoded);
                 return { ...decoded, isAuth: true };
             } catch (err) {
                 return { isAuth: false };

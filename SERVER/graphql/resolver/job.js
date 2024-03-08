@@ -42,7 +42,7 @@ export async function createJobPost(parent, args, context, info) {
 //resolver to get job post by id
 export async function jobPost(parent, args, context, info) {
     try {
-        const jobPost = await Job.findById(args.jobId).populate('author');
+        const jobPost = await Job.findById(args.jobPostId).populate('author');
         return { ...jobPost._doc, _id: jobPost.id };
     } catch (err) {
         throw err;
@@ -52,7 +52,8 @@ export async function jobPost(parent, args, context, info) {
 //resolver to update job post
 export async function updateJobPost(parent, args, context, info) {
     try {
-        const job = await Job.findById(args.jobId);
+        console.log("Update Job Input::: ", args);
+        const job = await Job.findById(args.jobPostId);
         if (!job) {
             throw new Error('Job not found');
         }
@@ -66,11 +67,14 @@ export async function updateJobPost(parent, args, context, info) {
         job.closingDate = args.jobPostInput.closingDate;
 
         const result = await job.save();
-
+        console.log("Update Job Result::: ", result);
         return { ...result._doc, _id: result.id };
+
     } catch (err) {
+        console.log("Error::: ", err);
         throw err;
     }
+
 }
 
 //delete job post by id
