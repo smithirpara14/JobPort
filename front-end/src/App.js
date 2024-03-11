@@ -39,7 +39,6 @@ const App = () => {
           <Route path="/jobposts/edit/:id" element={<UpdateJobPost />} />
           <Route path="/jobposts/create" element={<CreateJobPost />} />
           <Route path="*" element={<_404Page />} />
-
         </Routes>
       </Router>
       <Footer />
