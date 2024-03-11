@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const CREATE_USER = gql`
   mutation CreateUser($userInput: UserInput!) {
@@ -18,7 +18,7 @@ export const FETCH_USER_PERSONAL_INFO = gql`
       birthDate
       email
       firstName
-      lastName,
+      lastName
       accountType {
         name
       }
@@ -37,8 +37,8 @@ export const UPDATE_USER_PERSONAL_INFO = gql`
 `;
 
 export const FETCH_JOB_POSTS = gql`
-  query jobPosts ($userId: String!) {
-    jobPosts (userId: $userId) {
+  query jobPosts($userId: String!) {
+    jobPosts(userId: $userId) {
       _id
       title
       description
@@ -53,8 +53,8 @@ export const FETCH_JOB_POSTS = gql`
 `;
 
 export const CREATE_JOB_POST = gql`
-  mutation createJobPost($userId:String!, $jobPostInput: JobPostInput!) {
-    createJobPost(userId:$userId, jobPostInput: $jobPostInput) {
+  mutation createJobPost($userId: String!, $jobPostInput: JobPostInput!) {
+    createJobPost(userId: $userId, jobPostInput: $jobPostInput) {
       title
       description
       location
@@ -64,21 +64,22 @@ export const CREATE_JOB_POST = gql`
       creationDate
       closingDate
     }
-  }`;
+  }
+`;
 
 export const FETCH_JOB_POST = gql`
-    query jobPost($jobPostId: ID!) {
-      jobPost(jobPostId: $jobPostId) {
-        _id
-        title
-        description
-        location
-        experienceLevel
-        employmentType
-        salaryRange
-        creationDate
-        closingDate
-      }
+  query jobPost($jobPostId: ID!) {
+    jobPost(jobPostId: $jobPostId) {
+      _id
+      title
+      description
+      location
+      experienceLevel
+      employmentType
+      salaryRange
+      creationDate
+      closingDate
+    }
   }
 `;
 
@@ -96,5 +97,3 @@ export const UPDATE_JOB_POST = gql`
     }
   }
 `;
-
-
