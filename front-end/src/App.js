@@ -17,6 +17,7 @@ import JobPostList from "./components/employer_jobpost/jobPostList";
 import ViewJobPost from "./components/employer_jobpost/viewJobPost";
 import CreateJobPost from "./components/employer_jobpost/createJobPost";
 import UpdateJobPost from "./components/employer_jobpost/editJobPost";
+import About from "./components/about";
 import "./App.css";
 
 const App = () => {
@@ -31,6 +32,7 @@ const App = () => {
           <Route path="/logout" element={<Logout />} />
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/about" element={<About/>}/>
           <Route path="/createUser" element={<CreateUser />} />
           <Route path="/createAccountType" element={<CreateAccountType />} />     
           <Route path="/updateAccountType/:id" element={<UpdateAccountType />} />
