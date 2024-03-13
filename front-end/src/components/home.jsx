@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import JobPostList from "./employer_jobpost/jobPostList";
+// import JobPostList from "./employer_jobpost/jobPostList";
 import { Feather2 } from "react-bootstrap-icons";
 import FeaturedJobList from "./FeaturedJobList";
 
