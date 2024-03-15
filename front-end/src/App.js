@@ -33,6 +33,17 @@ const App = () => {
           <Route path="/login" element={<UserLogin />} />
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/logout" element={<Logout />} />
+          <Route path="/profile" element={<UserProfile />} />
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/about" element={<About/>}/>
+          <Route path="/createUser" element={<CreateUser />} />
+          <Route path="/createAccountType" element={<CreateAccountType />} />     
+          <Route path="/updateAccountType/:id" element={<UpdateAccountType />} />
+          <Route path="/jobposts" element={<JobPostList />} />
+          <Route path="/jobposts/:id" element={<ViewJobPost />} />
+          <Route path="/jobposts/edit/:id" element={<UpdateJobPost />} />
+          <Route path="/jobposts/create" element={<CreateJobPost />} />
+          {/*
           <Route
             path="/profile"
             element={
@@ -46,14 +57,6 @@ const App = () => {
             element={
               <PrivateRoute>
                 <Admin />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/about"
-            element={
-              <PrivateRoute>
-                <About />
               </PrivateRoute>
             }
           />
@@ -113,6 +116,7 @@ const App = () => {
               </PrivateRoute>
             }
           />
+          */}
           {/* <Route path="/jobposts/" element={<FeaturedJobList />} /> */}
           <Route path="*" element={<_404Page />} />
         </Routes>
