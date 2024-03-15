@@ -17,7 +17,7 @@ const center = {
 
 const TeamMap = () => {
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: '-RDYWQVw',
+    googleMapsApiKey: 'AIzaSyAQdNlqitgSK0GGezJjnUkkUAy-RDYWQVw',
     libraries,
   });
 
