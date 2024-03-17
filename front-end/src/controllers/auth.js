@@ -6,9 +6,6 @@ export const getToken = () => {
 // Function to set token in localStorage
 export const setToken = (token) => {
     localStorage.setItem('token', token);
-    // if (localStorage.getItem('token') !== null) {
-    //     window.location.reload();
-    // }
 };
 
 // Function to remove token from localStorage

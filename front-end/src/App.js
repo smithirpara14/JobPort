@@ -32,91 +32,29 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<UserLogin />} />
           <Route path="/register" element={<RegisterForm />} />
-          <Route path="/logout" element={<Logout />} />
-          <Route path="/profile" element={<UserProfile />} />
-          <Route path="/admin" element={<Admin />} />
-          <Route path="/about" element={<About/>}/>
-          <Route path="/createUser" element={<CreateUser />} />
-          <Route path="/createAccountType" element={<CreateAccountType />} />     
-          <Route path="/updateAccountType/:id" element={<UpdateAccountType />} />
-          <Route path="/jobposts" element={<JobPostList />} />
-          <Route path="/jobposts/:id" element={<ViewJobPost />} />
-          <Route path="/jobposts/edit/:id" element={<UpdateJobPost />} />
-          <Route path="/jobposts/create" element={<CreateJobPost />} />
-          {/*
-          <Route
-            path="/profile"
-            element={
-              <PrivateRoute>
-                <UserProfile />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/admin"
-            element={
-              <PrivateRoute>
-                <Admin />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/createUser"
-            element={
-              <PrivateRoute>
-                <CreateUser />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/createAccountType"
-            element={
-              <PrivateRoute>
-                <CreateAccountType />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/updateAccountType/:id"
-            element={
-              <PrivateRoute>
-                <UpdateAccountType />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/jobposts"
-            element={
-              <PrivateRoute>
-                <JobPostList />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/jobposts/:id"
-            element={
-              <PrivateRoute>
-                <ViewJobPost />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/jobposts/edit/:id"
-            element={
-              <PrivateRoute>
-                <UpdateJobPost />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/jobposts/create"
-            element={
-              <PrivateRoute>
-                <CreateJobPost />
-              </PrivateRoute>
-            }
-          />
-          */}
+          {/* <Route path="/logout" element={<Logout />} /> */}
+          <Route path="/logout" element={<PrivateRoute component={Logout} />} />
+          {/* <Route path="/profile" element={<UserProfile />} /> */}
+          <Route path="/profile" element={<PrivateRoute component={UserProfile} />} />
+          {/* <Route path="/admin" element={<Admin />} /> */}
+          <Route path="/admin" element={<PrivateRoute component={Admin} />} />
+          {/* <Route path="/about" element={<About />} /> */}
+          <Route path="/about" element={<PrivateRoute component={About} />} />
+          {/* <Route path="/createUser" element={<CreateUser />} /> */}
+          <Route path="/createUser" element={<PrivateRoute component={CreateUser} />} />
+          {/* <Route path="/createAccountType" element={<CreateAccountType />} /> */}
+          <Route path="/createAccountType" element={<PrivateRoute component={CreateAccountType} />} />
+          {/* <Route path="/updateAccountType/:id" element={<UpdateAccountType />} /> */}
+          <Route path="/updateAccountType/:id" element={<PrivateRoute component={UpdateAccountType} />} />
+          {/* <Route path="/jobposts" element={<JobPostList />} /> */}
+          <Route path="/jobposts" element={<PrivateRoute component={JobPostList} />} />
+          {/* <Route path="/jobposts/:id" element={<ViewJobPost />} /> */}
+          <Route path="/jobposts/:id" element={<PrivateRoute component={ViewJobPost} />} />
+          {/* <Route path="/jobposts/edit/:id" element={<UpdateJobPost />} /> */}
+          <Route path="/jobposts/edit/:id" element={<PrivateRoute component={UpdateJobPost} />} />
+          {/* <Route path="/jobposts/create" element={<CreateJobPost />} /> */}
+          <Route path="/jobposts/create" element={<PrivateRoute component={CreateJobPost} />} />
+
           {/* <Route path="/jobposts/" element={<FeaturedJobList />} /> */}
           <Route path="*" element={<_404Page />} />
         </Routes>
