@@ -95,7 +95,7 @@ const CreateJobPost = () => {
         },
       });
       if (result) {
-        navigate("/jobposts");
+        navigate("/jobposts", { replace: true });
       }
     } catch (error) {
       console.error("Error creating job:", error);
