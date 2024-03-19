@@ -97,3 +97,12 @@ export const UPDATE_JOB_POST = gql`
     }
   }
 `;
+
+export const DELETE_JOB_POST = gql`
+  mutation deleteJobPost($jobPostId: ID!) {
+    deleteJobPost(jobPostId: $jobPostId) {
+      _id
+    }
+  }
+`;
+

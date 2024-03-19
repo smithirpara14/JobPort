@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Form, Button, Dropdown } from "react-bootstrap";
 import { useMutation } from "@apollo/client";
-import { CREATE_JOB_POST } from "../graphqlQueries";
+import { FETCH_JOB_POSTS, CREATE_JOB_POST } from "../graphqlQueries";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -22,7 +22,11 @@ const CreateJobPost = () => {
   const [errorEmploymentType, setErrorEmploymentType] = useState("");
   const [errorSalaryRange, setErrorSalaryRange] = useState("");
   const [errorClosingDate, setErrorClosingDate] = useState("");
-  const [createJobPost] = useMutation(CREATE_JOB_POST);
+  const [createJobPost] = useMutation(CREATE_JOB_POST, {
+    onCompleted: () => {
+      navigate("/jobposts", { state: { jobCreated: true } });
+    },
+  });
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -94,9 +98,6 @@ const CreateJobPost = () => {
           },
         },
       });
-      if (result) {
-        navigate("/jobposts", { replace: true });
-      }
     } catch (error) {
       console.error("Error creating job:", error);
       setError("Error creating job");

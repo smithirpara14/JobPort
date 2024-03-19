@@ -5,15 +5,15 @@ import jwt from 'jsonwebtoken';
 
 //resolver to get all job post by author
 export async function jobPosts(parent, args, context, info) {
-    console.log("Job Posts:::");
+    // console.log("Job Posts:::");
     try {
         // Find the user document by email
         const user = await User.findOne({ email: args.userId });
         if (!user) {
             throw new Error('User with the provided email not found');
         }
-        const jobPosts = await Job.find({author : user._id}).populate('author');
-        console.log("Job Posts::: ", jobPosts);
+        const jobPosts = await Job.find({ author: user._id }).populate('author');
+        // console.log("Job Posts::: ", jobPosts);
         return jobPosts.map(jobPost => {
             return { ...jobPost._doc, _id: jobPost.id };
         });
@@ -62,7 +62,7 @@ export async function jobPost(parent, args, context, info) {
 //resolver to update job post
 export async function updateJobPost(parent, args, context, info) {
     try {
-        console.log("Update Job Input::: ", args);
+        // console.log("Update Job Input::: ", args);
         const job = await Job.findById(args.jobPostId);
         if (!job) {
             throw new Error('Job not found');
@@ -77,7 +77,7 @@ export async function updateJobPost(parent, args, context, info) {
         job.closingDate = args.jobPostInput.closingDate;
 
         const result = await job.save();
-        console.log("Update Job Result::: ", result);
+        // console.log("Update Job Result::: ", result);
         return { ...result._doc, _id: result.id };
 
     } catch (err) {
@@ -90,11 +90,11 @@ export async function updateJobPost(parent, args, context, info) {
 //delete job post by id
 export async function deleteJobPost(parent, args, context, info) {
     try {
-        const job = await Job.findById(args.jobId);
+        const job = await Job.findById(args.jobPostId);
         if (!job) {
             throw new Error('Job not found');
         }
-        await Job.findByIdAndDelete(args.jobId);
+        await Job.findByIdAndDelete(args.jobPostId);
         return { ...job._doc, _id: job.id };
     } catch (err) {
         throw err;
