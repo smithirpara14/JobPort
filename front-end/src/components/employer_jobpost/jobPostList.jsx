@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Button, Card } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FETCH_JOB_POSTS } from "../graphqlQueries";
@@ -8,6 +8,7 @@ import QueryResult from "../queryResult";
 
 const JobPostList = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [jobPosts, setJobPosts] = useState([]);
 
   const handleSetJobPosts = (data) => {
@@ -19,6 +20,12 @@ const JobPostList = () => {
     variables: { userId: localStorage.getItem("userEmail") },
     onCompleted: handleSetJobPosts,
   });
+
+  useEffect(() => {
+    if (location.state && (location.state.jobCreated || location.state.jobDeleted)) {
+      refetch();
+    }
+  })
 
   return (
     <QueryResult error={error} loading={loading} data={data}>
