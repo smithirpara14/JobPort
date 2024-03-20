@@ -7,7 +7,7 @@ import QueryResult from "../queryResult";
 import {dateFormatted} from "../../controllers/helper";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const EditJobPost = () => {
+const EMP_EditJobPost = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [jobTitle, setJobTitle] = useState("");
@@ -292,7 +292,7 @@ const EditJobPost = () => {
               >
                 Save Job
                   </Button>
-              <Button variant="warning" onClick={() => { navigate(`/jobposts/${id}`)}} className="m-1 jp-bg-success">Cancel</Button>
+              <Button variant="warning" onClick={() => { navigate(`/recruiter/jobposts/${id}`)}} className="m-1 jp-bg-success">Cancel</Button>
 
             </div>
           </Form>
@@ -304,4 +304,4 @@ const EditJobPost = () => {
   );
 };
 
-export default EditJobPost;
+export default EMP_EditJobPost;

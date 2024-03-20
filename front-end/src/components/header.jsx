@@ -1,7 +1,7 @@
 import React from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { isAuthenticated } from "../controllers/auth";
+import { isAuthenticated, isEmployer, isCandidate, isAdmin } from "../controllers/auth";
 import ProfileMenu from "./profileMenu";
 const Header = () => {
   return (
@@ -19,9 +19,33 @@ const Header = () => {
           <Nav.Link href="/" className="text-light">
             Home
           </Nav.Link>
-          <Nav.Link href="/jobposts" className="text-light">
-            Jobs
-          </Nav.Link>
+          {isAuthenticated() && isEmployer() ? (
+            <>
+              <Nav.Link href="/recruiter/jobposts" className="text-light">
+                Jobs
+              </Nav.Link>
+            </>
+          ) : (
+            <>
+            </>
+          )}
+          {isAuthenticated() && isCandidate() ? (
+            <>
+              <Nav.Link href="/jobposts" className="text-light">
+                Jobs
+              </Nav.Link>
+            </>
+          ) : (
+            <>
+            </>
+          )}
+          {isAuthenticated() && isAdmin() ? (
+            <>
+            </>
+          ) : (
+            <>
+            </>
+          )}
           <Nav.Link href="/about" className="text-light">
             About
           </Nav.Link>

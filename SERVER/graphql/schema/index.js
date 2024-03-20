@@ -70,6 +70,7 @@ export const typeDefs = `
         accountType(accountTypeId: ID!): AccountType
         login(email: String!, password: String!): AuthData!
         jobPosts(userId: String!): [JobPost!]!
+        allJobPosts: [JobPost!]!
         jobPost(jobPostId: ID!): JobPost
     }
 

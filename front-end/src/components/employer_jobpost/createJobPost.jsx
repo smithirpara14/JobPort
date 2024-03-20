@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Form, Button, Dropdown } from "react-bootstrap";
 import { useMutation } from "@apollo/client";
-import { FETCH_JOB_POSTS, CREATE_JOB_POST } from "../graphqlQueries";
+import { CREATE_JOB_POST } from "../graphqlQueries";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const CreateJobPost = () => {
+const EMP_CreateJobPost = () => {
   const navigate = useNavigate();
   const [jobTitle, setJobTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -24,7 +24,7 @@ const CreateJobPost = () => {
   const [errorClosingDate, setErrorClosingDate] = useState("");
   const [createJobPost] = useMutation(CREATE_JOB_POST, {
     onCompleted: () => {
-      navigate("/jobposts", { state: { jobCreated: true } });
+      navigate("/recruiter/jobposts", { state: { jobCreated: true } });
     },
   });
 
@@ -253,4 +253,4 @@ const CreateJobPost = () => {
   );
 };
 
-export default CreateJobPost;
+export default EMP_CreateJobPost;

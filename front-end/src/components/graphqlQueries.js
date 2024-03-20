@@ -106,3 +106,18 @@ export const DELETE_JOB_POST = gql`
   }
 `;
 
+export const FETCH_ALL_JOB_POSTS = gql`
+  query allJobPosts {
+    allJobPosts {
+      _id
+      title
+      description
+      location
+      experienceLevel
+      employmentType
+      salaryRange
+      creationDate
+      closingDate
+    }
+  }
+`;
