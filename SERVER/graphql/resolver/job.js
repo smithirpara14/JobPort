@@ -22,6 +22,18 @@ export async function jobPosts(parent, args, context, info) {
     }
 }
 
+//resolver to get all job posts
+export async function allJobPosts(parent, args, context, info) {
+    try {
+        const jobPosts = await Job.find().populate('author');
+        return jobPosts.map(jobPost => {
+            return { ...jobPost._doc, _id: jobPost.id };
+        });
+    } catch (err) {
+        throw err;
+    }
+}
+
 //resolver to create a job post
 export async function createJobPost(parent, args, context, info) {
     try {
