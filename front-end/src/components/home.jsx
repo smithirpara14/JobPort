@@ -3,8 +3,7 @@ import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 // import JobPostList from "./employer_jobpost/jobPostList";
 import { Feather2 } from "react-bootstrap-icons";
-import FeaturedJobList from "./FeaturedJobList";
-
+import JS_JobPostList from "./jobseeker_jobpost/jobPostList";
 const Home = () => {
   return (
     <Container>
@@ -35,14 +34,14 @@ const Home = () => {
       </Row>
 
       {/* Job Listings Section */}
-      <Row className="mt-4">
+      {/* <Row className="mt-4">
         <Col>
           <h2 className="text-center my-4">Featured Jobs</h2>
         </Col>
-      </Row>
+      </Row> */}
 
       {/* Job Listings */}
-      <Row>
+      {/* <Row>
         {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((jobId) => (
           <Col key={jobId} md={4} className="mb-4">
             <Card>
@@ -57,8 +56,8 @@ const Home = () => {
             </Card>
           </Col>
         ))}
-      </Row>
-      {/* <FeaturedJobList /> */}
+      </Row> */}
+      <JS_JobPostList />
     </Container>
   );
 };

@@ -120,12 +120,9 @@ const UserProfile = () => {
         }
     }
 
-
     const { loading, errorDB, data, refetch } = useQuery(FETCH_USER_PERSONAL_INFO, {
         variables: { email: localStorage.getItem("userEmail") }, onCompleted: setUserDetails
     });    
-
-
 
     return (
         <QueryResult error={errorDB} loading={loading} data={data}>
