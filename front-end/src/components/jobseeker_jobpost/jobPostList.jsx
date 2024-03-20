@@ -12,6 +12,7 @@ const JS_JobPostList = () => {
     const [filteredJobPosts, setFilteredJobPosts] = useState([]);
     const [location, setLocation] = useState("");
     const [employmentType, setEmploymentType] = useState("");
+    const [searchString, setSearchString] = useState("");
 
   const handleSetallJobPosts = (data) => {
     console.log("data", data);
@@ -26,6 +27,7 @@ const JS_JobPostList = () => {
     const resetFilter = () => {
         setLocation("");
         setEmploymentType("");
+        setSearchString("");
         setFilteredJobPosts(allJobPosts);
     }
 
@@ -40,6 +42,14 @@ const JS_JobPostList = () => {
         setFilteredJobPosts(filteredData);
     }
 
+    const handleSearch = () => {
+        let filteredData = allJobPosts
+        if(searchString !== ""){
+            filteredData = filteredData.filter(job => job.title.toLowerCase().includes(searchString.toLowerCase()));
+        }
+        setFilteredJobPosts(filteredData);
+    }
+
 
   return (
     <QueryResult error={error} loading={loading} data={data}>
@@ -47,9 +57,27 @@ const JS_JobPostList = () => {
         <Container className="mt-5 p-5" style={{ backgroundColor: "#ffffff" }}>
           <Row>
             <Col>
-              <h1>Job Posts</h1>
+              <h1>Jobs</h1>
             </Col>
           </Row>
+        <Form className="w-100 mb-4">
+            <Row>
+                <Col md={1}>
+                </Col>
+                <Col md={8}>
+                    <Form.Control
+                        type="text"
+                        value={searchString}
+                        onChange={(event) => setSearchString(event.target.value)}
+                        placeholder="Job title, keywords, or company name"
+                                        
+                    />
+                </Col>
+                <Col md={2} className="">
+                    <Button variant="primary" onClick={() => { handleSearch() }} >Find Jobs</Button>
+                </Col>
+            </Row>
+        </Form>          
         <Form  className="w-100 mb-4">
           <Row>
             <Col md={3}>
@@ -112,8 +140,8 @@ const JS_JobPostList = () => {
             </Col>
             <Col md={3}>
             </Col>
-            <Col md={3} className="">
-                <Button variant="primary" onClick={() => { applyFilter() }} className="m-1">Apply Filter</Button>
+            <Col md={3} className="text-end">
+                <Button variant="primary" onClick={() => { applyFilter() }} className="">Apply Filter</Button>
                 <Button variant="primary" onClick={() => {resetFilter()}} className="m-1">Reset</Button>
             </Col>
           </Row>
