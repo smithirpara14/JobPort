@@ -1,6 +1,14 @@
 import React, { useState } from "react";
-import { Container, Row, Col, Button, Card, Form, Dropdown } from "react-bootstrap";
-import { useNavigate  } from "react-router-dom";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Card,
+  Form,
+  Dropdown,
+} from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FETCH_ALL_JOB_POSTS } from "../graphqlQueries";
@@ -8,105 +16,112 @@ import QueryResult from "../queryResult";
 
 const JS_JobPostList = () => {
   const navigate = useNavigate();
-    const [allJobPosts, setallJobPosts] = useState([]);
-    const [filteredJobPosts, setFilteredJobPosts] = useState([]);
-    const [location, setLocation] = useState("");
-    const [employmentType, setEmploymentType] = useState("");
-    const [searchString, setSearchString] = useState("");
+  const [allJobPosts, setallJobPosts] = useState([]);
+  const [filteredJobPosts, setFilteredJobPosts] = useState([]);
+  const [location, setLocation] = useState("");
+  const [employmentType, setEmploymentType] = useState("");
+  const [searchString, setSearchString] = useState("");
 
   const handleSetallJobPosts = (data) => {
     console.log("data", data);
-      setallJobPosts(data.allJobPosts);
-      setFilteredJobPosts(data.allJobPosts);
+    setallJobPosts(data.allJobPosts);
+    setFilteredJobPosts(data.allJobPosts);
   };
 
   const { loading, error, data } = useQuery(FETCH_ALL_JOB_POSTS, {
     onCompleted: handleSetallJobPosts,
   });
-    
-    const resetFilter = () => {
-        setLocation("");
-        setEmploymentType("");
-        setSearchString("");
-        setFilteredJobPosts(allJobPosts);
-    }
 
-    const applyFilter = () => {
-        let filteredData = allJobPosts
-        if(location !== ""){
-            filteredData = filteredData.filter(job => job.location === location);
-        }
-        if(employmentType !== ""){
-            filteredData = filteredData.filter(job => job.employmentType === employmentType);
-        }
-        setFilteredJobPosts(filteredData);
-    }
+  const resetFilter = () => {
+    setLocation("");
+    setEmploymentType("");
+    setSearchString("");
+    setFilteredJobPosts(allJobPosts);
+  };
 
-    const handleSearch = () => {
-        let filteredData = allJobPosts
-        if(searchString !== ""){
-            filteredData = filteredData.filter(job => job.title.toLowerCase().includes(searchString.toLowerCase()));
-        }
-        setFilteredJobPosts(filteredData);
+  const applyFilter = () => {
+    let filteredData = allJobPosts;
+    if (location !== "") {
+      filteredData = filteredData.filter((job) => job.location === location);
     }
+    if (employmentType !== "") {
+      filteredData = filteredData.filter(
+        (job) => job.employmentType === employmentType
+      );
+    }
+    setFilteredJobPosts(filteredData);
+  };
 
+  const handleSearch = () => {
+    let filteredData = allJobPosts;
+    if (searchString !== "") {
+      filteredData = filteredData.filter((job) =>
+        job.title.toLowerCase().includes(searchString.toLowerCase())
+      );
+    }
+    setFilteredJobPosts(filteredData);
+  };
 
   return (
     <QueryResult error={error} loading={loading} data={data}>
       {data && data.allJobPosts && (
-        <Container className="mt-5 p-5" style={{ backgroundColor: "#ffffff" }}>
+        <Container
+          fluid
+          className="mt-2 p-2"
+          style={{ backgroundColor: "#ffffff" }}
+        >
           <Row>
             <Col>
-              <h1>Jobs</h1>
+              <h1 className="text-center my-4">Featured Jobs</h1>
             </Col>
           </Row>
-        <Form className="w-100 mb-4">
-            <Row>
-                <Col md={1}>
-                </Col>
-                <Col md={8}>
-                    <Form.Control
-                        type="text"
-                        value={searchString}
-                        onChange={(event) => setSearchString(event.target.value)}
-                        placeholder="Job title, keywords, or company name"
-                                        
-                    />
-                </Col>
-                <Col md={2} className="">
-                    <Button variant="primary" onClick={() => { handleSearch() }} >Find Jobs</Button>
-                </Col>
+          <Form className="my-4">
+            <Row className="align-items-end justify-content-center">
+              <Col md={6}>
+                <Form.Control
+                  type="text"
+                  value={searchString}
+                  onChange={(event) => setSearchString(event.target.value)}
+                  placeholder="Job title, keywords, or company name"
+                />
+              </Col>
+              <Col md={2}>
+                <Button variant="primary" onClick={handleSearch}>
+                  Find Jobs
+                </Button>
+              </Col>
             </Row>
-        </Form>          
-        <Form  className="w-100 mb-4">
-          <Row>
-            <Col md={3}>
-            <Form.Group controlId="formLocation">
-              <Form.Label>Location Type:</Form.Label>
-              <Dropdown>
-                <Dropdown.Toggle
-                  split
-                  variant="secondary"
-                  className="w-100 form-control"
-                  id="dropdown-split-basic"
-                >
-                  {location}
-                </Dropdown.Toggle>
-                <Dropdown.Menu className="w-100">
-                  <Dropdown.Item onClick={() => setLocation("Remote")}>
-                    Remote
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => setLocation("Hybrid")}>
-                    Hybrid
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => setLocation("On-site")}>
-                    On-site
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </Form.Group>
-            </Col>
-            <Col md={3}>
+          </Form>
+
+          <Form className="mb-4">
+            <Row className="align-items-end justify-content-center">
+              <Col md={2}>
+                <Form.Group controlId="formLocation">
+                  <Form.Label>Location Type:</Form.Label>
+                  <Dropdown>
+                    <Dropdown.Toggle
+                      split
+                      variant="secondary"
+                      className="w-100 form-control"
+                      id="dropdown-split-basic"
+                    >
+                      {location}
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                      <Dropdown.Item onClick={() => setLocation("Remote")}>
+                        Remote
+                      </Dropdown.Item>
+                      <Dropdown.Item onClick={() => setLocation("Hybrid")}>
+                        Hybrid
+                      </Dropdown.Item>
+                      <Dropdown.Item onClick={() => setLocation("On-site")}>
+                        On-site
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </Form.Group>
+              </Col>
+              <Col md={2}>
                 <Form.Group controlId="formEmploymentType">
                   <Form.Label>Employment Type:</Form.Label>
                   <Dropdown>
@@ -137,24 +152,35 @@ const JS_JobPostList = () => {
                     </Dropdown.Menu>
                   </Dropdown>
                 </Form.Group>
-            </Col>
-            <Col md={3}>
-            </Col>
-            <Col md={3} className="text-end">
-                <Button variant="primary" onClick={() => { applyFilter() }} className="">Apply Filter</Button>
-                <Button variant="primary" onClick={() => {resetFilter()}} className="m-1">Reset</Button>
-            </Col>
-          </Row>
-        </Form>
+              </Col>
+              <Col md={2}>
+                <Button
+                  variant="primary"
+                  onClick={applyFilter}
+                  className="w-100"
+                >
+                  Apply Filter
+                </Button>
+              </Col>
+              <Col md={2}>
+                <Button
+                  variant="primary"
+                  onClick={resetFilter}
+                  className="w-100"
+                >
+                  Reset
+                </Button>
+              </Col>
+            </Row>
+          </Form>
           {filteredJobPosts.length === 0 ? (
-            // Show no job post banner
             <div>
               <h3>No Job Posts</h3>
             </div>
           ) : (
-            <Row>
+            <Row md={2} lg={4} className="g-4">
               {filteredJobPosts.map((job) => (
-                <Col key={job._id} md={4} className="mb-4">
+                <Col key={job._id}>
                   <Card>
                     <Card.Body>
                       <Card.Title>{job.title}</Card.Title>

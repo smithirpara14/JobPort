@@ -4,13 +4,15 @@ import "bootstrap/dist/css/bootstrap.min.css";
 // import JobPostList from "./employer_jobpost/jobPostList";
 import { Feather2 } from "react-bootstrap-icons";
 import JS_JobPostList from "./jobseeker_jobpost/jobPostList";
+import { Link } from "react-router-dom";
+
 const Home = () => {
   return (
-    <Container>
+    <Container fluid className="px-1">
       {/* Header Section */}
       <Row>
         <Col>
-          <h1 className="text-center ">Welcome to Job Portal</h1>
+          <h1 className="text-center mt-4">Welcome to Job Portal</h1>
           <p className="text-center">
             Find the perfect job that matches your skills and interests.
           </p>
@@ -18,27 +20,39 @@ const Home = () => {
       </Row>
 
       {/* Image and Content Section */}
-      <Row className="mt-4">
-        <Col md={6}>
-          {/* Add your image component or element here */}
-          <img src="images/MainImage.jpg" alt="Banner" className="img-fluid" />
+      <Row className="mt-4 mx-0">
+        <Col md={5}>
+          <img
+            src="images/MainImage.jpg"
+            alt="Banner"
+            className="img-fluid"
+            style={{ borderRadius: "10px" }}
+          />
         </Col>
         <Col md={6} className="my-auto">
-          <h2>Explore Exciting Opportunities</h2>
-          <p>
-            Discover a wide range of job opportunities that suit your skills and
-            career goals.
-          </p>
-          <Button variant="primary">View Jobs</Button>
+          <div>
+            <h2 className="mb-3">Explore Exciting Opportunities</h2>
+            <p className="text-lg">
+              Begin your journey towards a fulfilling career by exploring a
+              diverse range of job opportunities tailored to your skills and
+              career aspirations. Whether you're an experienced professional
+              seeking new challenges or a recent graduate embarking on your
+              career path, JobPort offers a platform to discover and apply for
+              exciting roles across various industries.
+            </p>
+            <p className="text-lg">
+              Our curated collection of job listings ensures that you have
+              access to high-quality opportunities from reputable organizations.
+              Explore job postings that match your expertise, interests, and
+              preferences, and take the next step towards advancing your career.
+            </p>
+
+            <Link to="/jobposts">
+              <Button variant="primary">View Jobs</Button>
+            </Link>
+          </div>
         </Col>
       </Row>
-
-      {/* Job Listings Section */}
-      {/* <Row className="mt-4">
-        <Col>
-          <h2 className="text-center my-4">Featured Jobs</h2>
-        </Col>
-      </Row> */}
 
       {/* Job Listings */}
       {/* <Row>

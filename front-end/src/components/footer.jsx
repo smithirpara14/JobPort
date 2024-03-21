@@ -1,17 +1,13 @@
 import React from "react";
 import { Container } from "react-bootstrap";
+
 const Footer = () => {
   return (
-    <Container className="mt-auto">
-      <footer
-        className="rounded-top-5 px-4 text-white p-1 text-center jp-bg-primary"
-        style={{
-        }}
-      >
-        <p>&copy; 2024 Job Portal. All rights reserved.</p>
-      </footer>
-    </Container>
-        
+    <footer className="jp-bg-primary text-white">
+      <Container className="py-3 text-center">
+        <p className="mb-0">&copy; 2024 Job Portal. All rights reserved.</p>
+      </Container>
+    </footer>
   );
 };
 

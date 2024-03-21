@@ -22,10 +22,13 @@ const EMP_JobPostList = () => {
   });
 
   useEffect(() => {
-    if (location.state && (location.state.jobCreated || location.state.jobDeleted)) {
+    if (
+      location.state &&
+      (location.state.jobCreated || location.state.jobDeleted)
+    ) {
       refetch();
     }
-  })
+  });
 
   return (
     <QueryResult error={error} loading={loading} data={data}>
