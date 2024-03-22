@@ -5,10 +5,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Feather2 } from "react-bootstrap-icons";
 import JS_JobPostList from "./jobseeker_jobpost/jobPostList";
 import { Link } from "react-router-dom";
+import { isAuthenticated, isCandidate, isEmployer } from "../controllers/auth";
 
 const Home = () => {
   return (
-    <Container fluid className="px-1">
+    <Container fluid className="">
       {/* Header Section */}
       <Row>
         <Col>
@@ -46,10 +47,16 @@ const Home = () => {
               Explore job postings that match your expertise, interests, and
               preferences, and take the next step towards advancing your career.
             </p>
-
-            <Link to="/jobposts">
-              <Button variant="primary">View Jobs</Button>
-            </Link>
+            {isAuthenticated() && isCandidate() && (
+              <Link to="/jobposts">
+                <Button variant="primary">View Jobs</Button>
+              </Link>
+            )}
+            {isAuthenticated() && isEmployer() && (
+              <Link to="/recruiter/jobposts">
+                <Button variant="primary">View Jobs</Button>
+              </Link>
+            )}
           </div>
         </Col>
       </Row>
@@ -71,7 +78,9 @@ const Home = () => {
           </Col>
         ))}
       </Row> */}
-      <JS_JobPostList />
+      {isAuthenticated() && isCandidate() && (
+        <JS_JobPostList />
+      )}
     </Container>
   );
 };

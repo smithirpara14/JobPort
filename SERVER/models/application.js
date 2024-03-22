@@ -16,10 +16,10 @@ const applicationSchema = new Schema({
         default: Date.now
     },
     status: {
-        type: Schema.Types.ObjectId,
-        ref: 'ApplicationStatus'
+        type: String,
+        enum: ['Pending', 'Accepted', 'Rejected'],
+        default: 'Pending'
     }
-
 });
 
 export default mongoose.model('Application', applicationSchema);

@@ -9,10 +9,7 @@ import { readFileSync } from 'fs';
 import { typeDefs } from "./graphql/schema/index.js";
 import { resolvers } from './graphql/resolver/index.js';
 import { isAuth } from './middleware/is-auth.js';
-//graphql
-// const typeDefs = readFileSync("./graphql/schema/schema.graphql", "utf8");
-//const typeDefs = require("./graphql/schema/index");
-//const graphQlResolvers = require('./graphql/resolver/index');
+
 
 const app = express();
 
