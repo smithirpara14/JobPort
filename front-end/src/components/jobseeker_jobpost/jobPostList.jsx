@@ -184,6 +184,9 @@ const JS_JobPostList = () => {
                   <Card>
                     <Card.Body>
                       <Card.Title>{job.title}</Card.Title>
+                      <Card.Subtitle className="mb-2 text-muted">
+                        {job.location} | {job.employmentType}
+                      </Card.Subtitle>
                       <Card.Text>{job.description}</Card.Text>
                       <Button
                         variant="primary"

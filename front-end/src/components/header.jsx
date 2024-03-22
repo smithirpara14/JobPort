@@ -23,7 +23,7 @@ const Header = () => {
               Home
             </Nav.Link>
             {isAuthenticated() && isEmployer() && (
-              <Nav.Link href="/recruiter/jobposts" className="text-light">
+              <Nav.Link href="/recruiter/jobposts" className="text-light fs-5">
                 Jobs
               </Nav.Link>
             )}

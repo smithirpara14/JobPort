@@ -3,7 +3,7 @@ import { Container } from "react-bootstrap";
 
 const Footer = () => {
   return (
-    <footer className="jp-bg-primary text-white">
+    <footer className="jp-bg-primary text-white mt-auto">
       <Container className="py-3 text-center">
         <p className="mb-0">&copy; 2024 Job Portal. All rights reserved.</p>
       </Container>

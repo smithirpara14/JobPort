@@ -62,6 +62,14 @@ export const typeDefs = `
         salaryRange: String!
         closingDate: GraphQlDate
     }
+
+    type Application {
+        _id: ID
+        user: User
+        job: JobPost
+        applicationDate: GraphQlDate
+        status: String
+    }
     
     type Query {
         users: [User!]!
@@ -72,6 +80,10 @@ export const typeDefs = `
         jobPosts(userId: String!): [JobPost!]!
         allJobPosts: [JobPost!]!
         jobPost(jobPostId: ID!): JobPost
+        applicationsByUser(userId: String!): [Application!]!
+        applicationsByJob(jobPostId: String!): [Application!]!
+        application(applicationId: ID!): Application
+
     }
 
     type Mutation {
@@ -84,6 +96,8 @@ export const typeDefs = `
         createJobPost(userId:String!, jobPostInput: JobPostInput): JobPost
         updateJobPost(jobPostId: ID!, jobPostInput: JobPostInput): JobPost
         deleteJobPost(jobPostId: ID!): JobPost
-
+        createApplication(userId: String!, jobPostId: String!): Application
+        updateApplicationStatus(applicationId: ID!, status: String!): Application
+        deleteApplication(applicationId: ID!): Application
     }
 `;
