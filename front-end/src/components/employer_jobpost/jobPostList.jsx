@@ -56,7 +56,7 @@ const EMP_JobPostList = () => {
               <h3>No Job Posts</h3>
             </div>
           ) : (
-            <Row>
+            <Row className="mt-5">
               {jobPosts.map((job) => (
                 <Col key={job._id} md={4} className="mb-4">
                   <Card>

@@ -22,7 +22,6 @@ import JS_ViewJobPost from "./components/jobseeker_jobpost/viewJobPost";
 import About from "./components/about";
 import PrivateRoute from "./components/privateRoute";
 
-
 import "./App.css";
 
 const App = () => {
@@ -35,22 +34,52 @@ const App = () => {
           <Route path="/login" element={<UserLogin />} />
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/logout" element={<PrivateRoute component={Logout} />} />
-          <Route path="/profile" element={<PrivateRoute component={UserProfile} />} />
+          <Route
+            path="/profile"
+            element={<PrivateRoute component={UserProfile} />}
+          />
           <Route path="/admin" element={<PrivateRoute component={Admin} />} />
           <Route path="/about" element={<PrivateRoute component={About} />} />
-          <Route path="/createUser" element={<PrivateRoute component={CreateUser} />} />
-          <Route path="/createAccountType" element={<PrivateRoute component={CreateAccountType} />} />
-          <Route path="/updateAccountType/:id" element={<PrivateRoute component={UpdateAccountType} />} />
+          <Route
+            path="/createUser"
+            element={<PrivateRoute component={CreateUser} />}
+          />
+          <Route
+            path="/createAccountType"
+            element={<PrivateRoute component={CreateAccountType} />}
+          />
+          <Route
+            path="/updateAccountType/:id"
+            element={<PrivateRoute component={UpdateAccountType} />}
+          />
 
           {/* Recruiter Job Post Routes */}
-          <Route path="/recruiter/jobposts" element={<PrivateRoute component={EMP_JobPostList} />} />
-          <Route path="/recruiter/jobposts/:id" element={<PrivateRoute component={EMP_ViewJobPost} />} />
-          <Route path="/recruiter/jobposts/edit/:id" element={<PrivateRoute component={EMP_UpdateJobPost} />} />
-          <Route path="/recruiter/jobposts/create" element={<PrivateRoute component={EMP_CreateJobPost} />} />
+          <Route
+            path="/recruiter/jobposts"
+            element={<PrivateRoute component={EMP_JobPostList} />}
+          />
+          <Route
+            path="/recruiter/jobposts/:id"
+            element={<PrivateRoute component={EMP_ViewJobPost} />}
+          />
+          <Route
+            path="/recruiter/jobposts/edit/:id"
+            element={<PrivateRoute component={EMP_UpdateJobPost} />}
+          />
+          <Route
+            path="/recruiter/jobposts/create"
+            element={<PrivateRoute component={EMP_CreateJobPost} />}
+          />
 
           {/* Job Seeker (Cadidate) Job Post Routes */}
-          <Route path="/jobposts" element={<PrivateRoute component={JS_JobPostList} />} />
-          <Route path="/jobposts/:id" element={<PrivateRoute component={JS_ViewJobPost} />} />
+          <Route
+            path="/jobposts"
+            element={<PrivateRoute component={JS_JobPostList} />}
+          />
+          <Route
+            path="/jobposts/:id"
+            element={<PrivateRoute component={JS_ViewJobPost} />}
+          />
 
           {/* Invalid Route */}
           <Route path="*" element={<_404Page />} />
