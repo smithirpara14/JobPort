@@ -1,0 +1,11 @@
+.slim-navbar {
+    height: 40px;
+  }
+  
+  .slim-navbar .navbar-nav .nav-link {
+    font-size: 14px; 
+  }
+  
+  .slim-navbar .navbar-toggler-icon {
+    padding: 0.45rem; 
+  }

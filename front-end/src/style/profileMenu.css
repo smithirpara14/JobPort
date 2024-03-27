@@ -1,5 +1,9 @@
 /* DropdownMenu.css */
 
+.profile-icon {
+  z-index: 999;
+}
+
 /* Container for the entire menu */
 .menu-container {
   position: relative;

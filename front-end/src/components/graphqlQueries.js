@@ -1,5 +1,46 @@
 import { gql } from "@apollo/client";
 
+export const GET_ACCOUNT_TYPES = gql`
+  query accountTyes{
+    accountTypes {
+      _id
+      name
+      description
+    }
+  }
+`;
+
+export const DELETE_ACCOUNT_TYPE = gql`
+  mutation DeleteAccountType($accountTypeId: ID!) {
+    deleteAccountType(accountTypeId: $accountTypeId) {
+      _id
+    }
+  }
+`;
+
+export const GET_USERS = gql`
+  query {
+    users {
+      _id
+      firstName
+      lastName
+      email
+      birthDate
+      accountType {
+        name
+      }
+    }
+  }
+`;
+
+export const DELETE_USER = gql`
+  mutation DeleteUser($userId: ID!) {
+    deleteUser(userId: $userId) {
+      _id
+    }
+  }
+`;
+
 export const CREATE_USER = gql`
   mutation CreateUser($userInput: UserInput!) {
     createUser(userInput: $userInput) {
