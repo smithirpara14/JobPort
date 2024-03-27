@@ -22,7 +22,6 @@ import JS_ViewJobPost from "./components/jobseeker_jobpost/viewJobPost";
 import About from "./components/about";
 import PrivateRoute from "./components/privateRoute";
 
-
 import "./App.css";
 
 const App = () => {
@@ -51,6 +50,7 @@ const App = () => {
           {/* Job Seeker (Cadidate) Job Post Routes */}
           <Route path="/jobposts" element={<PrivateRoute component={JS_JobPostList} />} />
           <Route path="/jobposts/:id" element={<PrivateRoute component={JS_ViewJobPost} />} />
+          {/*<Route path="/saved" element={<JS_ViewSavedJobPost/>} />*/}
 
           {/* Invalid Route */}
           <Route path="*" element={<_404Page />} />

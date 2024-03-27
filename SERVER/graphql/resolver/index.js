@@ -15,7 +15,8 @@ export const resolvers = {
     jobPost,
     applicationsByUser,
     applicationsByJob,
-    application
+    application,
+    savedJobsByEmail
   },
   Mutation: {
     createUser,
@@ -31,7 +32,6 @@ export const resolvers = {
     updateApplicationStatus,
     deleteApplication,
     saveJob,
-    savedJobsByEmail,
     removeSavedJob
   },
   GraphQlDate: GraphQlDateResolver

@@ -155,7 +155,7 @@ export async function saveJob(parent, args, context, info) {
     }
 }
 
-// Resolver function to get all saved jobs for a given email
+//resolver to get all saved jobs by email
 export async function savedJobsByEmail(parent, args, context, info) {
     try {
         const user = await User.findOne({ email: args.email });
@@ -166,7 +166,7 @@ export async function savedJobsByEmail(parent, args, context, info) {
         return savedJobs.map(savedJob => ({
             ...savedJob._doc,
             _id: savedJob.id,
-            user: user, 
+            user: user,
         }));
     } catch (err) {
         console.error("Error fetching saved jobs:", err);
