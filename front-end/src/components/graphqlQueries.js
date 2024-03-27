@@ -137,3 +137,27 @@ export const SAVE_JOB = gql`
     }
   }
 `;
+
+// query to fetch saved jobs by email
+export const FETCH_SAVED_POSTS_BY_EMAIL = gql`
+  query savedPosts($email: String!) {
+    savedJobsByEmail(email: $email) {
+      _id
+      user {
+        _id
+      }
+      job {
+        _id
+        title
+        description
+        location
+        experienceLevel
+        employmentType
+        salaryRange
+        creationDate
+        closingDate
+      }
+      savedDate
+    }
+  }
+`;

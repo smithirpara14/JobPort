@@ -18,6 +18,9 @@ const ProfileMenu = () => {
                 <Nav.Link href="/profile" className="text-dark">
                     Profile
                 </Nav.Link>
+                <Nav.Link href="/saved" className="text-dark">
+                    Saved
+                </Nav.Link>                   
                 <Nav.Link href="/logout" className="text-dark">
                     Logout
                 </Nav.Link>
