@@ -12,6 +12,7 @@ const JS_ViewJobPost = () => {
   const { id } = useParams();
   const userEmail = getUserEmail();
   const [jobPost, setJobPost] = useState({});
+  const [isSaved, setIsSaved] = useState(false); // State to track if job is saved
   const [saveJob] = useMutation(SAVE_JOB);
 
   const { loading, error, data } = useQuery(FETCH_JOB_POST, {
@@ -20,6 +21,7 @@ const JS_ViewJobPost = () => {
   });
 
   const handleSaveJob = async () => {
+    setIsSaved(true);
     try {
       await saveJob({ variables: { email: userEmail, jobPostId: id } });
       console.log('Job saved: '+ userEmail);
@@ -56,7 +58,7 @@ const JS_ViewJobPost = () => {
                 </Card.Body>
                 <Card.Footer>
                   <Button variant="primary" onClick={() => { console.log('apply now')}} className="m-1">Apply now</Button>
-                  <Button variant="primary" onClick={handleSaveJob} className="m-1">Save for later</Button>
+                  <Button variant="primary" onClick={handleSaveJob} className="m-1" disabled={isSaved}>{isSaved ? "Saved" : "Save for later"}</Button>
                 </Card.Footer>
               </Card>
             </Col>
