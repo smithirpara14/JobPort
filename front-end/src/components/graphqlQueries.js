@@ -161,3 +161,12 @@ export const FETCH_SAVED_POSTS_BY_EMAIL = gql`
     }
   }
 `;
+
+// mutation to remove a saved job
+export const REMOVE_SAVED_JOB = gql`
+  mutation RemoveSavedJob($savedJobId: ID!) {
+    removeSavedJob(savedJobId: $savedJobId) {
+      _id
+    }
+  }
+`;

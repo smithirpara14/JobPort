@@ -2,7 +2,8 @@ import React from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { getUserEmail } from "../../controllers/auth";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
-import { FETCH_SAVED_POSTS_BY_EMAIL } from "../graphqlQueries";
+import { FETCH_SAVED_POSTS_BY_EMAIL, REMOVE_SAVED_JOB } from "../graphqlQueries";
+import { useApolloClient } from '@apollo/client';
 
 const ViewSavedPost = () => {
   const userEmail = getUserEmail();
@@ -10,14 +11,26 @@ const ViewSavedPost = () => {
     variables: { email: userEmail },
   });
 
+  const [removeSavedJob] = useMutation(REMOVE_SAVED_JOB);
+  const client = useApolloClient();
+
   const handleApplyNow = () => {
-    // Add your logic for handling the "Apply now" button click here
     console.log('apply now');
   };
 
-  const handleSaveForLater = () => {
-    // Add your logic for handling the "Save for later" button click here
-    console.log('save for later');
+  const handleRemove = async (savedJobId) => {
+    try {
+      await removeSavedJob({ variables: { savedJobId } });
+  
+      const newData = data.savedJobsByEmail.filter(savedPost => savedPost._id !== savedJobId);
+      client.writeQuery({
+        query: FETCH_SAVED_POSTS_BY_EMAIL,
+        variables: { email: userEmail },
+        data: { savedJobsByEmail: newData },
+      });
+    } catch (error) {
+      console.error("Error removing saved job:", error);
+    }
   };
 
   return (
@@ -25,7 +38,7 @@ const ViewSavedPost = () => {
       <h1>Saved Job Posts</h1>
       {loading && <p>Loading...</p>}
       {error && <p>Error: {error.message}</p>}
-      {data && data.savedJobsByEmail && (
+      {data && data.savedJobsByEmail && data.savedJobsByEmail.length > 0 ? (
         <Row xs={1} md={2} className="g-4">
           {data.savedJobsByEmail.map(savedPost => (
             <Col key={savedPost._id}>
@@ -50,12 +63,18 @@ const ViewSavedPost = () => {
                 </Card.Body>
                 <Card.Footer>
                   <Button variant="primary" onClick={handleApplyNow} className="m-1">Apply now</Button>
-                  {/*<Button variant="primary" onClick={handleSaveForLater} className="m-1">Save for later</Button>*/}
+                  <Button variant="danger" onClick={() => handleRemove(savedPost._id)} className="m-1">Remove</Button>
                 </Card.Footer>
               </Card>
             </Col>
           ))}
         </Row>
+      ) : (
+        <Card className="mt-3">
+          <Card.Body>
+            <Card.Text>No saved job posts yet.</Card.Text>
+          </Card.Body>
+        </Card>
       )}
     </Container>
   );
