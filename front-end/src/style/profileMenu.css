@@ -1,5 +1,9 @@
 /* DropdownMenu.css */
 
+.profile-icon {
+  z-index: 999;
+}
+
 /* Container for the entire menu */
 .menu-container {
   position: relative;
@@ -28,6 +32,7 @@
 /* Dropdown menu styling */
 .menu {
   position: absolute;
+  padding: 3px 15px 3px 0px;
   top: 100%;
   left: 0;
   background-color: #ffffff;

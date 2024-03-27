@@ -1,5 +1,46 @@
 import { gql } from "@apollo/client";
 
+export const GET_ACCOUNT_TYPES = gql`
+  query accountTyes{
+    accountTypes {
+      _id
+      name
+      description
+    }
+  }
+`;
+
+export const DELETE_ACCOUNT_TYPE = gql`
+  mutation DeleteAccountType($accountTypeId: ID!) {
+    deleteAccountType(accountTypeId: $accountTypeId) {
+      _id
+    }
+  }
+`;
+
+export const GET_USERS = gql`
+  query {
+    users {
+      _id
+      firstName
+      lastName
+      email
+      birthDate
+      accountType {
+        name
+      }
+    }
+  }
+`;
+
+export const DELETE_USER = gql`
+  mutation DeleteUser($userId: ID!) {
+    deleteUser(userId: $userId) {
+      _id
+    }
+  }
+`;
+
 export const CREATE_USER = gql`
   mutation CreateUser($userInput: UserInput!) {
     createUser(userInput: $userInput) {
@@ -118,6 +159,55 @@ export const FETCH_ALL_JOB_POSTS = gql`
       salaryRange
       creationDate
       closingDate
+    }
+  }
+`;
+
+// mutation for saving a job
+export const SAVE_JOB = gql`
+  mutation SaveJob($email: String!, $jobPostId: ID!) {
+    saveJob(email: $email, jobPostId: $jobPostId) {
+      _id
+      savedDate
+      user {
+        _id
+      }
+      job {
+        _id
+      }
+    }
+  }
+`;
+
+// query to fetch saved jobs by email
+export const FETCH_SAVED_POSTS_BY_EMAIL = gql`
+  query savedPosts($email: String!) {
+    savedJobsByEmail(email: $email) {
+      _id
+      user {
+        _id
+      }
+      job {
+        _id
+        title
+        description
+        location
+        experienceLevel
+        employmentType
+        salaryRange
+        creationDate
+        closingDate
+      }
+      savedDate
+    }
+  }
+`;
+
+// mutation to remove a saved job
+export const REMOVE_SAVED_JOB = gql`
+  mutation RemoveSavedJob($savedJobId: ID!) {
+    removeSavedJob(savedJobId: $savedJobId) {
+      _id
     }
   }
 `;
