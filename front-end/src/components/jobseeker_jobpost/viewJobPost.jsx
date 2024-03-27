@@ -12,7 +12,7 @@ const JS_ViewJobPost = () => {
   const { id } = useParams();
   const userEmail = getUserEmail();
   const [jobPost, setJobPost] = useState({});
-  const [isSaved, setIsSaved] = useState(false); // State to track if job is saved
+  const [isSaved, setIsSaved] = useState(false); 
   const [saveJob] = useMutation(SAVE_JOB);
 
   const { loading, error, data } = useQuery(FETCH_JOB_POST, {
