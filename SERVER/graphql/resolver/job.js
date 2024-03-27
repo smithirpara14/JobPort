@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs';
 import Job from '../../models/job.js';
 import User from '../../models/user.js';
+import SavedJob from '../../models/savedJob.js';    
 import jwt from 'jsonwebtoken';
 
 //resolver to get all job post by author
@@ -109,6 +110,87 @@ export async function deleteJobPost(parent, args, context, info) {
         await Job.findByIdAndDelete(args.jobPostId);
         return { ...job._doc, _id: job.id };
     } catch (err) {
+        throw err;
+    }
+}
+
+// Resolve to save job
+export async function saveJob(parent, args, context, info) {
+    try {
+        const user = await User.findOne({ email: args.email });
+        if (!user) {
+            throw new Error('User not found');
+        }
+
+        const existingSavedJob = await SavedJob.findOne({
+            user: user._id,
+            job: args.jobPostId
+        });
+        if (existingSavedJob) {
+            throw new Error('Job already saved by the user');
+        }
+
+        const job = await Job.findById(args.jobPostId);
+        if (!job) {
+            throw new Error('Job not found');
+        }
+
+        const savedJob = new SavedJob({
+            user: user._id,
+            job: job._id,
+            savedDate: new Date()
+        });
+
+        const result = await savedJob.save();
+
+        return {
+            ...result._doc,
+            _id: result.id,
+            user: user,
+            job: job
+        };
+    } catch (err) {
+        console.error("Error saving job:", err);
+        throw err;
+    }
+}
+
+// Resolver function to get all saved jobs for a given email
+export async function savedJobsByEmail(parent, args, context, info) {
+    try {
+        const user = await User.findOne({ email: args.email });
+        if (!user) {
+            throw new Error('User not found');
+        }
+        const savedJobs = await SavedJob.find({ user: user._id }).populate('job');
+        return savedJobs.map(savedJob => ({
+            ...savedJob._doc,
+            _id: savedJob.id,
+            user: user, 
+        }));
+    } catch (err) {
+        console.error("Error fetching saved jobs:", err);
+        throw err;
+    }
+}
+
+// Resolver function to remove a saved job based on the job ID
+export async function removeSavedJob(parent, args, context, info) {
+    try {
+        const { savedJobId } = args;
+
+        const savedJob = await SavedJob.findByIdAndDelete(savedJobId);
+
+        if (!savedJob) {
+            throw new Error('Saved job not found');
+        }
+
+        return {
+            ...savedJob._doc,
+            _id: savedJob.id
+        };
+    } catch (err) {
+        console.error("Error removing saved job:", err);
         throw err;
     }
 }

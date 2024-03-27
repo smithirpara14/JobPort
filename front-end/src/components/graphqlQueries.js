@@ -121,3 +121,19 @@ export const FETCH_ALL_JOB_POSTS = gql`
     }
   }
 `;
+
+// Define the GraphQL mutation for saving a job
+export const SAVE_JOB = gql`
+  mutation SaveJob($email: String!, $jobPostId: ID!) {
+    saveJob(email: $email, jobPostId: $jobPostId) {
+      _id
+      savedDate
+      user {
+        _id
+      }
+      job {
+        _id
+      }
+    }
+  }
+`;

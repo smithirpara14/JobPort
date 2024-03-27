@@ -63,6 +63,13 @@ export const typeDefs = `
         closingDate: GraphQlDate
     }
 
+    type SavedJob {
+        _id: ID!
+        user: User!
+        job: JobPost!
+        savedDate: String!
+    }
+
     type Application {
         _id: ID
         user: User
@@ -83,7 +90,6 @@ export const typeDefs = `
         applicationsByUser(userId: String!): [Application!]!
         applicationsByJob(jobPostId: String!): [Application!]!
         application(applicationId: ID!): Application
-
     }
 
     type Mutation {
@@ -99,5 +105,8 @@ export const typeDefs = `
         createApplication(userId: String!, jobPostId: String!): Application
         updateApplicationStatus(applicationId: ID!, status: String!): Application
         deleteApplication(applicationId: ID!): Application
+        saveJob(email: String!, jobPostId: ID!): SavedJob
+        savedJobsByEmail(email: String!): [SavedJob!]!
+        removeSavedJob(savedJobId: ID!): SavedJob
     }
 `;
