@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Nav } from 'react-bootstrap';
 import { PersonFill } from 'react-bootstrap-icons';
-import { useNavigate } from "react-router-dom";
+import { isAuthenticated, isCandidate, isAdmin } from '../controllers/auth';
 import "../style/profileMenu.css";
 
 const ProfileMenu = () => {
@@ -17,12 +17,16 @@ const ProfileMenu = () => {
         <Nav.Link href="/profile" className="text-dark">
           Profile
         </Nav.Link>
-        <Nav.Link href="/admin" className="text-dark">
-          Admin
-        </Nav.Link>
-        <Nav.Link href="/saved" className="text-dark">
-          Saved
-        </Nav.Link>
+        {isAuthenticated() && isAdmin() && (
+            <Nav.Link href="/admin" className="text-dark">
+              Admin
+            </Nav.Link>
+        )}
+        {isAuthenticated() && isCandidate() && (
+          <Nav.Link href="/saved" className="text-dark">
+            Saved
+          </Nav.Link>
+        )}
         <Nav.Link href="/logout" className="text-dark">
           Logout
         </Nav.Link>

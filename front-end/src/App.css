@@ -69,3 +69,7 @@
   font-size: 18px;
   color: #007bff; /* Custom color for loading text */
 }
+
+.menu-container {
+  z-index: 1000;
+}
