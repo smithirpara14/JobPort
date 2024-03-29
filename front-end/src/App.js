@@ -16,6 +16,7 @@ import CheckJobPosts from "./components/Admin/checkJobPosts";
 import CreateUser from "./components/createUser";
 import CreateAccountType from "./components/createAccountType";
 import UpdateAccountType from "./components/updateAccountType";
+import EMP_Home from "./components/employer_jobpost/home";
 import EMP_JobPostList from "./components/employer_jobpost/jobPostList";
 import EMP_ViewJobPost from "./components/employer_jobpost/viewJobPost";
 import EMP_CreateJobPost from "./components/employer_jobpost/createJobPost";
@@ -27,6 +28,7 @@ import About from "./components/about";
 import PrivateRoute from "./components/privateRoute";
 
 import "./App.css";
+import { isAuthenticated, isEmployer } from "./controllers/auth";
 
 const App = () => {
   return (
@@ -34,7 +36,10 @@ const App = () => {
       <Header />
       <Router>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={
+            isAuthenticated() && isEmployer() ? <EMP_Home /> : <Home />
+
+          } />
           <Route path="/login" element={<UserLogin />} />
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/logout" element={<PrivateRoute component={Logout} />} />
@@ -78,13 +83,13 @@ const App = () => {
           {/* Job Seeker (Cadidate) Job Post Routes */}
           <Route path="/jobposts" element={<PrivateRoute component={JS_JobPostList} />} />
           <Route path="/jobposts/:id" element={<PrivateRoute component={JS_ViewJobPost} />} />
-          <Route path="/saved" element={<JS_ViewSavedJobPost/>} />
+          <Route path="/saved" element={<JS_ViewSavedJobPost />} />
 
           {/* Admin Route */}
           <Route path="/admin" element={<Admin />} />
           <Route path="/admin/checkAccountTypes" element={<CheckAccountTypes />} />
           <Route path="/admin/checkUsers" element={<CheckUsers />} />
-          <Route path="/admin/checkJobPosts" element={<CheckJobPosts />} /> 
+          <Route path="/admin/checkJobPosts" element={<CheckJobPosts />} />
 
           {/* Invalid Route */}
           <Route path="*" element={<_404Page />} />

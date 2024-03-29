@@ -211,3 +211,17 @@ export const REMOVE_SAVED_JOB = gql`
     }
   }
 `;
+
+// query recruiter summary
+export const FETCH_RECRUITER_SUMMARY = gql`
+  query recruiterSummary($userId: String!) {
+    recruiterSummary(userId: $userId) {
+      totalJobPosts
+      totalApplications
+      activeJobPosts
+      closedJobPosts
+      todayJobPosts
+      todayApplications
+    }
+  }
+`;

@@ -77,6 +77,15 @@ export const typeDefs = `
         applicationDate: GraphQlDate
         status: String
     }
+
+    type RecruiterSummary{
+        totalJobPosts: Int
+        totalApplications: Int
+        activeJobPosts: Int
+        closedJobPosts: Int
+        todayJobPosts: Int
+        todayApplications: Int
+    }
     
     type Query {
         users: [User!]!
@@ -90,7 +99,8 @@ export const typeDefs = `
         applicationsByUser(userId: String!): [Application!]!
         applicationsByJob(jobPostId: String!): [Application!]!
         application(applicationId: ID!): Application  
-        savedJobsByEmail(email: String!): [SavedJob!]! 
+        savedJobsByEmail(email: String!): [SavedJob!]!
+        recruiterSummary(userId: String!): RecruiterSummary
     }
 
     type Mutation {
