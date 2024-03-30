@@ -1,5 +1,5 @@
 import { users, login, createUser, updateUserPersonalInfo, user, accountTypes, accountType, deleteUser, createAccountType, deleteAccountType, updateAccountType } from './auth.js';
-import { jobPosts, allJobPosts, jobPost, createJobPost, updateJobPost, deleteJobPost, saveJob, savedJobsByEmail, removeSavedJob } from './job.js';
+import { jobPosts, allJobPosts, jobPost, jobPostWithApplication, createJobPost, updateJobPost, deleteJobPost, saveJob, savedJobsByEmail, removeSavedJob, savedAppliedJobsByUser } from './job.js';
 import { createApplication, applicationsByUser, applicationsByJob, application, updateApplicationStatus, deleteApplication } from './application.js';
 import { recruiterSummary } from './recruiter.js';
 import { GraphQlDateResolver } from './helper.js';
@@ -14,11 +14,13 @@ export const resolvers = {
     jobPosts,
     allJobPosts,
     jobPost,
+    jobPostWithApplication,
     applicationsByUser,
     applicationsByJob,
     application,
     savedJobsByEmail,
-    recruiterSummary
+    recruiterSummary,
+    savedAppliedJobsByUser
   },
   Mutation: {
     createUser,

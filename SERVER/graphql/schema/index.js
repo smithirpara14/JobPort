@@ -86,6 +86,18 @@ export const typeDefs = `
         todayJobPosts: Int
         todayApplications: Int
     }
+
+    type JobPostWithApplication {
+        jobPost: JobPost
+        application: Application
+        savedJob: SavedJob
+    }
+
+    type savedAppliedJobsByUser {
+        savedJobs: [SavedJob]
+        appliedJobs: [Application]
+    }
+
     
     type Query {
         users: [User!]!
@@ -96,11 +108,14 @@ export const typeDefs = `
         jobPosts(userId: String!): [JobPost!]!
         allJobPosts: [JobPost!]!
         jobPost(jobPostId: ID!): JobPost
+        jobPostWithApplication(jobPostId: ID!, userId: String!): JobPostWithApplication
         applicationsByUser(userId: String!): [Application!]!
         applicationsByJob(jobPostId: String!): [Application!]!
         application(applicationId: ID!): Application  
         savedJobsByEmail(email: String!): [SavedJob!]!
+        savedAppliedJobsByUser(userId: String!): savedAppliedJobsByUser
         recruiterSummary(userId: String!): RecruiterSummary
+        
     }
 
     type Mutation {

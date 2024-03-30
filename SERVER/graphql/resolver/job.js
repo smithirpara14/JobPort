@@ -1,7 +1,8 @@
 import bcrypt from 'bcryptjs';
 import Job from '../../models/job.js';
 import User from '../../models/user.js';
-import SavedJob from '../../models/savedJob.js';    
+import SavedJob from '../../models/savedJob.js';
+import Application from '../../models/application.js';
 import jwt from 'jsonwebtoken';
 
 //resolver to get all job post by author
@@ -70,6 +71,33 @@ export async function jobPost(parent, args, context, info) {
     } catch (err) {
         throw err;
     }
+}
+
+//resolver to get job post by id with application or saved job
+export async function jobPostWithApplication(parent, args, context, info) {
+    try {
+        const user = await User.findOne({ email: args.userId });
+        console.log("User::: ", user);
+        if (!user) {
+            throw new Error('User not found');
+        }
+        const jobPost = await Job.findById(args.jobPostId);
+        if (!jobPost) {
+            throw new Error('Job post not found');
+        }
+        console.log("Job Post::: ", jobPost);
+        const application = await Application.findOne({ user: user.id, job: jobPost.id });
+        console.log("Application::: ", application);
+        const savedJob = await SavedJob.findOne({ user: user.id, job: jobPost.id });
+        return {
+            jobPost: { ...jobPost._doc, _id: jobPost.id },
+            application: application ? { ...application._doc, _id: application.id } : null,
+            savedJob: savedJob ? { ...savedJob._doc, _id: savedJob.id } : null
+        };
+    } catch (err) {
+        throw err;
+    }
+
 }
 
 //resolver to update job post
@@ -194,3 +222,33 @@ export async function removeSavedJob(parent, args, context, info) {
         throw err;
     }
 }
+
+// resolver to get all job posts ( saved, applied, archived) by job seeker user
+export async function savedAppliedJobsByUser(parent, args, context, info) {
+    try {
+        const user = await User.findOne({ email: args.userId });
+        if (!user) {
+            throw new Error('User not found');
+        }
+
+        const savedJobs = await SavedJob.find({ user: user._id }).populate('job');
+        const applications = await Application.find({ user: user._id }).populate('job');
+
+        return {
+            savedJobs: savedJobs.map(savedJob => ({
+                ...savedJob._doc,
+                _id: savedJob.id,
+                user: user,
+            })),
+            appliedJobs: applications.map(application => ({
+                ...application._doc,
+                _id: application.id,
+                user: user,
+            }))
+        };
+
+    } catch (err) {
+        console.error("Error fetching saved jobs:", err);
+        throw err;
+    }
+} 

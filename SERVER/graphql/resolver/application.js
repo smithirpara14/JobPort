@@ -1,11 +1,12 @@
 import Application from "../../models/application.js";
 import User from "../../models/user.js";
 import Job from "../../models/job.js";
+import SavedJob from "../../models/savedJob.js";
 
 
 export async function createApplication(parent, args, context, info) {
     try {
-        console.log(args);
+        console.log("Create Application", args);
         const user = await User.findOne({ email: args.userId });
         if (!user) {
             throw new Error('User not found');
@@ -22,6 +23,13 @@ export async function createApplication(parent, args, context, info) {
             status: 'Pending'
         });
         const result = await application.save();
+
+        //delete if saved job exists
+        const savedJob = await SavedJob.findOne({ user: user._id, job: job._id });
+        if (savedJob) {
+            await SavedJob.findByIdAndDelete(savedJob._id);
+        }
+
         return { ...result._doc, _id: result.id };
     }
     catch (err) {

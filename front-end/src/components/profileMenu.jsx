@@ -23,8 +23,8 @@ const ProfileMenu = () => {
             </Nav.Link>
         )}
         {isAuthenticated() && isCandidate() && (
-          <Nav.Link href="/saved" className="text-dark">
-            Saved
+          <Nav.Link href="/myjobs" className="text-dark">
+            My Jobs
           </Nav.Link>
         )}
         <Nav.Link href="/logout" className="text-dark">
