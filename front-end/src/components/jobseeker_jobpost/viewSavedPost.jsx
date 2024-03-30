@@ -2,7 +2,8 @@ import React from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { getUserEmail } from "../../controllers/auth";
 import { Container, Row, Col, Card, Button, Tabs, Tab } from "react-bootstrap";
-import { FETCH_SAVED_APPLIED_JOBS, REMOVE_SAVED_JOB , APPLY_JOB} from "../graphqlQueries";
+import { FETCH_SAVED_APPLIED_JOBS, REMOVE_SAVED_JOB, APPLY_JOB } from "../graphqlQueries";
+import { dateFormatted } from "../../controllers/helper";
 
 const ViewSavedPost = () => {
   const userEmail = getUserEmail();
@@ -58,7 +59,7 @@ const ViewSavedPost = () => {
                     <strong>Salary Range:</strong> {savedPost.job.salaryRange}
                   </Card.Text>
                   <Card.Text>
-                    <strong>Closing Date:</strong> {savedPost.job.closingDate}
+                    <strong>Closing Date:</strong> {dateFormatted(savedPost.job.closingDate)}
                   </Card.Text>
                 </Card.Body>
                 <Card.Footer>
@@ -98,7 +99,7 @@ const ViewSavedPost = () => {
                     <strong>Salary Range:</strong> {savedPost.job.salaryRange}
                   </Card.Text>
                   <Card.Text>
-                    <strong>Closing Date:</strong> {savedPost.job.closingDate}
+                    <strong>Closing Date:</strong> {dateFormatted(savedPost.job.closingDate)}
                   </Card.Text>
                 </Card.Body>
                 <Card.Footer>

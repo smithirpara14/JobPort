@@ -124,6 +124,35 @@ export const FETCH_JOB_POST = gql`
   }
 `;
 
+export const FETCH_JOB_POST_APPLICATIONS = gql`
+  query jobPostWithApplications($jobPostId: ID!) {
+    jobPostWithApplications(jobPostId: $jobPostId) {
+      jobPost {
+        _id
+        title
+        description
+        location
+        experienceLevel
+        employmentType
+        salaryRange
+        creationDate
+        closingDate
+      }
+      applications {
+        _id
+        user {
+          _id
+          firstName
+          lastName
+          email
+        }
+        applicationDate
+        status
+      }
+    }
+  }
+`;
+
 export const FETCH_JOB_POST_APPLICATION = gql`
   query jobPostWithApplication($jobPostId: ID!, $userId: String!) {
     jobPostWithApplication(jobPostId: $jobPostId, userId: $userId) {

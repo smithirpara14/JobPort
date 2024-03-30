@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { Container, Row, Col, Card, Button, Table } from "react-bootstrap";
 import { useQuery, useMutation } from "@apollo/client";
-import { FETCH_JOB_POST, DELETE_JOB_POST } from "../graphqlQueries";
+import { FETCH_JOB_POST_APPLICATIONS, DELETE_JOB_POST } from "../graphqlQueries";
 import { useNavigate, useParams } from "react-router-dom";
 import QueryResult from "../queryResult";
 import { dateFormatted } from "../../controllers/helper";
@@ -18,9 +18,9 @@ const EMP_ViewJobPost = () => {
     }
   });
 
-  const { loading, error, data } = useQuery(FETCH_JOB_POST, {
+  const { loading, error, data } = useQuery(FETCH_JOB_POST_APPLICATIONS, {
     variables: { jobPostId: id },
-    onCompleted: (data) => { setJobPost(data.jobPost); }
+    onCompleted: (data) => { setJobPost(data.jobPostWithApplications.jobPost); }
   });
   
   
@@ -41,10 +41,10 @@ const EMP_ViewJobPost = () => {
   return (
     
     <QueryResult error={error} loading={loading} data={data}>
-    {data && data.jobPost && (
+    {data && data.jobPostWithApplications && data.jobPostWithApplications.jobPost && (
       <Container className="mt-5">
       <Row>
-        <Col md={8} className="mx-auto">
+        <Col md={10} className="mx-auto">
           <Card>
               <Card.Body>
               {errorDelete && <span className="text-danger">{errorDelete}</span>}
@@ -72,8 +72,51 @@ const EMP_ViewJobPost = () => {
           </Card>
         </Col>
       </Row>
+      {data.jobPostWithApplications.applications && data.jobPostWithApplications.applications.length > 0 ? (
+        <Row className="mt-4">
+        <Col md={10} className="mx-auto">
+          <Card>
+            <Card.Body>
+              <h3>Applications</h3>
+              <Table striped bordered hover>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Application Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.jobPostWithApplications.applications.map(application => (
+                    <tr key={application.user.email}>
+                      <td>{application.user.firstName} {application.user.lastName}</td>
+                      <td>{application.user.email}</td>
+                      <td>{application.status}</td>
+                      <td>{dateFormatted(application.applicationDate)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+          ) : (
+            <Row className="mt-4">
+            <Col md={10} className="mx-auto">
+            <Card className="mt-3">
+              <Card.Body>
+                <Card.Text>No applications yet.</Card.Text>
+              </Card.Body>
+                  </Card>
+                </Col>
+              </Row>
+          
+      )}
     </Container>
-    )}
+      )}
+      
 </QueryResult>
   );
 };

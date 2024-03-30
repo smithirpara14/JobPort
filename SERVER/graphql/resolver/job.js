@@ -73,6 +73,23 @@ export async function jobPost(parent, args, context, info) {
     }
 }
 
+// resolver to get job post with applications for recruiter
+export async function jobPostWithApplications(parent, args, context, info) {
+    try {
+        const jobPost = await Job.findById(args.jobPostId).populate('author');
+        const applications = await Application.find({ job: jobPost._id }).populate('user');
+        return {
+            jobPost: { ...jobPost._doc, _id: jobPost.id },
+            applications: applications.map(application => {
+                return { ...application._doc, _id: application.id };
+            })
+        };
+
+    } catch (err) {
+        throw err;
+    }
+}
+
 //resolver to get job post by id with application or saved job
 export async function jobPostWithApplication(parent, args, context, info) {
     try {

@@ -98,6 +98,11 @@ export const typeDefs = `
         appliedJobs: [Application]
     }
 
+    type JobPostWithApplications {
+        jobPost: JobPost
+        applications: [Application]
+    }
+
     
     type Query {
         users: [User!]!
@@ -108,6 +113,7 @@ export const typeDefs = `
         jobPosts(userId: String!): [JobPost!]!
         allJobPosts: [JobPost!]!
         jobPost(jobPostId: ID!): JobPost
+        jobPostWithApplications(jobPostId: ID!): JobPostWithApplications
         jobPostWithApplication(jobPostId: ID!, userId: String!): JobPostWithApplication
         applicationsByUser(userId: String!): [Application!]!
         applicationsByJob(jobPostId: String!): [Application!]!
