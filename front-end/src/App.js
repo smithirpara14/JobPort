@@ -83,7 +83,7 @@ const App = () => {
           {/* Job Seeker (Cadidate) Job Post Routes */}
           <Route path="/jobposts" element={<PrivateRoute component={JS_JobPostList} />} />
           <Route path="/jobposts/:id" element={<PrivateRoute component={JS_ViewJobPost} />} />
-          <Route path="/saved" element={<JS_ViewSavedJobPost />} />
+          <Route path="/myjobs" element={<JS_ViewSavedJobPost />} />
 
           {/* Admin Route */}
           <Route path="/admin" element={<Admin />} />

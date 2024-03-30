@@ -7,6 +7,7 @@
 /* Container for the entire menu */
 .menu-container {
   position: relative;
+  z-index: 1000;
 }
 
 /* Trigger button styling */
@@ -43,9 +44,11 @@
 
 .menu.active {
   display: block;
+  text-wrap: nowrap;
 }
 
 .menu ul {
+  text-wrap: nowrap;
   list-style: none;
   padding: 0;
   margin: 0;

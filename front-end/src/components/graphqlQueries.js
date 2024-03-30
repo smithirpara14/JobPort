@@ -124,6 +124,30 @@ export const FETCH_JOB_POST = gql`
   }
 `;
 
+export const FETCH_JOB_POST_APPLICATION = gql`
+  query jobPostWithApplication($jobPostId: ID!, $userId: String!) {
+    jobPostWithApplication(jobPostId: $jobPostId, userId: $userId) {
+      jobPost {
+        _id
+        title
+        description
+        location
+        experienceLevel
+        employmentType
+        salaryRange
+        creationDate
+        closingDate
+      }
+      application {
+        _id,
+        status
+      }
+      savedJob {
+        _id
+      }
+  }
+}`;
+
 export const UPDATE_JOB_POST = gql`
   mutation updateJobPost($jobId: ID!, $jobPostInput: JobPostInput!) {
     updateJobPost(jobPostId: $jobId, jobPostInput: $jobPostInput) {
@@ -203,6 +227,44 @@ export const FETCH_SAVED_POSTS_BY_EMAIL = gql`
   }
 `;
 
+//query to fetch saved, applied jobs by user
+export const FETCH_SAVED_APPLIED_JOBS = gql`
+  query savedAppliedJobsByUser($userId: String!) {
+    savedAppliedJobsByUser(userId: $userId) {
+      savedJobs {
+        _id
+        job {
+          _id
+          title
+          description
+          location
+          experienceLevel
+          employmentType
+          salaryRange
+          creationDate
+          closingDate
+        }
+        savedDate
+      }
+      appliedJobs {
+        _id
+        job {
+          _id
+          title
+          description
+          location
+          experienceLevel
+          employmentType
+          salaryRange
+          creationDate
+          closingDate
+        }
+        applicationDate
+        status
+      }
+  }
+}`;
+
 // mutation to remove a saved job
 export const REMOVE_SAVED_JOB = gql`
   mutation RemoveSavedJob($savedJobId: ID!) {
@@ -222,6 +284,17 @@ export const FETCH_RECRUITER_SUMMARY = gql`
       closedJobPosts
       todayJobPosts
       todayApplications
+    }
+  }
+`;
+
+// mutaion to apply for a job createApplication(userId: String!, jobPostId: String!): Application
+export const APPLY_JOB = gql`
+  mutation createApplication($userId: String!, $jobPostId: String!) {
+    createApplication(userId: $userId, jobPostId: $jobPostId) {
+      _id
+      applicationDate
+      status
     }
   }
 `;

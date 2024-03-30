@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { useQuery, useMutation } from "@apollo/client";
-import { FETCH_JOB_POST, SAVE_JOB } from "../graphqlQueries";
+import { FETCH_JOB_POST_APPLICATION, SAVE_JOB, APPLY_JOB } from "../graphqlQueries";
 import { useParams } from "react-router-dom";
 import QueryResult from "../queryResult";
 import { getUserEmail } from "../../controllers/auth";
@@ -13,27 +13,45 @@ const JS_ViewJobPost = () => {
   const userEmail = getUserEmail();
   const [jobPost, setJobPost] = useState({});
   const [isSaved, setIsSaved] = useState(false); 
+  const [isApplied, setIsApplied] = useState(false);
   const [saveJob] = useMutation(SAVE_JOB);
+  const [applyJob] = useMutation(APPLY_JOB);
 
-  const { loading, error, data } = useQuery(FETCH_JOB_POST, {
-    variables: { jobPostId: id },
-    onCompleted: (data) => { setJobPost(data.jobPost); }
+  const { loading, error, data } = useQuery(FETCH_JOB_POST_APPLICATION, {
+    variables: { jobPostId: id, userId: userEmail },
+    onCompleted: (data) => {
+      console.log("Data:::", data.jobPostWithApplication);
+      setJobPost(data.jobPostWithApplication.jobPost);
+      if (data.jobPostWithApplication.application) {
+        setIsApplied(true);
+      }
+      if (data.jobPostWithApplication.savedJob) {
+        setIsSaved(true);
+      }
+    }
   });
 
   const handleSaveJob = async () => {
-    setIsSaved(true);
     try {
       await saveJob({ variables: { email: userEmail, jobPostId: id } });
-      console.log('Job saved: '+ userEmail);
-      console.log(data);
+      setIsSaved(true);
     } catch (error) {
       console.error("Error saving job:", error);
     }
   };
 
+  const handleApplyJob = async () => {
+    try {
+      await applyJob({ variables: { userId : userEmail, jobPostId: id } });
+      setIsApplied(true);
+    } catch (error) {
+      console.error("Error applying job:", error);
+    }
+  }
+
   return (
     <QueryResult error={error} loading={loading} data={data}>
-      {data && data.jobPost && (
+      {data && data.jobPostWithApplication && (
         <Container className="mt-5">
           <Row>
             <Col md={8} className="mx-auto">
@@ -57,8 +75,10 @@ const JS_ViewJobPost = () => {
                   </Card.Text>
                 </Card.Body>
                 <Card.Footer>
-                  <Button variant="primary" onClick={() => { console.log('apply now')}} className="m-1">Apply now</Button>
-                  <Button variant="primary" onClick={handleSaveJob} className="m-1" disabled={isSaved}>{isSaved ? "Saved" : "Save for later"}</Button>
+                  <Button variant="primary" onClick={handleApplyJob} className="m-1" disabled={isApplied}>{isApplied ? "Applied" : "Apply now"}</Button>
+                  {
+                    isApplied ? null : <Button variant="primary" onClick={handleSaveJob} className="m-1" disabled={isSaved}>{isSaved ? "Saved" : "Save for later"}</Button>
+                  }
                 </Card.Footer>
               </Card>
             </Col>
