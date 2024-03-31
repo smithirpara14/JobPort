@@ -153,6 +153,11 @@ export async function deleteJobPost(parent, args, context, info) {
             throw new Error('Job not found');
         }
         await Job.findByIdAndDelete(args.jobPostId);
+
+        //delete saved job and applications for the job post
+        await SavedJob.deleteMany({ job: args.jobPostId });
+        await Application.deleteMany({ job: args.jobPostId });
+
         return { ...job._doc, _id: job.id };
     } catch (err) {
         throw err;
