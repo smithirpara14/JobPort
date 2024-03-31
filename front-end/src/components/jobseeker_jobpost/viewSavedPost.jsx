@@ -34,7 +34,7 @@ const ViewSavedPost = () => {
 
   return (
     <Container className="mt-5">
-      <h1>Your Jobs</h1>
+      <h1>My Jobs</h1>
       {loading && <p>Loading...</p>}
       {error && <p>Error: {error.message}</p>}
       <Tabs defaultActiveKey="saved" id="uncontrolled-tab-example" className="mb-3">
