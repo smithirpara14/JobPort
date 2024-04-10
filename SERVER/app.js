@@ -8,19 +8,24 @@ import cors from 'cors';
 import { readFileSync } from 'fs';
 import { typeDefs } from "./graphql/schema/index.js";
 import { resolvers } from './graphql/resolver/index.js';
-import { isAuth } from './middleware/is-auth.js';
+import { default as graphqlUploadExpress } from 'graphql-upload/graphqlUploadExpress.mjs';
+import multer from 'multer';
 
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 
 const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 1 }));
 
 // app.use(isAuth);
 
 const apolloServer = new ApolloServer({
     typeDefs,
     resolvers,
+    uploads: false
 });
 
 const startApolloServer = async () => {
@@ -36,6 +41,10 @@ const startApolloServer = async () => {
             }
         }
     }));
+    app.use('/upload', upload.single('file'), (req, res) => {
+        res.send({ success: true });
+    });
+
 };
 
 startApolloServer();
@@ -50,6 +59,7 @@ mongoose.connect(`mongodb+srv://${process.env.MONGO_USER
     }).catch(err => {
         console.log(err);
     });
+
 
 // mongoose.connect(`mongodb+srv://krunal:qwertyuiop@cluster0.4ej0mg8.mongodb.net/<your-database-name>?retryWrites=true&w=majority`)
 //     .then(() => {

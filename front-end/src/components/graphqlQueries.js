@@ -1,5 +1,6 @@
 import { gql } from "@apollo/client";
 
+
 export const GET_ACCOUNT_TYPES = gql`
   query accountTyes{
     accountTypes {
@@ -325,5 +326,28 @@ export const APPLY_JOB = gql`
       applicationDate
       status
     }
+  }
+`;
+
+// query to fetch resume by user
+export const FETCH_RESUME = gql`
+  query getResume($userId: String!) {
+    getResume(userId: $userId) {
+      _id
+      filename
+      mimetype
+      path
+    }
+  }
+`;
+
+// mutation to upload resume
+export const UPLOAD_RESUME = gql`
+  mutation uploadResume($userId: String!, $file: Upload!) {
+    uploadResume(userId: $userId, file: $file) {
+      filename
+      mimetype
+      encoding
+    } 
   }
 `;
