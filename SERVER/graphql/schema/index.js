@@ -1,6 +1,7 @@
 
 export const typeDefs = `
     scalar GraphQlDate
+    scalar Upload
 
     type User {
         _id: ID
@@ -103,6 +104,19 @@ export const typeDefs = `
         applications: [Application]
     }
 
+    type Resume {
+        _id: ID!
+        user: User!
+        filename: String!
+        mimetype: String!
+        path: String!
+    }
+
+    type File {
+        filename: String!
+        mimetype: String!
+        encoding: String!
+    }
     
     type Query {
         users: [User!]!
@@ -120,7 +134,8 @@ export const typeDefs = `
         application(applicationId: ID!): Application  
         savedJobsByEmail(email: String!): [SavedJob!]!
         savedAppliedJobsByUser(userId: String!): savedAppliedJobsByUser
-        recruiterSummary(userId: String!): RecruiterSummary
+        recruiterSummary(userId: String!): RecruiterSummary,
+        getResume(userId: String!): Resume
         
     }
 
@@ -139,5 +154,6 @@ export const typeDefs = `
         deleteApplication(applicationId: ID!): Application
         removeSavedJob(savedJobId: ID!): SavedJob     
         saveJob(email: String!, jobPostId: ID!): SavedJob
+        uploadResume(userId:String!, file: Upload!): File!
     }
 `;

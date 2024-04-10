@@ -11,3 +11,17 @@ export const GraphQlDateResolver = new GraphQLScalarType({
         return isNaN(newDate) ? undefined : newDate;
     },
 });
+
+export const GraphQlUploadResolver = new GraphQLScalarType({
+    name: "Upload",
+    description: "A GraphQL Upload Type",
+    parseValue(value) {
+        return value;
+    },
+    parseLiteral(ast) {
+        return ast.value;
+    },
+    serialize(value) {
+        return value;
+    },
+});

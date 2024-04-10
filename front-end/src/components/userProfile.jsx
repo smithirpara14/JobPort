@@ -5,6 +5,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { FETCH_USER_PERSONAL_INFO, UPDATE_USER_PERSONAL_INFO } from "./graphqlQueries";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { validateName, dateFormatted } from "../controllers/helper";
+import ManageResume from "./manageResume";
 
 const UserProfile = () => {
     const [formDisabled, setFormDisabled] = useState(true);
@@ -129,7 +130,31 @@ const UserProfile = () => {
             {data && data.user && (
                 <Container className="mt-5 p-5" style={{ backgroundColor: "#f0f0f0" }}>
                     <Row>
+                        <Col md={8}>
+                            <h3>Manager User Profile</h3>
+                        </Col>
+                        <Col md={2} className="d-flex flex-row-reverse">
+                            
+                            {formDisabled ? (
+                                <Button onClick={() => setFormDisabled(!formDisabled)} className="m-1">
+                                Edit
+                                </Button>
+                            ) : (
+                                    <>
+                                <Button onClick={handleCancel} className="m-1">
+                                Cancel
+                                </Button>
+                                
+                                <Button onClick={handleSave} className="m-1">
+                                Save
+                                </Button>
+                                    </>
+                            )}
+                        </Col>
+                    </Row>
+                    <Row>
                         <Col md={10} className="right-section align-self-center p-4">
+                            
                             {formDisabled ?
                                 (
                                 <Row className="mt-5">
@@ -222,23 +247,11 @@ const UserProfile = () => {
                             }
                             
                         </Col>
-                        <Col md={2}>
-                            
-                            {formDisabled ? (
-                                <Button onClick={() => setFormDisabled(!formDisabled)} className="m-1">
-                                Edit
-                                </Button>
-                            ) : (
-                                    <>
-                                <Button onClick={handleCancel} className="m-1">
-                                Cancel
-                                </Button>
-                                
-                                <Button onClick={handleSave} className="m-1">
-                                Save
-                                </Button>
-                                    </>
-                            )}
+                        
+                    </Row>
+                    <Row className="mt-5">
+                        <Col md={12}>
+                            <ManageResume />
                         </Col>
                     </Row>
                 </Container>
