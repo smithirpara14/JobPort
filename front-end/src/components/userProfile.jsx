@@ -6,6 +6,7 @@ import { FETCH_USER_PERSONAL_INFO, UPDATE_USER_PERSONAL_INFO } from "./graphqlQu
 import "bootstrap/dist/css/bootstrap.min.css";
 import { validateName, dateFormatted } from "../controllers/helper";
 import ManageResume from "./manageResume";
+import ManageService from "./user_account/ManageService";
 
 const UserProfile = () => {
     const [formDisabled, setFormDisabled] = useState(true);
@@ -252,6 +253,12 @@ const UserProfile = () => {
                     <Row className="mt-5">
                         <Col md={12}>
                             <ManageResume />
+                        </Col>
+                    </Row>
+                    
+                    <Row className="mt-5">
+                        <Col md={6}>
+                            <ManageService />
                         </Col>
                     </Row>
                 </Container>

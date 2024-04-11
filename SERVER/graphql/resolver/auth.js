@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs';
 import User from '../../models/user.js';
 import AccountType from '../../models/accounttype.js';
 import jwt from 'jsonwebtoken';
+import { stripe } from './index.js';
 
 export async function createUser(parent, args, context, info) {
     try {
@@ -236,3 +237,130 @@ export async function login(parent, { email, password }, context, info) {
     return { userId: user.email, token: token, tokenExpiration: 1, userRole: user.accountType.name };
 
 }
+
+//resolver for creating subscription
+export async function createSubscription(parent, args, context, info) {
+    try {
+        const { userId, source, plan } = args;
+        console.log("args: ", args);
+        const user = await User.findOne({ email: userId });
+        if (!user) {
+            throw new Error('User not found');
+        }
+        let planId = null;
+
+        if (plan == 'Monthly') {
+            planId = 'price_1P48Ig01l6hWzQr1ew7xCdiO';
+        }
+        else if (plan == '6Months') {
+            planId = 'price_1P48Ig01l6hWzQr1bGhdXug8';
+        }
+        else if (plan == 'Yearly') {
+            planId = 'price_1P48Ig01l6hWzQr1uHjruIOS';
+        }
+
+        if (!planId) {
+            throw new Error('Invalid plan');
+        }
+
+        const customer = await stripe.customers.create({
+            email: user.email,
+            source: source,
+            plan: planId
+        });
+
+        user.stripeId = customer.id;
+        user.subscriptionType = plan;
+        await user.save();
+        return { ...user._doc, _id: user.id };
+
+    } catch (err) {
+        console.error("Error creating subscription:", err);
+        throw err;
+    }
+}
+
+//resolver for fetching user subscription
+export async function getSubscription(parent, args, context, info) {
+    try {
+        const { userId } = args;
+        const user = await User.findOne({ email: userId });
+        if (!user) {
+            throw new Error('User not found');
+        }
+        //return subscription details if customer is empty
+        if (!user.stripeId) {
+            return {
+                stripeId: user.stripeId,
+                subscriptionType: user.subscriptionType,
+                expirationDate: null,
+                nextPaymentDate: null,
+                nextPaymentAmount: 0,
+                status: 'Cancelled/Expired'
+            };
+        }
+        //fetch subscription details from stripe using stripeId from user and fetch subscription status
+
+        const customer = await stripe.customers.retrieve(user.stripeId);
+        console.log("Customer::: ", customer);
+
+
+
+        const subscription = await stripe.subscriptions.list({ customer: customer.id });
+        console.log("Subscription::: ", subscription);
+
+        //return subscription details if subscription.data is not empty
+        if (subscription.data.length === 0) {
+            return {
+                stripeId: user.stripeId,
+                subscriptionType: user.subscriptionType,
+                expirationDate: null,
+                nextPaymentDate: null,
+                nextPaymentAmount: 0,
+                status: 'Cancelled/Expired'
+            };
+        } else {
+            return {
+                stripeId: user.stripeId,
+                subscriptionType: user.subscriptionType,
+                expirationDate: subscription.data[0].current_period_end ? new Date(subscription.data[0].current_period_end * 1000) : null,
+                nextPaymentDate: subscription.data[0].current_period_end ? new Date(subscription.data[0].current_period_end * 1000) : null,
+                nextPaymentAmount: subscription.data[0].plan.amount / 100,
+                status: subscription.data[0].status
+            };
+        }
+
+    }
+    catch (err) {
+        console.error("Error fetching user subscription:", err);
+        throw err;
+    }
+}
+
+//resolver for cancelling subscription
+export async function cancelSubscription(parent, args, context, info) {
+    try {
+        const { userId } = args;
+        const user = await User.findOne({ email: userId });
+        if (!user) {
+            throw new Error('User not found');
+        }
+        //fetch customer from stripe using stripeId from user
+        const customer = await stripe.customers.retrieve(user.stripeId);
+        console.log("Customer::: ", customer);
+        //fetch subscription from stripe using customer id
+        const subscription = await stripe.subscriptions.list({ customer: customer.id });
+        console.log("Subscription::: ", subscription);
+        //cancel subscription
+        await stripe.subscriptions.cancel(subscription.data[0].id);
+        //update user subscription details
+        user.subscriptionType = 'Cancelled/Expired';
+        await user.save();
+        return { ...user._doc, _id: user.id };
+    } catch (err) {
+        console.error("Error cancelling subscription:", err);
+        throw err;
+    }
+}
+
+

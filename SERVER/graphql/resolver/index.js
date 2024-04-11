@@ -1,11 +1,11 @@
-import { users, login, createUser, updateUserPersonalInfo, user, accountTypes, accountType, deleteUser, createAccountType, deleteAccountType, updateAccountType } from './auth.js';
+import { users, login, createUser, updateUserPersonalInfo, user, accountTypes, accountType, deleteUser, createAccountType, deleteAccountType, updateAccountType, createSubscription, getSubscription, cancelSubscription } from './auth.js';
 import { jobPosts, allJobPosts, jobPost, jobPostWithApplication, jobPostWithApplications, createJobPost, updateJobPost, deleteJobPost, saveJob, savedJobsByEmail, removeSavedJob, savedAppliedJobsByUser } from './job.js';
 import { createApplication, applicationsByUser, applicationsByJob, application, updateApplicationStatus, deleteApplication } from './application.js';
 import { recruiterSummary } from './recruiter.js';
 import { uploadResume, getResume } from './resume.js';
 import { GraphQlDateResolver, GraphQlUploadResolver } from './helper.js';
-import GraphQLUpload  from 'graphql-upload/GraphQLUpload.mjs';
-
+import GraphQLUpload from 'graphql-upload/GraphQLUpload.mjs';
+import Stripe from 'stripe';
 export const resolvers = {
   GraphQlDate: GraphQlDateResolver,
   Upload: GraphQLUpload,
@@ -26,7 +26,8 @@ export const resolvers = {
     savedJobsByEmail,
     recruiterSummary,
     savedAppliedJobsByUser,
-    getResume
+    getResume,
+    getSubscription
   },
   Mutation: {
     createUser,
@@ -43,6 +44,10 @@ export const resolvers = {
     deleteApplication,
     saveJob,
     removeSavedJob,
-    uploadResume
+    uploadResume,
+    createSubscription,
+    cancelSubscription
   }
 };
+
+export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)

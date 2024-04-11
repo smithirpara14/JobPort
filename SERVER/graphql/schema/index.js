@@ -12,6 +12,8 @@ export const typeDefs = `
         creationDate: String
         birthDate: GraphQlDate
         accountType: AccountType
+        stripeId: String
+        subscriptionType: String
     }
 
     type AccountType {
@@ -118,6 +120,15 @@ export const typeDefs = `
         encoding: String!
     }
     
+    type Subscription {
+        stripeId: String
+        subscriptionType: String
+        expirationDate: GraphQlDate
+        nextPaymentDate: GraphQlDate
+        nextPaymentAmount: Int
+        status: String
+    }
+
     type Query {
         users: [User!]!
         user(email: String!): User
@@ -136,6 +147,7 @@ export const typeDefs = `
         savedAppliedJobsByUser(userId: String!): savedAppliedJobsByUser
         recruiterSummary(userId: String!): RecruiterSummary,
         getResume(userId: String!): Resume
+        getSubscription(userId: String!): Subscription
         
     }
 
@@ -155,5 +167,7 @@ export const typeDefs = `
         removeSavedJob(savedJobId: ID!): SavedJob     
         saveJob(email: String!, jobPostId: ID!): SavedJob
         uploadResume(userId:String!, file: Upload!): File!
+        createSubscription(userId: String!, source: String!, plan: String!): User
+        cancelSubscription(userId: String!): User
     }
 `;

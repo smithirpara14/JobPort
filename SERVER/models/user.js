@@ -29,7 +29,14 @@ const userSchema = new Schema({
     accountType: {
         type: Schema.Types.ObjectId,
         ref: 'AccountType'
-    }
+    },
+    stripeId: {
+        type: String
+    },
+    subscriptionType: {
+        type: String,
+        default: 'free-trial'
+    },
 });
 
 export default mongoose.model('User', userSchema);

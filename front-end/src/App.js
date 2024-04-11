@@ -29,6 +29,7 @@ import PrivateRoute from "./components/privateRoute";
 
 import "./App.css";
 import { isAuthenticated, isEmployer } from "./controllers/auth";
+import SubscribeService from "./components/user_account/SubscribeService";
 
 const App = () => {
   return (
@@ -93,6 +94,9 @@ const App = () => {
 
           {/* Invalid Route */}
           <Route path="*" element={<_404Page />} />
+
+          {/* Stripe testing route */}
+          <Route path="/subscribe" element={<PrivateRoute component={SubscribeService} />} />
         </Routes>
       </Router>
       <Footer />
