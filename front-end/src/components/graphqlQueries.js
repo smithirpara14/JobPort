@@ -351,3 +351,40 @@ export const UPLOAD_RESUME = gql`
     } 
   }
 `;
+
+// mutation to create subscription
+//createSubscription(userId: String!, source: String!, plan: String!)
+export const CREATE_SUBSCRIPTION = gql`
+  mutation createSubscription($userId: String!, $source: String!, $plan: String!) {
+    createSubscription(userId: $userId, source: $source, plan: $plan) {
+      email
+      stripeId
+      subscriptionType
+    }
+  }
+`;
+
+// query to fetch user subscription
+export const FETCH_SUBSCRIPTION = gql`
+  query getSubscription($userId: String!) {
+    getSubscription(userId: $userId) {
+      stripeId
+      subscriptionType
+      expirationDate
+      nextPaymentDate
+      nextPaymentAmount
+      status
+    }
+  }
+`;
+
+// mutation to cancel subscription
+export const CANCEL_SUBSCRIPTION = gql`
+  mutation cancelSubscription($userId: String!) {
+    cancelSubscription(userId: $userId) {
+      email
+      stripeId
+      subscriptionType
+    }
+  }
+`;
