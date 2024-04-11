@@ -62,7 +62,7 @@ const JS_ViewJobPost = () => {
                     {jobPost.location} | {jobPost.employmentType}
                   </Card.Subtitle>
                   <Card.Text>
-                    <strong>Description:</strong> {jobPost.description}
+                    <strong>Description:</strong> {jobPost.description && jobPost.description.length > 500 ? jobPost.description.substring(0,500) + ' ... ' : jobPost.description}
                   </Card.Text>
                   <Card.Text>
                     <strong>Experience Level:</strong> {jobPost.experienceLevel}

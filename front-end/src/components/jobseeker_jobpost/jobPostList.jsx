@@ -187,7 +187,7 @@ const JS_JobPostList = () => {
                       <Card.Subtitle className="mb-2 text-muted">
                         {job.location} | {job.employmentType}
                       </Card.Subtitle>
-                      <Card.Text>{job.description}</Card.Text>
+                      <Card.Text>{job.description && job.description.length > 100 ? job.description.substring(0,100) + ' ...' : job.description}</Card.Text>
                       <Button
                         variant="primary"
                         onClick={() => {

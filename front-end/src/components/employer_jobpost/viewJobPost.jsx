@@ -1,12 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Card, Button, Table } from "react-bootstrap";
 import { useQuery, useMutation } from "@apollo/client";
-import { FETCH_JOB_POST_APPLICATIONS, DELETE_JOB_POST } from "../graphqlQueries";
+import { FETCH_JOB_POST_APPLICATIONS, DELETE_JOB_POST, UPDATE_APPLICATION_STATUS } from "../graphqlQueries";
 import { useNavigate, useParams } from "react-router-dom";
 import QueryResult from "../queryResult";
 import { dateFormatted } from "../../controllers/helper";
 import "bootstrap/dist/css/bootstrap.min.css";
-
 const EMP_ViewJobPost = () => {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -17,10 +16,18 @@ const EMP_ViewJobPost = () => {
       navigate("/recruiter/jobposts", { state: { jobDeleted: true } });
     }
   });
+  const [updateApplicationStatus] = useMutation(UPDATE_APPLICATION_STATUS, {
+    onCompleted: () => { 
+      refetch();
+    }
+  });
 
-  const { loading, error, data } = useQuery(FETCH_JOB_POST_APPLICATIONS, {
+  const { loading, error, data, refetch } = useQuery(FETCH_JOB_POST_APPLICATIONS, {
     variables: { jobPostId: id },
-    onCompleted: (data) => { setJobPost(data.jobPostWithApplications.jobPost); }
+    onCompleted: (data) => {
+      console.log("data", data);
+      setJobPost(data.jobPostWithApplications.jobPost);
+    }
   });
   
   
@@ -35,13 +42,44 @@ const EMP_ViewJobPost = () => {
       }
     }
   };
+  
+  const handleAccept = async (applicationId) => {
+    try {
+      await updateApplicationStatus(
+        {
+          variables:
+          {
+            applicationId:applicationId,
+            status: "Accepted"
+          }
+        });
+      refetch();
+    } catch (error) {
+      console.error("Error accepting application:", error);
+    }
+  }
+
+  const handleReject = async (applicationId) => {
+    try {
+      await updateApplicationStatus(
+        {
+          variables:
+          {
+            applicationId:applicationId,
+            status: "Rejected"
+          }
+        });
+      refetch();
+    }catch (error) {
+      console.error("Error rejecting application:", error);
+    }
+  }
 
   
-
   return (
     
     <QueryResult error={error} loading={loading} data={data}>
-    {data && data.jobPostWithApplications && data.jobPostWithApplications.jobPost && (
+      {data && data.jobPostWithApplications && data.jobPostWithApplications.jobPost && jobPost && (
       <Container className="mt-5">
       <Row>
         <Col md={10} className="mx-auto">
@@ -53,7 +91,7 @@ const EMP_ViewJobPost = () => {
                 {jobPost.location} | {jobPost.employmentType}
               </Card.Subtitle>
               <Card.Text>
-                <strong>Description:</strong> {jobPost.description}
+                <strong>Description:</strong> { jobPost.description && jobPost.description.length > 500 ? jobPost.description.substring(0,500) + ' ... ' : jobPost.description}
               </Card.Text>
               <Card.Text>
                 <strong>Experience Level:</strong> {jobPost.experienceLevel}
@@ -85,6 +123,7 @@ const EMP_ViewJobPost = () => {
                     <th>Email</th>
                     <th>Status</th>
                     <th>Application Date</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -94,6 +133,15 @@ const EMP_ViewJobPost = () => {
                       <td>{application.user.email}</td>
                       <td>{application.status}</td>
                       <td>{dateFormatted(application.applicationDate)}</td>
+                      <td>
+                        <Button variant="success" onClick={() => {
+                          handleAccept(application._id);
+                        
+                      }} className="m-1">Accept</Button>
+                        <Button variant="danger" onClick={() => {
+                          handleReject(application._id);
+                      }} className="m-1">Reject</Button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>

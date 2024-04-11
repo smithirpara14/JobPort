@@ -24,10 +24,11 @@ export async function jobPosts(parent, args, context, info) {
     }
 }
 
-//resolver to get all job posts
+//resolver to get all active job posts 
 export async function allJobPosts(parent, args, context, info) {
     try {
-        const jobPosts = await Job.find().populate('author');
+
+        const jobPosts = await Job.find({ closingDate: { $gte: new Date() } }).populate('author');
         return jobPosts.map(jobPost => {
             return { ...jobPost._doc, _id: jobPost.id };
         });

@@ -329,6 +329,17 @@ export const APPLY_JOB = gql`
   }
 `;
 
+// mutation to update application status
+export const UPDATE_APPLICATION_STATUS = gql`
+  mutation updateApplicationStatus($applicationId: ID!, $status: String!) {
+    updateApplicationStatus(applicationId: $applicationId, status: $status) {
+      _id
+      status
+    }
+  }
+`;
+
+
 // query to fetch resume by user
 export const FETCH_RESUME = gql`
   query getResume($userId: String!) {

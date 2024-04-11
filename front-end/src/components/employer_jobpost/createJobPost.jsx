@@ -106,9 +106,9 @@ const EMP_CreateJobPost = () => {
 
   return (
     <Container className="mt-5 p-5" style={{ backgroundColor: "#f0f0f0" }}>
+          <Form onSubmit={handleSubmit} className="w-100">
       <Row>
         <Col md={6} className="right-section align-self-center p-4">
-          <Form onSubmit={handleSubmit} className="w-100">
             {error && <span className="text-danger">{error}</span>}
             <Form.Group controlId="formJobTtile">
               <Form.Label>Job Title:</Form.Label>
@@ -121,18 +121,6 @@ const EMP_CreateJobPost = () => {
             </Form.Group>
             {errorJobTitle && (
               <span className="text-danger">{errorJobTitle}</span>
-            )}
-            <Form.Group controlId="formDescription">
-              <Form.Label>Description:</Form.Label>
-              <Form.Control
-                type="textarea"
-                value={description}
-                onChange={(event) => setDescription(event.target.value)}
-                placeholder="Enter Job Description"
-              />
-            </Form.Group>
-            {errorDescription && (
-              <span className="text-danger">{errorDescription}</span>
             )}
             <Form.Group controlId="formLocation">
               <Form.Label>Location Type:</Form.Label>
@@ -237,18 +225,30 @@ const EMP_CreateJobPost = () => {
                 )}
               </Col>
             </Row>
-            <div className="text-center">
-              <Button
-                variant="primary"
-                type="submit"
-                className="w-50 mt-5 jp-bg-primary m-auto"
-              >
-                Save Job
-              </Button>
-            </div>
-          </Form>
-        </Col>
-      </Row>
+          </Col>
+          <Col md={6} className=" p-4">
+            <Form.Group controlId="formDescription">
+                <Form.Label>Description:</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  value={description} rows={15}
+                  onChange={(event) => setDescription(event.target.value)}
+                  placeholder="Enter Job Description"
+                />
+              </Form.Group>
+              {errorDescription && (
+                <span className="text-danger">{errorDescription}</span>
+              )}
+          </Col>
+        </Row>
+        <Row>
+          <Col className="text-center">
+            <Button variant="primary" type="submit">
+              Create Job Post
+            </Button>
+          </Col>
+        </Row>
+      </Form>
     </Container>
   );
 };
