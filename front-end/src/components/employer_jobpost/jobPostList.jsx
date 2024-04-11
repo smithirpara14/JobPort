@@ -62,7 +62,7 @@ const EMP_JobPostList = () => {
                   <Card>
                     <Card.Body>
                       <Card.Title>{job.title}</Card.Title>
-                      <Card.Text>{job.description}</Card.Text>
+                      <Card.Text>{job.description.length > 100 ? job.description.substring(0,100) + ' ... ' : job.description}</Card.Text>
                       <Button
                         variant="primary"
                         onClick={() => {

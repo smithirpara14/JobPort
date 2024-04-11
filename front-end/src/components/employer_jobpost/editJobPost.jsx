@@ -146,13 +146,14 @@ const EMP_EditJobPost = () => {
     <QueryResult error={errorDB} loading={loading} data={data}>
       {data && data.jobPost && (
         <Container className="mt-5 p-5" style={{ backgroundColor: "#f0f0f0" }}>
-          <Row>
-            <Col md={6} className="right-section align-self-center p-4">
-              <Form onSubmit={handleSubmit} className="w-100">
-                {error && <span className="text-danger">{error}</span>}
+          <Form onSubmit={handleSubmit} className="w-100">
+          {error && <span className="text-danger">{error}</span>}
                 {showSuccessMessage && (
                   <span className="text-success">{successMessage}</span>
                 )}
+            <Row>
+              <Col md={6} className="right-section align-self-center p-4">
+                
                 <Form.Group controlId="formJobTtile">
                   <Form.Label>Job Title:</Form.Label>
                   <Form.Control
@@ -164,18 +165,6 @@ const EMP_EditJobPost = () => {
                 </Form.Group>
                 {errorJobTitle && (
                   <span className="text-danger">{errorJobTitle}</span>
-                )}
-                <Form.Group controlId="formDescription">
-                  <Form.Label>Description:</Form.Label>
-                  <Form.Control
-                    type="textarea"
-                    value={description}
-                    onChange={(event) => setDescription(event.target.value)}
-                    placeholder="Enter Job Description"
-                  />
-                </Form.Group>
-                {errorDescription && (
-                  <span className="text-danger">{errorDescription}</span>
                 )}
                 <Form.Group controlId="formLocation">
                   <Form.Label>Location Type:</Form.Label>
@@ -282,7 +271,26 @@ const EMP_EditJobPost = () => {
                     )}
                   </Col>
                 </Row>
-                <div className="text-center mt-4">
+              </Col>
+              <Col md={6} className=" p-4">
+                <Form.Group controlId="formDescription">
+                    <Form.Label>Description:</Form.Label>
+                    <Form.Control
+                      as="textarea"
+                      rows = {15}
+                      value={description}
+                      onChange={(event) => setDescription(event.target.value)}
+                      placeholder="Enter Job Description"
+                    />
+                  </Form.Group>
+                  {errorDescription && (
+                    <span className="text-danger">{errorDescription}</span>
+                  )}
+              </Col>
+            </Row>
+            <Row>
+              <Col className="text-center">
+              <div className="text-center mt-4">
                   <Button
                     variant="success"
                     type="submit"
@@ -300,9 +308,9 @@ const EMP_EditJobPost = () => {
                     Cancel
                   </Button>
                 </div>
-              </Form>
-            </Col>
-          </Row>
+              </Col>
+            </Row>
+          </Form>
         </Container>
       )}
     </QueryResult>

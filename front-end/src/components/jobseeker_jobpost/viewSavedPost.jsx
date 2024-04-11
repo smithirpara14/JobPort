@@ -50,7 +50,7 @@ const ViewSavedPost = () => {
                     {savedPost.job.location} | {savedPost.job.employmentType}
                   </Card.Subtitle>
                   <Card.Text>
-                    <strong>Description:</strong> {savedPost.job.description}
+                    <strong>Description:</strong> {savedPost.job.description && savedPost.job.description.length > 100 ? savedPost.job.description.substring(0,100) + ' ... ' : savedPost.job.description}
                   </Card.Text>
                   <Card.Text>
                     <strong>Experience Level:</strong> {savedPost.job.experienceLevel}
@@ -90,7 +90,7 @@ const ViewSavedPost = () => {
                     {savedPost.job.location} | {savedPost.job.employmentType}
                   </Card.Subtitle>
                   <Card.Text>
-                    <strong>Description:</strong> {savedPost.job.description}
+                    <strong>Description:</strong> {savedPost.job.description && savedPost.job.description.length > 100 ? savedPost.job.description.substring(0,100) + ' ... ' : savedPost.job.description}
                   </Card.Text>
                   <Card.Text>
                     <strong>Experience Level:</strong> {savedPost.job.experienceLevel}
@@ -103,7 +103,7 @@ const ViewSavedPost = () => {
                   </Card.Text>
                 </Card.Body>
                 <Card.Footer>
-                  <Button variant="primary" className="m-1" disabled>Applied</Button>
+                  <Button variant={ savedPost.status === 'Rejected' ? 'danger' : 'primary'} className="m-1" disabled>{ savedPost.status}</Button>
                 </Card.Footer>
               </Card>
             </Col>
