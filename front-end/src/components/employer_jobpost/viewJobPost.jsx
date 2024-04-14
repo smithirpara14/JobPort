@@ -140,7 +140,12 @@ const EMP_ViewJobPost = () => {
                       }} className="m-1">Accept</Button>
                         <Button variant="danger" onClick={() => {
                           handleReject(application._id);
-                      }} className="m-1">Reject</Button>
+                        }} className="m-1">Reject</Button>
+                        {
+                          application.resume && (
+                          <Button variant="primary" href={`/recruiter/viewresume/${application.user.email}`} className="m-1">Resume</Button>
+                          )
+                        }
                       </td>
                     </tr>
                   ))}

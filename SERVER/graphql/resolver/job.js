@@ -3,7 +3,9 @@ import Job from '../../models/job.js';
 import User from '../../models/user.js';
 import SavedJob from '../../models/savedJob.js';
 import Application from '../../models/application.js';
+import Resume from '../../models/resume.js';
 import jwt from 'jsonwebtoken';
+import { users } from './auth.js';
 
 //resolver to get all job post by author
 export async function jobPosts(parent, args, context, info) {
@@ -79,12 +81,32 @@ export async function jobPostWithApplications(parent, args, context, info) {
     try {
         const jobPost = await Job.findById(args.jobPostId).populate('author');
         const applications = await Application.find({ job: jobPost._id }).populate('user');
+        console.log("Applications::: ", applications);
+        const users = applications.map(application => application.user);
+        console.log("Users::: ", users);
+        const resumes = await Resume.find({ user: { $in: users.map(user => user._id) } });
+        console.log("Resumes::: ", resumes);
+        const applicationsWithResume = applications.map(application => {
+            const resume = resumes.find(resume => resume.user.toString() === application.user._id.toString());
+            return {
+                ...application._doc,
+                _id: application.id,
+                resume: resume ? { _id: resume.id, filename: resume.filename } : null
+            };
+        });
+
         return {
             jobPost: { ...jobPost._doc, _id: jobPost.id },
-            applications: applications.map(application => {
-                return { ...application._doc, _id: application.id };
-            })
+            applications: applicationsWithResume
         };
+        
+
+        // return {
+        //     jobPost: { ...jobPost._doc, _id: jobPost.id },
+        //     applications: applications.map(application => {
+        //         return { ...application._doc, _id: application.id};
+        //     })
+        // };
 
     } catch (err) {
         throw err;

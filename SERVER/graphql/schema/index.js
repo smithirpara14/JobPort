@@ -101,9 +101,18 @@ export const typeDefs = `
         appliedJobs: [Application]
     }
 
+    type ApplicationWithResume {
+        _id: ID
+        user: User
+        job: JobPost
+        applicationDate: GraphQlDate
+        status: String
+        resume: Resume
+    }
+
     type JobPostWithApplications {
         jobPost: JobPost
-        applications: [Application]
+        applications: [ApplicationWithResume]
     }
 
     type Resume {
