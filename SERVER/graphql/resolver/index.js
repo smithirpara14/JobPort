@@ -2,8 +2,8 @@ import { users, login, createUser, updateUserPersonalInfo, user, accountTypes, a
 import { jobPosts, allJobPosts, jobPost, jobPostWithApplication, jobPostWithApplications, createJobPost, updateJobPost, deleteJobPost, saveJob, savedJobsByEmail, removeSavedJob, savedAppliedJobsByUser } from './job.js';
 import { createApplication, applicationsByUser, applicationsByJob, application, updateApplicationStatus, deleteApplication } from './application.js';
 import { recruiterSummary } from './recruiter.js';
-import { uploadResume, getResume } from './resume.js';
-import { GraphQlDateResolver, GraphQlUploadResolver } from './helper.js';
+import { uploadResume, getResume, deleteResume, getResumeFile } from './resume.js';
+import { GraphQlDateResolver } from './helper.js';
 import GraphQLUpload from 'graphql-upload/GraphQLUpload.mjs';
 import Stripe from 'stripe';
 export const resolvers = {
@@ -27,6 +27,7 @@ export const resolvers = {
     recruiterSummary,
     savedAppliedJobsByUser,
     getResume,
+    getResumeFile,
     getSubscription
   },
   Mutation: {
@@ -45,6 +46,7 @@ export const resolvers = {
     saveJob,
     removeSavedJob,
     uploadResume,
+    deleteResume,
     createSubscription,
     cancelSubscription
   }

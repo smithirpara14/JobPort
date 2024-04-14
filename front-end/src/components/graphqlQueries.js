@@ -346,8 +346,17 @@ export const FETCH_RESUME = gql`
     getResume(userId: $userId) {
       _id
       filename
+    }
+  }
+`;
+
+// query to fetch resume file
+export const FETCH_RESUME_FILE = gql`
+  query getResumeFile($userId: String!) {
+    getResumeFile(userId: $userId) {
+      filename
       mimetype
-      path
+      data
     }
   }
 `;
@@ -358,8 +367,17 @@ export const UPLOAD_RESUME = gql`
     uploadResume(userId: $userId, file: $file) {
       filename
       mimetype
-      encoding
+      fileId
     } 
+  }
+`;
+
+// mutation to delete resume
+export const DELETE_RESUME = gql`
+  mutation deleteResume($userId: String!) {
+    deleteResume(userId: $userId) {
+      _id
+    }
   }
 `;
 
