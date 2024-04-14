@@ -42,9 +42,6 @@ const startApolloServer = async () => {
             }
         }
     }));
-    app.use('/upload', upload.single('file'), (req, res) => {
-        res.send({ success: true });
-    });
 
 };
 

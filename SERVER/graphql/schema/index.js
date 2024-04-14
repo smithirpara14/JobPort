@@ -119,6 +119,18 @@ export const typeDefs = `
         mimetype: String!
         encoding: String!
     }
+
+    type FileResponse {
+        filename: String!
+        mimetype: String!
+        fileId: String!
+    }
+
+    type FileContent {
+        filename: String!
+        mimetype: String!
+        data: String!
+    }
     
     type Subscription {
         stripeId: String
@@ -147,6 +159,7 @@ export const typeDefs = `
         savedAppliedJobsByUser(userId: String!): savedAppliedJobsByUser
         recruiterSummary(userId: String!): RecruiterSummary,
         getResume(userId: String!): Resume
+        getResumeFile(userId: String!): FileContent
         getSubscription(userId: String!): Subscription
         
     }
@@ -166,7 +179,8 @@ export const typeDefs = `
         deleteApplication(applicationId: ID!): Application
         removeSavedJob(savedJobId: ID!): SavedJob     
         saveJob(email: String!, jobPostId: ID!): SavedJob
-        uploadResume(userId:String!, file: Upload!): File!
+        uploadResume(userId:String!, file: Upload!): FileResponse!
+        deleteResume(userId: String!): Resume
         createSubscription(userId: String!, source: String!, plan: String!): User
         cancelSubscription(userId: String!): User
     }

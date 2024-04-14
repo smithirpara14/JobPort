@@ -5,8 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-
-
+import createUploadLink from "apollo-upload-client/createUploadLink.mjs";
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
@@ -15,13 +14,14 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
+      'Apollo-Require-Preflight':'false',
       authorization: token ? `${token}` : "",
       
     }
   }
 });
 
-const httpLink = createHttpLink({
+const httpLink = createUploadLink({
   uri: 'http://localhost:3001/graphql'
 });
 

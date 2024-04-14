@@ -16,10 +16,10 @@ const resumeSchema = new Schema({
         type: String,
         required: true
     },
-    path: {
+    fileId: {
         type: String,
         required: true
-    },
+    }
 });
 
 export default mongoose.model('Resume', resumeSchema);
