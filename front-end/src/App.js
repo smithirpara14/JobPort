@@ -21,6 +21,7 @@ import EMP_JobPostList from "./components/employer_jobpost/jobPostList";
 import EMP_ViewJobPost from "./components/employer_jobpost/viewJobPost";
 import EMP_CreateJobPost from "./components/employer_jobpost/createJobPost";
 import EMP_UpdateJobPost from "./components/employer_jobpost/editJobPost";
+import EMP_ViewResume from "./components/employer_jobpost/viewResume";
 import JS_JobPostList from "./components/jobseeker_jobpost/jobPostList";
 import JS_ViewJobPost from "./components/jobseeker_jobpost/viewJobPost";
 import JS_ViewSavedJobPost from "./components/jobseeker_jobpost/viewSavedPost";
@@ -80,6 +81,7 @@ const App = () => {
             path="/recruiter/jobposts/create"
             element={<PrivateRoute component={EMP_CreateJobPost} />}
           />
+          <Route path="/recruiter/viewresume/:id" element={<EMP_ViewResume />} />
 
           {/* Job Seeker (Cadidate) Job Post Routes */}
           <Route path="/jobposts" element={<PrivateRoute component={JS_JobPostList} />} />

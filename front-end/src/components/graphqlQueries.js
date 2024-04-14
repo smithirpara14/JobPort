@@ -149,6 +149,10 @@ export const FETCH_JOB_POST_APPLICATIONS = gql`
         }
         applicationDate
         status
+        resume {
+          filename,
+          _id,
+        }
       }
     }
   }

@@ -31,7 +31,7 @@ const ManageResume = () => {
         }
     });
 
-    const { data: resumeFileData, loading: resumeFileLoading, error: resumeFileError, refetchFile } = useQuery(FETCH_RESUME_FILE, {
+    const { data: resumeFileData, loading: resumeFileLoading, error: resumeFileError, refetch : refetchFile } = useQuery(FETCH_RESUME_FILE, {
         variables: {
             userId: userEmail
         }
@@ -66,7 +66,8 @@ const ManageResume = () => {
                 if(data.uploadResume.fileId) { 
                     setSuccessMessage('File uploaded successfully');
                     refetch();
-                    refetchFile();
+                    if(resumeFileData)
+                        refetchFile();
                 } else {
                     setSuccessMessage('');
                     setMessage('File upload failed. Please try again later.');
