@@ -21,8 +21,9 @@ const authLink = setContext((_, { headers }) => {
   }
 });
 
+//uri: 'http://localhost:3001/graphql'
 const httpLink = createUploadLink({
-  uri: 'http://localhost:3001/graphql'
+  uri: 'https://jobport-backend.onrender.com/graphql'
 });
 
 
