@@ -16,6 +16,23 @@ const ManageService = () => {
     const [plan, setPlan] = useState('Basic');
     const [cancelSubscription] = useMutation(CANCEL_SUBSCRIPTION);
 
+    const afterDataFetched = (subscriptionData) => {
+        console.log("Subscription data: ", subscriptionData);
+        if (subscriptionData.getSubscription.status === 'active') {
+            setIsActive(true);
+        }
+        if (subscriptionData.getSubscription.subscriptionType === 'Monthly') {
+            setPlan('Premium Monthly');
+        }
+        else if (subscriptionData.getSubscription.subscriptionType === '6Months') {
+            setPlan('Premium 6 Months');
+        }
+        else if (subscriptionData.getSubscription.subscriptionType === 'Yearly') {
+            setPlan('Premium Yearly');
+        }
+    }
+
+
     const { loading, error, data, refetch } = useQuery(FETCH_SUBSCRIPTION, {
         variables: { userId: userEmail }, onCompleted: (data) => {
             console.log("Subscription data: ", data);
@@ -43,6 +60,8 @@ const ManageService = () => {
             });
             console.log('Response:', response);
             refetch();
+            setIsActive(false);
+            setPlan('Basic');
         }
         catch (error) {
             console.error('Error cancelling subscription:', error);

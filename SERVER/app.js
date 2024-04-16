@@ -57,13 +57,3 @@ mongoose.connect(`mongodb+srv://${process.env.MONGO_USER
     }).catch(err => {
         console.log(err);
     });
-
-
-// mongoose.connect(`mongodb+srv://krunal:qwertyuiop@cluster0.4ej0mg8.mongodb.net/<your-database-name>?retryWrites=true&w=majority`)
-//     .then(() => {
-//         app.listen(3001);
-//         console.log('Server is running on port 3001');
-//         console.log('GraphQl Server started on localhost:3001/graphql');
-//     }).catch(err => {
-//         console.log(err);
-//     });

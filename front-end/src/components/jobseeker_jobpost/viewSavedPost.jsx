@@ -2,11 +2,27 @@ import React from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { getUserEmail } from "../../controllers/auth";
 import { Container, Row, Col, Card, Button, Tabs, Tab } from "react-bootstrap";
-import { FETCH_SAVED_APPLIED_JOBS, REMOVE_SAVED_JOB, APPLY_JOB } from "../graphqlQueries";
+import { FETCH_USER_PERSONAL_INFO,FETCH_SUBSCRIPTION, FETCH_SAVED_APPLIED_JOBS, REMOVE_SAVED_JOB, APPLY_JOB } from "../graphqlQueries";
 import { dateFormatted } from "../../controllers/helper";
+import { Link } from 'react-router-dom';
 
 const ViewSavedPost = () => {
   const userEmail = getUserEmail();
+
+  const { loading: loadingUser, error: errorUser, data: dataUser } = useQuery(FETCH_USER_PERSONAL_INFO, {
+    variables: { email: userEmail },
+    onCompleted: (data) => {
+      console.log("User data: ", data);
+    }
+  }
+  );
+
+  const { loading: loadingSubscription, error: errorSubscription, data: dataSubscription } = useQuery(FETCH_SUBSCRIPTION, {
+    variables: { userId: userEmail }
+    }
+  );
+
+
   const { loading, error, data, refetch } = useQuery(FETCH_SAVED_APPLIED_JOBS, {
     variables: { userId: userEmail },
   });
@@ -63,6 +79,7 @@ const ViewSavedPost = () => {
                   </Card.Text>
                 </Card.Body>
                 <Card.Footer>
+                
                   <Button variant="primary" onClick={() => handleApplyNow(savedPost.job._id) } className="m-1">Apply now</Button>
                   <Button variant="danger" onClick={() => handleRemove(savedPost._id)} className="m-1">Remove</Button>
                 </Card.Footer>
@@ -103,7 +120,33 @@ const ViewSavedPost = () => {
                   </Card.Text>
                 </Card.Body>
                 <Card.Footer>
-                  <Button variant={ savedPost.status === 'Rejected' ? 'danger' : 'primary'} className="m-1" disabled>{ savedPost.status}</Button>
+                  {dataUser && dataUser.user && dataUser.user.subscriptionType === 'free-trial' ? (
+                    <>
+                    <Button variant="primary" className="m-1" disabled>Pending</Button>
+                    <p>Upgrade to <Link to="/subscribe">premium</Link> to view application status</p>
+                    </>
+                    ) :
+                    (
+                      <>
+                      {
+                        dataUser && dataUser.user && dataUser.user.subscriptionType !== 'free-trial'
+                          && dataSubscription && dataSubscription.getSubscription && dataSubscription.getSubscription.status === 'active' ?
+                        (
+                            <>
+                              <Button variant={ savedPost.status === 'Rejected' ? 'danger' : 'primary'} className="m-1" disabled>{ savedPost.status}</Button>
+                            </>
+                        ) :
+                        (
+                              <>
+                                <p></p>
+                                <Button variant="primary" className="m-1" disabled>Pending</Button>
+                                <p> Your premium plan has expired. <Link to="/subscribe">Upgrade Now</Link></p>
+                              </>
+                        )
+                        }
+                      </>
+                    )}
+                  
                 </Card.Footer>
               </Card>
             </Col>

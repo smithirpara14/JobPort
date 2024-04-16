@@ -64,6 +64,8 @@ export const FETCH_USER_PERSONAL_INFO = gql`
       accountType {
         name
       }
+      subscriptionType
+      stripeId
     }
   }
 `;
