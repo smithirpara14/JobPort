@@ -2,7 +2,7 @@
   "name": "front-end",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:3001",
+  "proxy": "https://jobport-backend.onrender.com/",
   "dependencies": {
     "@apollo/client": "^3.9.2",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
