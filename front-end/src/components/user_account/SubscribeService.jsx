@@ -71,7 +71,7 @@ const SubscribeService = () => {
     return (
 
         //lets design our own pricing table
-        <Container>
+        <Container className='mt-5'>
             <Row>
                 <Col md={4}>
                     <Card>
@@ -157,11 +157,6 @@ const SubscribeService = () => {
 
             </Row>
         </Container>
-
-        // <StripeCheckout
-        //     token={onToken}
-        //     stripeKey="pk_test_51P47EO01l6hWzQr1Hvfa2CSiwYvaWHi4CExnJeUbH0kLjMFhjuX2reesTpu1pajJO0PZvlDlzvOq91RCNg7U4EEJ00rFQgTV6X"
-        // />
     );
 
 }
