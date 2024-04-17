@@ -43,7 +43,7 @@ const CheckAccountTypes = () => {
                 <td>{accountType.name}</td>
                 <td>{accountType.description}</td>
                 <td>
-                  <Link to={`/updateAccountType/${accountType._id}`} className="btn btn-sm btn-info mr-1">
+                  <Link to={`/updateAccountType/${accountType._id}`} className="btn btn-sm btn-info mr-1 d-none">
                     Update
                   </Link>
                   <button onClick={() => handleDeleteAccountType(accountType._id)} className="btn btn-sm btn-danger ml-1">

@@ -13,6 +13,7 @@ import Admin from "./components/admin";
 import CheckAccountTypes from "./components/Admin/checkAccountTypes";
 import CheckUsers from "./components/Admin/checkUsers";
 import CheckJobPosts from "./components/Admin/checkJobPosts";
+import EditJobPost from "./components/Admin/editJobPost";
 import CreateUser from "./components/createUser";
 import CreateAccountType from "./components/createAccountType";
 import UpdateAccountType from "./components/updateAccountType";
@@ -93,6 +94,8 @@ const App = () => {
           <Route path="/admin/checkAccountTypes" element={<CheckAccountTypes />} />
           <Route path="/admin/checkUsers" element={<CheckUsers />} />
           <Route path="/admin/checkJobPosts" element={<CheckJobPosts />} />
+          <Route path="/admin/editJobPost/:id" element={<EditJobPost />}
+/>
 
           {/* Invalid Route */}
           <Route path="*" element={<_404Page />} />

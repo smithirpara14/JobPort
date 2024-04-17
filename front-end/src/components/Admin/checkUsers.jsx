@@ -34,7 +34,7 @@ const CheckUsers = () => {
               <th>First Name</th>
               <th>Last Name</th>
               <th>Email</th>
-              <th>Birth Date</th>
+              <th className='d-none'>Birth Date</th>
               <th>Account Type</th>
               <th>Actions</th>
             </tr>
@@ -46,7 +46,7 @@ const CheckUsers = () => {
                 <td>{user.firstName}</td>
                 <td>{user.lastName}</td>
                 <td>{user.email}</td>
-                <td>{user.birthDate}</td>
+                <td className='d-none'>{user.birthDate}</td>
                 <td>{user.accountType ? user.accountType.name : "N/A"}</td>
                 <td>
                   <button onClick={() => handleDeleteUser(user._id)} className="btn btn-sm btn-danger">

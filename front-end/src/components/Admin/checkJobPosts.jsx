@@ -26,7 +26,7 @@ const CheckJobPosts = () => {
       <AdminNav />
       <Container>
         <h2>Job Posts</h2>
-        <Link to="/createJobPost" className="btn btn-primary mb-3">Create Job Post</Link>
+        <Link to="/createJobPost" className="btn btn-primary mb-3 d-none">Create Job Post</Link>
         <table className="table">
           <thead>
             <tr>
@@ -45,8 +45,8 @@ const CheckJobPosts = () => {
                 <td>{jobPost.description}</td>
                 <td>{jobPost.location}</td>
                 <td>
-                  <Link to={`/updateJobPost/${jobPost._id}`} className="btn btn-sm btn-info mr-1">
-                    Update
+                  <Link to={`/admin/editJobPost/${jobPost._id}`} className="btn btn-sm btn-info mr-1">
+                    Edit
                   </Link>
                   <button onClick={() => handleDeleteJobPost(jobPost._id)} className="btn btn-sm btn-danger ml-1">
                     Delete
